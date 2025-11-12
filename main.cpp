@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "RenderMan.h"
+#include "Engine\RenderMan.h"
 
 
 
@@ -17,10 +17,20 @@ int main() {
     pain.setFillColor(sf::Color::Yellow);
     pain.setPosition(0, 0);
 
-    renderer.AddDrawable(&circle, 0);
-    renderer.AddDrawable(&pain, 1);
+    DrawObj kys = renderer.createDrawable(&circle, 0);
+    DrawObj imInPain = renderer.createDrawable(&pain, 1);
+
+    pain.setPosition(100, 50);
+    renderer.RenderWindow();
+
+
+    renderer.AddDrawable(&kys);
+    renderer.AddDrawable(&imInPain);
     while (window.isOpen()) {
+        renderer.RenderWindowClear();
         sf::Event event;
+        pain.setPosition(pain.getPosition().x - 1, 50);
+
         while (window.pollEvent(event))
             if (event.type == sf::Event::Closed)
                 window.close();

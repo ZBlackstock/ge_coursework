@@ -12,11 +12,15 @@ public:
 
     void SetWindow(sf::RenderWindow* win);
 
-    void AddDrawable(sf::Drawable* obj, int layer);
+    void AddDrawable(const DrawObj* newObj);
+
+    DrawObj createDrawable(sf::Drawable* object, int layer);
+
+    void RenderWindowClear();
 
     void RenderWindow();
 
 private:
     sf::RenderWindow* window = nullptr;
-    std::vector<DrawObj> drawObjects;
+    std::vector<const DrawObj*> drawObjects;
 };

@@ -1,26 +1,35 @@
 #include <SFML/Graphics.hpp>
 #include "RenderMan.h"
+//manages render order of drawable pointers
 
+void RenderMan::SetWindow(sf::RenderWindow* win)
+{
+    window = win;
+}
 
-    void RenderMan::SetWindow(sf::RenderWindow* win)
-    {
-        window = win;
+void RenderMan::AddDrawable(const DrawObj* newObj)
+{
+    drawObjects.push_back(newObj);
+}
+
+DrawObj RenderMan::createDrawable(sf::Drawable* object, int layer)
+{
+    DrawObj newObj;
+    newObj.object = object;
+    newObj.layer = layer;
+    
+    return newObj;
+}
+
+void RenderMan::RenderWindow()
+{
+    for (const DrawObj* drawable : drawObjects) {
+        window->draw(*drawable->object); // use -> to access members
     }
+    window->display();
+}
 
-    void RenderMan::AddDrawable(sf::Drawable* obj, int layer)
-    {
-        DrawObj newObj;
-        newObj.object = obj;
-        newObj.layer = layer;
-
-        drawObjects.push_back(newObj);
-    }
-
-    void RenderMan::RenderWindow()
-    {
-        for (DrawObj& drawable : drawObjects) {
-            window->draw(*drawable.object);
-            
-        }
-        window->display();
-    }
+void RenderMan::RenderWindowClear()
+{
+    window->clear();
+}
