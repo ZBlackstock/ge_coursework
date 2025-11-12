@@ -12,6 +12,7 @@ void RenderMan::AddDrawable(const DrawObj* newObj)
     drawObjects.push_back(newObj);
 }
 
+
 DrawObj RenderMan::createDrawable(sf::Drawable* object, int layer)
 {
     DrawObj newObj;

@@ -16,16 +16,16 @@ int main() {
     sf::RectangleShape pain(sf::Vector2f(300.f,300.f));
     pain.setFillColor(sf::Color::Yellow);
     pain.setPosition(0, 0);
-
-    DrawObj kys = renderer.createDrawable(&circle, 0);
-    DrawObj imInPain = renderer.createDrawable(&pain, 1);
+    
+     DrawObj* kys = new DrawObj(renderer.createDrawable(&circle, 0));
+    DrawObj* imInPain = new DrawObj(renderer.createDrawable(&pain, 1));
 
     pain.setPosition(100, 50);
     renderer.RenderWindow();
 
 
-    renderer.AddDrawable(&kys);
-    renderer.AddDrawable(&imInPain);
+    renderer.AddDrawable(kys);
+    renderer.AddDrawable(imInPain);
     while (window.isOpen()) {
         renderer.RenderWindowClear();
         sf::Event event;
