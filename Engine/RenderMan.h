@@ -39,6 +39,17 @@ public:
     */
     void RenderWindow();
 
+    /**
+    * @brief remove a DrawObj pointer from list
+    * @param toRemove is the pointer for the DrawObj to delete
+    */
+    void RemoveDrawObj(const DrawObj* toRemove);
+
+    /**
+    * @brief delete all DrawObj Pointers from list
+    */
+    void RemoveAllDrawObj();
+
 private:
     sf::RenderWindow* window = nullptr;
     std::vector<const DrawObj*> drawObjects;

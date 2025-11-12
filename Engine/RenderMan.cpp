@@ -34,6 +34,20 @@ void RenderMan::RenderWindow()
     window->display();
 }
 
+void RenderMan::RemoveDrawObj(const DrawObj* toRemove)
+{
+    drawObjects.erase(
+        std::remove(drawObjects.begin(), drawObjects.end(), toRemove),
+        drawObjects.end()
+    );
+}
+
+
+void RenderMan::RemoveAllDrawObj() 
+{
+    drawObjects.clear();
+}
+
 void RenderMan::RenderWindowClear()
 {
     window->clear();

@@ -26,6 +26,8 @@ int main() {
 
     renderer.AddDrawable(kys);
     renderer.AddDrawable(imInPain);
+
+
     while (window.isOpen()) {
         renderer.RenderWindowClear();
         sf::Event event;
