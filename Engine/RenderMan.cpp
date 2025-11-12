@@ -24,8 +24,12 @@ DrawObj RenderMan::createDrawable(sf::Drawable* object, int layer)
 
 void RenderMan::RenderWindow()
 {
+
+    std::sort(drawObjects.begin(), drawObjects.end(),
+        [](const DrawObj* a, const DrawObj* b) { return a->layer < b->layer; });
+
     for (const DrawObj* drawable : drawObjects) {
-        window->draw(*drawable->object); // use -> to access members
+        window->draw(*drawable->object);
     }
     window->display();
 }

@@ -17,8 +17,8 @@ int main() {
     pain.setFillColor(sf::Color::Yellow);
     pain.setPosition(0, 0);
     
-     DrawObj* kys = new DrawObj(renderer.createDrawable(&circle, 0));
-    DrawObj* imInPain = new DrawObj(renderer.createDrawable(&pain, 1));
+     DrawObj* kys = new DrawObj(renderer.createDrawable(&circle, 1));
+    DrawObj* imInPain = new DrawObj(renderer.createDrawable(&pain, 0));
 
     pain.setPosition(100, 50);
     renderer.RenderWindow();
