@@ -4,7 +4,7 @@
 
 struct DrawObj
 {
-    sf::Drawable* object;
+    std::shared_ptr<sf::Drawable> object;
     int layer;
 };
 
@@ -16,17 +16,13 @@ public:
     void SetWindow(sf::RenderWindow* win);
 
 
-    /// @brief Adds a drawable object to the render manager.
-    /// @param newObj Pointer to the DrawObj to add. RenderMan does not take ownership.
-    void AddDrawable(const DrawObj* newObj);
 
 
     /// @brief Creates a DrawObj struct wrapping a drawable and a layer.
-    /// @param object Pointer to the SFML drawable object.
+    /// @param object Shared Pointer to the SFML drawable object.
     /// @param layer Layer index for rendering order.
-    /// @return A DrawObj struct containing the drawable and layer info.
-    /// for the caller to copy
-    DrawObj createDrawable(sf::Drawable* object, int layer);
+    /// @return A DrawObj raw ptr if the caller needs one
+    DrawObj* createDrawable(const std::shared_ptr<sf::Drawable> object, int layer);
 
     // @brief clears the window pointed to by SetWindow
     void RenderWindowClear();
@@ -43,7 +39,7 @@ public:
     * @brief remove a DrawObj pointer from list
     * @param toRemove is the pointer for the DrawObj to delete
     */
-    void RemoveDrawObj(const DrawObj* toRemove);
+    void RemoveDrawObjByDrawable(const std::shared_ptr<sf::Drawable>& drawable);
 
     /**
     * @brief delete all DrawObj Pointers from list
@@ -52,5 +48,9 @@ public:
 
 private:
     sf::RenderWindow* window = nullptr;
-    std::vector<const DrawObj*> drawObjects;
+    std::vector<std::unique_ptr<DrawObj>> drawObjects;
+
+    /// @brief Adds a unique_ptr to the vector in RenderMan.
+    /// @param newObj Pointer to the DrawObj to add.
+    void AddDrawable(std::unique_ptr<DrawObj> newObj);
 };
