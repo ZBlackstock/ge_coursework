@@ -4,7 +4,7 @@
 
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(400, 400), "SFML Test");
+    sf::RenderWindow window(sf::VideoMode(1000,800), "Black Dragon");
 
     RenderMan renderer;       
     renderer.SetWindow(&window);
@@ -20,7 +20,7 @@ int main() {
      DrawObj* kys = new DrawObj(renderer.createDrawable(&circle, 1));
     DrawObj* imInPain = new DrawObj(renderer.createDrawable(&pain, 0));
 
-    pain.setPosition(100, 50);
+    pain.setPosition(800, 1000);
     renderer.RenderWindow();
 
 
@@ -31,7 +31,7 @@ int main() {
     while (window.isOpen()) {
         renderer.RenderWindowClear();
         sf::Event event;
-        pain.setPosition(pain.getPosition().x - 1, 50);
+        pain.setPosition(pain.getPosition().x - 1,(800-300)/2);
 
         while (window.pollEvent(event))
             if (event.type == sf::Event::Closed)
