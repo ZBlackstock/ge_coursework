@@ -4,7 +4,11 @@
 
 
 int main() {
+    static constexpr float time_step = 0.017f;  // this is apperantly what you need to make 60fps idk
+                                                // thanks leni
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML Test");
+
+    
 
     RenderMan renderer;       
     renderer.SetWindow(&window);
@@ -19,8 +23,6 @@ int main() {
 
     renderer.createDrawable(circle, 1);
     renderer.createDrawable(pain, 0);
-
-    renderer.RemoveDrawObjByDrawable(pain);
 
 
     while (window.isOpen()) {
