@@ -46,6 +46,7 @@ std::shared_ptr<Scene> sm::get_active_scene()
 
 void sm::set_active_scene(std::shared_ptr<Scene> scene)
 {
+	// Clear renderManager list
 	if (active_scene != NULL)
 	{
 		active_scene->on_scene_inactive();
@@ -93,6 +94,7 @@ void MainMenu::on_scene_active()
 {
 	std::cout << "MainMenu on_scene_active()" << std::endl;
 	// ADD MAINMENU SPRITES
+
 }
 
 bool spacePressed = false;
@@ -109,7 +111,6 @@ void MainMenu::update(const float& dt)
 void MainMenu::on_scene_inactive()
 {
 	std::cout << "MainMenu on_scene_inactive()" << std::endl;
-
 }
 
 // _______________________Map_________________________________________
