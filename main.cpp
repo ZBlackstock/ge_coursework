@@ -31,6 +31,12 @@ int main() {
         sf::Event event;
         pain->setPosition(pain->getPosition().x - 1, 50);
 
+        static sf::Clock clock;
+        const float dt = clock.restart().asSeconds();
+
+        scene_manager.update(dt);
+
+
         while (window.pollEvent(event))
             if (event.type == sf::Event::Closed)
                 window.close();

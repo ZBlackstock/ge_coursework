@@ -10,15 +10,23 @@
 void SceneManager::init()
 {
 	std::cout << "SceneManager::Init()" << std::endl;
+	active_scene = NULL;
+
 	std::shared_ptr<MainMenu> main_menu = std::make_shared<MainMenu>("MainMenu");
+	std::shared_ptr<Map> map = std::make_shared<Map>("Map");
+
 	SceneManager::add_scene(main_menu);
-	SceneManager::set_active_scene(main_menu);
+	SceneManager::add_scene(map);
+
+	SceneManager::set_active_scene("MainMenu");
 }
 
-// Calls update for active_scene
 void SceneManager::update(const float& dt)
 {
-	active_scene->update(dt);
+	if (active_scene != NULL)
+	{
+		active_scene->update(dt);
+	}
 }
 
 void SceneManager::add_scene(std::shared_ptr<Scene> scene)
@@ -33,10 +41,25 @@ std::shared_ptr<Scene> SceneManager::get_active_scene()
 
 void SceneManager::set_active_scene(std::shared_ptr<Scene> scene)
 {
-	std::cout << "active_scene = " << scene->name << std::endl;
-	active_scene->on_scene_inactive();
+	if (active_scene != NULL) 
+	{
+		active_scene->on_scene_inactive();
+	}
 	active_scene = scene;
 	active_scene->on_scene_active();
+	std::cout << "active_scene = " << scene->name << std::endl;
+}
+
+void SceneManager::set_active_scene(const std::string& name)
+{
+	for (int i = 0; i < SceneManager::scenes.size(); ++i)
+	{
+		std::shared_ptr<Scene> scene = SceneManager::scenes.at(i);
+		if (scene.get()->name == name)
+		{
+			SceneManager::set_active_scene(scene);
+		}
+	}
 }
 
 // _______________________________ Scene ______________________________________________
@@ -76,10 +99,11 @@ Map::Map(std::string scene_name)
 // Load sprites for Map HERE
 void Map::init()
 {
-
+	std::cout << "Map init()" << std::endl;
 }
 
 void Map::update(const float& dt)
 {
+	std::cout << "Map update()" << std::endl;
 
 }
