@@ -1,13 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include "Engine\RenderMan.h"
+#include "Engine\AudioManager.h"
 
 
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML Test");
 
-    RenderMan renderer;       
+    RenderMan renderer; 
+    AudioManager audioMan;
+
     renderer.SetWindow(&window);
+
+    //auto sound = std::make_shared<sf::Sound>();
+    audioMan.addSounds();
+    audioMan.playSounds();
 
     auto circle = std::make_shared<sf::CircleShape>(200.f);
     circle->setFillColor(sf::Color::Green);
@@ -22,6 +29,7 @@ int main() {
 
     renderer.RemoveDrawObjByDrawable(pain);
 
+    //TODO 
 
     while (window.isOpen()) {
         renderer.RenderWindowClear();
