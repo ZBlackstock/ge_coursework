@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Engine\RenderMan.h"
-
-
+#include "Engine\SceneMan.hpp"
+#include "Engine\Scene.hpp"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML Test");
@@ -9,6 +9,7 @@ int main() {
     RenderMan renderer;       
     renderer.SetWindow(&window);
 
+    // Should probably remove this render test stuff
     auto circle = std::make_shared<sf::CircleShape>(200.f);
     circle->setFillColor(sf::Color::Green);
     circle->setPosition(0, 0);
@@ -22,6 +23,8 @@ int main() {
 
     renderer.RemoveDrawObjByDrawable(pain);
 
+    SceneManager scene_manager;
+    scene_manager.init();
 
     while (window.isOpen()) {
         renderer.RenderWindowClear();

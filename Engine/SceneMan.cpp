@@ -2,53 +2,49 @@
 #include <vector>
 #include <iostream>
 #include "SceneMan.hpp"
+#include "Scene.hpp"
 
-using sm = SceneManager;
-using s = Scene;
 
 // _______________________ Scene Manager ______________________________________________
 
-void sm::init()
+void SceneManager::init()
 {
-	std::shared_ptr<MainMenu> main_menu = std::make_shared<MainMenu>();
-	sm::add_scene(main_menu);
-
-	sm::set_active_scene(main_menu);
+	std::cout << "SceneManager::Init()" << std::endl;
+	std::shared_ptr<MainMenu> main_menu = std::make_shared<MainMenu>("MainMenu");
+	SceneManager::add_scene(main_menu);
+	SceneManager::set_active_scene(main_menu);
 }
 
 // Calls update for active_scene
-void sm::update(const float& dt)
+void SceneManager::update(const float& dt)
 {
 	active_scene->update(dt);
 }
 
-void sm::add_scene(std::shared_ptr<Scene> scene)
+void SceneManager::add_scene(std::shared_ptr<Scene> scene)
 {
-	sm::scenes.push_back(scene);
+	SceneManager::scenes.push_back(scene);
 }
 
-std::shared_ptr<Scene> sm::get_active_scene()
+std::shared_ptr<Scene> SceneManager::get_active_scene()
 {
 	return active_scene;
 }
 
-void sm::set_active_scene(std::shared_ptr<Scene> scene)
+void SceneManager::set_active_scene(std::shared_ptr<Scene> scene)
 {
-	cout << "active_scene = " << scene << endl;
+	std::cout << "active_scene = " << scene->name << std::endl;
+	active_scene->on_scene_inactive();
 	active_scene = scene;
+	active_scene->on_scene_active();
 }
 
 // _______________________________ Scene ______________________________________________
 
-void s::update(const float& dt)
-{
-}
-void s::on_scene_active()
-{
-}
-void s::on_scene_inactive()
-{
-}
+void Scene::init() {}
+void Scene::update(const float& dt) {}
+void Scene::on_scene_active() {}
+void Scene::on_scene_inactive() {}
 
 // ____________________________ Custom Scenes _________________________________________
 
@@ -59,15 +55,15 @@ MainMenu::MainMenu(std::string scene_name)
 }
 
 // Load sprites for MainMenu HERE
-MainMenu::init()
+void MainMenu::init()
 {
-	cout << "MainMenu init()" << endl;
+	std::cout << "MainMenu init()" << std::endl;
 
 }
 
-MainMenu::update(const float& dt)
+void MainMenu::update(const float& dt)
 {
-	cout << "MainMenu update()" << endl;
+	std::cout << "MainMenu update()" << std::endl;
 
 }
 
@@ -78,12 +74,12 @@ Map::Map(std::string scene_name)
 }
 
 // Load sprites for Map HERE
-Map::init()
+void Map::init()
 {
 
 }
 
-Map::update(const float& dt)
+void Map::update(const float& dt)
 {
 
 }
