@@ -8,24 +8,23 @@ using s = Scene;
 
 // _______________________ Scene Manager ______________________________________________
 
-sm::init()
+void sm::init()
 {
-	// Change to have custom scene classes or die
-	int i = 0;
-	while (i < 5) // Temp loop to handle multiple scenes
-	{
-		std::shared_ptr<Scene> scene = std::make_shared<Scene>();
-		scenes.push_back(scene);
-		i++;
-	}
+	std::shared_ptr<MainMenu> main_menu = std::make_shared<MainMenu>();
+	sm::add_scene(main_menu);
 
-	sm::set_active_scene(scenes[0]);
+	sm::set_active_scene(main_menu);
 }
 
 // Calls update for active_scene
-sm::update(const float& dt)
+void sm::update(const float& dt)
 {
 	active_scene->update(dt);
+}
+
+void sm::add_scene(std::shared_ptr<Scene> scene)
+{
+	sm::scenes.push_back(scene);
 }
 
 std::shared_ptr<Scene> sm::get_active_scene()
@@ -41,17 +40,50 @@ void sm::set_active_scene(std::shared_ptr<Scene> scene)
 
 // _______________________________ Scene ______________________________________________
 
-s::Scene(std::string scene_name)
+void s::update(const float& dt)
 {
-	name = scene_name;
 }
-
-s::update(const float& dt) // Can probably remove this, as update will be hanled by derived classes
-{	
+void s::on_scene_active()
+{
+}
+void s::on_scene_inactive()
+{
 }
 
 // ____________________________ Custom Scenes _________________________________________
 
-// NEED:
 // main_menu
+MainMenu::MainMenu(std::string scene_name)
+{
+	name = scene_name;
+}
+
+// Load sprites for MainMenu HERE
+MainMenu::init()
+{
+	cout << "MainMenu init()" << endl;
+
+}
+
+MainMenu::update(const float& dt)
+{
+	cout << "MainMenu update()" << endl;
+
+}
+
 // map
+Map::Map(std::string scene_name)
+{
+	name = scene_name;
+}
+
+// Load sprites for Map HERE
+Map::init()
+{
+
+}
+
+Map::update(const float& dt)
+{
+
+}
