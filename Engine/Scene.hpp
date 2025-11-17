@@ -20,7 +20,8 @@ class MainMenu : public Scene
 {
 public:
 	MainMenu(std::string scene_name);
-	virtual void init();
+	virtual void on_scene_active();
+	virtual void on_scene_inactive();
 	virtual void update(const float& dt);
 };
 
@@ -28,6 +29,7 @@ class Map : public Scene
 {
 public:
 	Map(std::string scene_name);
-	virtual void init();
+	virtual void on_scene_active();
+	virtual void on_scene_inactive();
 	virtual void update(const float& dt);
 };
