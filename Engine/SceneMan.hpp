@@ -1,5 +1,7 @@
+#pragma once
 #include <vector>
 #include <memory> // For pointers
+#include "RenderMan.h"
 
 class SceneManager
 {
@@ -16,12 +18,12 @@ private:
 	std::shared_ptr<Scene> active_scene; // Current scene
 };
 
-
 class Scene
 {
 public:
+	RenderMan* render_manager;
 	virtual void init(); // Derived class will load sprites and logic specific to itself
 	virtual void update(const float* dt);
-	virtual void on_scene_active(); // Called when scene is set to active_scene
-	virtual void on_scene_inactive(); // Called on frame when no lonhger active_scene
+	virtual void on_scene_active(); // Called when scene is set to active_scene, add SceneMan drawables
+	virtual void on_scene_inactive(); // Called on frame when no lonhger active_scene, clear SceneMan drawables
 };
