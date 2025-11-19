@@ -4,7 +4,7 @@
 
 std::vector<std::unique_ptr<DrawObj>> RenderMan::drawObjects{};
 sf::RenderWindow* RenderMan::window = nullptr;
-
+std::vector<std::shared_ptr<sf::Texture>> RenderMan::textures;
 
 void RenderMan::SetWindow(sf::RenderWindow* win)
 {
@@ -23,6 +23,11 @@ DrawObj* RenderMan::createDrawable(const std::shared_ptr<sf::Drawable> object, i
     DrawObj* rawPtr = newObj.get();  // optional, if you need to keep a raw pointer
     AddDrawable(std::move(newObj));
     return rawPtr;
+}
+
+void RenderMan::create_sprite(std::string tx_file_path, sf::Vector2f pos, int layer) 
+{
+
 }
 
 void RenderMan::RenderWindow()

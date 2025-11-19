@@ -91,7 +91,11 @@ MainMenu::MainMenu(std::string scene_name)
 	name = scene_name;
 }
 
+// MOVE THIS TO RENDER MANAGER
+// CREATE FUNCTION IN RENDERMAN THAT MAKES SPRITE WITH PATH AND TEXTURE
+// create_sprite(string tx_file_path, sf::Vector2f pos, int layer)
 std::vector<std::shared_ptr<sf::Texture>> textures;
+
 // Load sprites for MainMenu HERE
 void MainMenu::on_scene_active()
 {
