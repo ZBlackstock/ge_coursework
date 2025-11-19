@@ -8,7 +8,6 @@ struct DrawObj
     int layer;
 };
 
-// Hello Louis
 class RenderMan {
 public:
 
