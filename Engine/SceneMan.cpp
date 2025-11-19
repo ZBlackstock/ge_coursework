@@ -5,9 +5,11 @@
 #include "Scene.hpp"
 #include "RenderMan.h"
 #include "game_system.h"
+#include "UI_button.hpp"
 
 using sm = SceneManager;
 using gs = GameSystem;
+using b = Button;
 // _______________________ Scene Manager ______________________________________________
 
 // These must be re-declared here because theyre static
@@ -93,16 +95,31 @@ MainMenu::MainMenu(std::string scene_name)
 	name = scene_name;
 }
 
-// MOVE THIS TO RENDER MANAGER
-// CREATE FUNCTION IN RENDERMAN THAT MAKES SPRITE WITH PATH AND TEXTURE
-// create_sprite(string tx_file_path, sf::Vector2f pos, int layer)
-
 // Load sprites for MainMenu HERE
 void MainMenu::on_scene_active()
 {
 	std::cout << "MainMenu on_scene_active()" << std::endl;
+
 	// Load MainMenu sprites
-	RenderMan::create_sprite(gs::sprites_path + "title.png", { 0,0 }, 0);
+	RenderMan::create_sprite("title.png", { gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) - 200 }, 0);
+
+	std::shared_ptr<Button> button0 = std::make_shared<Button>
+		("play", sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) + 200.0f }, 1);
+	std::shared_ptr<Button> button1 = std::make_shared<Button>
+		("play", sf::Vector2f{ gs::screen_size_f.x / 2 ,(gs::screen_size_f.y / 2) + 290.0f }, 1);
+	std::shared_ptr<Button> button2 = std::make_shared<Button>
+		("play", sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) + 380.f }, 1);
+
+	button0->set_above(button2);
+	button0->set_below(button1);
+
+	button1->set_above(button0);
+	button1->set_below(button2);
+
+	button2->set_above(button1);
+	button2->set_below(button0);
+
+	button0->highlight();
 }
 
 bool spacePressed = false;

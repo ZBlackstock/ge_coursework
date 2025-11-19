@@ -5,9 +5,9 @@
 #include "Engine\Scene.hpp"
 #include "Engine\game_system.h"
 
-sf::Vector2i GameSystem::screen_size = sf::Vector2i{ 1000,1000 };
+sf::Vector2i GameSystem::screen_size = sf::Vector2i{ 1920,1080 };
 sf::Vector2f GameSystem::screen_size_f = static_cast<sf::Vector2f>(GameSystem::screen_size);
-std::string GameSystem::sprites_path = "../res/sprites/";
+std::string GameSystem::sprites_path = "../../../../res/sprites/";
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(GameSystem::screen_size.x, GameSystem::screen_size.y), "SFML Test");

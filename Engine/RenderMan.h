@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <map>
 
 
 struct DrawObj
@@ -17,6 +18,7 @@ public:
 	// @param win points towards the window currently in use
 	static void SetWindow(sf::RenderWindow* win);
 	static void create_sprite(std::string tx_file_path, sf::Vector2f pos, int layer);
+	static void set_sprite_pos(std::string name, sf::Vector2f pos);
 
 	/// @brief Creates a DrawObj struct wrapping a drawable and a layer.
 	/// @param object Shared Pointer to the SFML drawable object.
@@ -50,6 +52,7 @@ private:
 	static sf::RenderWindow* window;
 	static std::vector<std::unique_ptr<DrawObj>> drawObjects;
 	static std::vector<std::shared_ptr<sf::Texture>> textures;
+	static std::map<std::string, std::shared_ptr<sf::Sprite>> sprites;
 
 	/// @brief Adds a unique_ptr to the vector in RenderMan.
 	/// @param newObj Pointer to the DrawObj to add.
