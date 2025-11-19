@@ -4,6 +4,7 @@
 #include "SceneMan.hpp"
 #include "Scene.hpp"
 #include "RenderMan.h"
+#include "game_system.h"
 
 using sm = SceneManager;
 // _______________________ Scene Manager ______________________________________________
@@ -100,6 +101,7 @@ void MainMenu::on_scene_active()
 {
 	std::cout << "MainMenu on_scene_active()" << std::endl;
 	// Load MainMenu sprites
+	RenderMan::create_sprite("../res/sprites/tree.png", { GameSystem::screen_size.x / 2, GameSystem::screen_size.y / 2 }, 0);
 }
 
 bool spacePressed = false;

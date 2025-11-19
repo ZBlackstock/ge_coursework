@@ -2,9 +2,12 @@
 #include "Engine\RenderMan.h"
 #include "Engine\SceneMan.hpp"
 #include "Engine\Scene.hpp"
+#include "Engine\game_system.h"
+
+sf::Vector2i GameSystem::screen_size = sf::Vector2i{ 1000,1000 };
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML Test");
+	sf::RenderWindow window(sf::VideoMode(GameSystem::screen_size.x, GameSystem::screen_size.y), "SFML Test");
 
 	RenderMan::SetWindow(&window);
 
