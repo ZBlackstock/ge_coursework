@@ -25,11 +25,12 @@ int main() {
     renderer.createDrawable(pain, 0);
 
 
+
     while (window.isOpen()) {
         renderer.RenderWindowClear();
         sf::Event event;
-        pain->setPosition(pain->getPosition().x - 1, 50);
-
+        pain->setPosition(pain->getPosition().x - 1, 400);
+        pain->setRotation(pain->getRotation() - 1.f);
         while (window.pollEvent(event))
             if (event.type == sf::Event::Closed)
                 window.close();

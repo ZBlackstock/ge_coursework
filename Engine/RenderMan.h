@@ -16,8 +16,6 @@ public:
     void SetWindow(sf::RenderWindow* win);
 
 
-
-
     /// @brief Creates a DrawObj struct wrapping a drawable and a layer.
     /// @param object Shared Pointer to the SFML drawable object.
     /// @param layer Layer index for rendering order.

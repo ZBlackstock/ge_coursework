@@ -10,6 +10,7 @@ private:
     static void _init();
     static void _update(const float& dt);
     static void _render();
+    static void _sounds();
     static std::shared_ptr<Scene> _active_scene;
 
 };

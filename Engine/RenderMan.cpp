@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "RenderMan.h"
+#include <SFML/Audio.hpp>
 //manages render order of drawable pointers
+
 
 void RenderMan::SetWindow(sf::RenderWindow* win)
 {
@@ -71,3 +73,4 @@ void RenderMan::RenderWindowClear()
 *to clear the window
 *renderer.RenderWindowClear():
 */
+

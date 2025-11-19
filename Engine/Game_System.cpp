@@ -30,6 +30,8 @@ void GameSystem::start(unsigned int width, unsigned int height,
         RenderMan::RenderWindowClear();
         _update(dt);
         _render();
+        _sounds();
+
         sf::sleep(sf::seconds(time_step));
         //Wait for Vsync
         window.display();
