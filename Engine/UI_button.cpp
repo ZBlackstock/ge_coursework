@@ -81,3 +81,10 @@ bool b::is_selected()
 {
 	return b::_selected;
 }
+
+// ____________ Custom Buttons ____________________________
+
+// Add custom button functionality for different button types
+//
+// - Load scene
+//

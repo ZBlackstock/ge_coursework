@@ -120,6 +120,8 @@ void MainMenu::on_scene_active()
 	button2->set_below(button0);
 
 	button0->highlight();
+
+	// NEED EVENT MANAGER TO CALL UPDATE() ON ALL BUTTONS
 }
 
 bool spacePressed = false;
