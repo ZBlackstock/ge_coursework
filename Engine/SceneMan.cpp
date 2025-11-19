@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SceneMan.hpp"
 #include "Scene.hpp"
+#include "RenderMan.h"
 
 using sm = SceneManager;
 // _______________________ Scene Manager ______________________________________________
@@ -89,12 +90,24 @@ MainMenu::MainMenu(std::string scene_name)
 {
 	name = scene_name;
 }
+
+std::vector<std::shared_ptr<sf::Texture>> textures;
 // Load sprites for MainMenu HERE
 void MainMenu::on_scene_active()
 {
 	std::cout << "MainMenu on_scene_active()" << std::endl;
-	// ADD MAINMENU SPRITES
+	// Load MainMenu sprites
+	std::shared_ptr < sf::Texture> tx_main_menu = std::make_shared<sf::Texture>();
+	if (!tx_main_menu->loadFromFile("../res/sprites/tree.png"))
+	{
+		std::cout << "Couldn't load texture";
+	}
+	std::shared_ptr<sf::Sprite> spr_main_menu = std::make_shared<sf::Sprite>();
+	spr_main_menu.get()->setTexture(*tx_main_menu);
+	spr_main_menu.get()->setPosition(sf::Vector2f{ 500,500 });
 
+	textures.push_back(tx_main_menu);
+	RenderMan::createDrawable(spr_main_menu, 0);
 }
 
 bool spacePressed = false;
