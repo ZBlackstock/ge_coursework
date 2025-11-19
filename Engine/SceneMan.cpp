@@ -3,8 +3,11 @@
 #include <iostream>
 #include "SceneMan.hpp"
 #include "Scene.hpp"
+#include "RenderMan.h"
+#include "game_system.h"
 
 using sm = SceneManager;
+using gs = GameSystem;
 // _______________________ Scene Manager ______________________________________________
 
 // These must be re-declared here because theyre static
@@ -89,12 +92,17 @@ MainMenu::MainMenu(std::string scene_name)
 {
 	name = scene_name;
 }
+
+// MOVE THIS TO RENDER MANAGER
+// CREATE FUNCTION IN RENDERMAN THAT MAKES SPRITE WITH PATH AND TEXTURE
+// create_sprite(string tx_file_path, sf::Vector2f pos, int layer)
+
 // Load sprites for MainMenu HERE
 void MainMenu::on_scene_active()
 {
 	std::cout << "MainMenu on_scene_active()" << std::endl;
-	// ADD MAINMENU SPRITES
-
+	// Load MainMenu sprites
+	RenderMan::create_sprite(gs::sprites_path + "title.png", { 0,0 }, 0);
 }
 
 bool spacePressed = false;
