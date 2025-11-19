@@ -40,7 +40,8 @@ void RenderMan::create_sprite(std::string tx_file_path, sf::Vector2f pos, int la
 
 	// Set sprite texture and position on screen
 	sprite.get()->setTexture(*texture);
-	sprite.get()->setPosition(pos); 
+	sprite.get()->setPosition(pos);
+	std::cout << "Set sprite screen pos as " << pos.x << ", " << pos.y << std::endl;
 
 	//Add texture to global list. Sprite will appear as white box otherwise (as texture will go out of scope)
 	RenderMan::textures.push_back(texture);
