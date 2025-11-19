@@ -2,6 +2,10 @@
 #include "RenderMan.h"
 //manages render order of drawable pointers
 
+std::vector<std::unique_ptr<DrawObj>> RenderMan::drawObjects{};
+sf::RenderWindow* RenderMan::window = nullptr;
+
+
 void RenderMan::SetWindow(sf::RenderWindow* win)
 {
     window = win;
