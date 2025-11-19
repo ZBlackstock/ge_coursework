@@ -7,6 +7,7 @@
 #include "game_system.h"
 
 using sm = SceneManager;
+using gs = GameSystem;
 // _______________________ Scene Manager ______________________________________________
 
 // These must be re-declared here because theyre static
@@ -101,7 +102,7 @@ void MainMenu::on_scene_active()
 {
 	std::cout << "MainMenu on_scene_active()" << std::endl;
 	// Load MainMenu sprites
-	RenderMan::create_sprite("../res/sprites/tree.png", { (GameSystem::screen_size_f.x /3), GameSystem::screen_size_f.y / 2 }, 0);
+	RenderMan::create_sprite(gs::sprites_path + "tree.png", { (GameSystem::screen_size_f.x /3), GameSystem::screen_size_f.y / 2 }, 0);
 }
 
 bool spacePressed = false;
