@@ -1,6 +1,7 @@
 #include <SFML/graphics.hpp>
 #include <string>
 
+// All variables here should be static, and initialised in main
 class GameSystem
 {
 public:
