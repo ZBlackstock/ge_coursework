@@ -6,8 +6,7 @@
 int main() {
 	sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML Test");
 
-	RenderMan renderer;
-	renderer.SetWindow(&window);
+	RenderMan::SetWindow(&window);
 
 	// Should probably remove this render test stuff
 	auto circle = std::make_shared<sf::CircleShape>(200.f);
@@ -18,15 +17,15 @@ int main() {
 	pain->setFillColor(sf::Color::Yellow);
 	pain->setPosition(1000, 0);
 
-	renderer.createDrawable(circle, 1);
-	renderer.createDrawable(pain, 0);
+	RenderMan::createDrawable(circle, 1);
+	RenderMan::createDrawable(pain, 0);
 
-	renderer.RemoveDrawObjByDrawable(pain);
+	//RenderMan::RemoveDrawObjByDrawable(pain);
 
 	SceneManager::init();
 
 	while (window.isOpen()) {
-		renderer.RenderWindowClear();
+		RenderMan::RenderWindowClear();
 		sf::Event event;
 		pain->setPosition(pain->getPosition().x - 1, 50);
 
@@ -43,7 +42,7 @@ int main() {
 			}
 		}
 
-		renderer.RenderWindow();
+		RenderMan::RenderWindow();
 	}
 	return 0;
 }
