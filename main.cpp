@@ -5,6 +5,7 @@
 #include "Engine\game_system.h"
 
 sf::Vector2i GameSystem::screen_size = sf::Vector2i{ 1000,1000 };
+sf::Vector2f GameSystem::screen_size_f = static_cast<sf::Vector2f>( GameSystem::screen_size);
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(GameSystem::screen_size.x, GameSystem::screen_size.y), "SFML Test");
