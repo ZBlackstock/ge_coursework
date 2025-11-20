@@ -28,3 +28,5 @@ private:
 	sf::Vector2f _pos;
 	std::string _name;
 };
+
+// ____________ Custom Buttons ____________________________

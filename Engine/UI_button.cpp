@@ -92,4 +92,4 @@ std::string b::get_name()
 // Add custom button functionality for different button types
 //
 // - Load scene
-//
+// - Quit game
