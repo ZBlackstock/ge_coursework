@@ -6,6 +6,7 @@
 #include "RenderMan.h"
 #include "game_system.h"
 #include "UI_button.hpp"
+#include "event_man.hpp"
 
 using sm = SceneManager;
 using gs = GameSystem;
@@ -103,25 +104,18 @@ void MainMenu::on_scene_active()
 	// Load MainMenu sprites
 	RenderMan::create_sprite("title.png", { gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) - 200 }, 0);
 
-	std::shared_ptr<Button> button0 = std::make_shared<Button>
+	std::shared_ptr<Button> btn_play = std::make_shared<Button>
 		("play", sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) + 200.0f }, 1);
-	std::shared_ptr<Button> button1 = std::make_shared<Button>
-		("play", sf::Vector2f{ gs::screen_size_f.x / 2 ,(gs::screen_size_f.y / 2) + 290.0f }, 1);
-	std::shared_ptr<Button> button2 = std::make_shared<Button>
-		("play", sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) + 380.f }, 1);
+	std::shared_ptr<Button> btn_quit = std::make_shared<Button>
+		("quit", sf::Vector2f{ gs::screen_size_f.x / 2 ,(gs::screen_size_f.y / 2) + 290.0f }, 1);
 
-	button0->set_above(button2);
-	button0->set_below(button1);
+	btn_play->set_above(btn_quit);
+	btn_play->set_below(btn_quit);
 
-	button1->set_above(button0);
-	button1->set_below(button2);
+	btn_quit->set_above(btn_play);
+	btn_quit->set_below(btn_play);
 
-	button2->set_above(button1);
-	button2->set_below(button0);
-
-	button0->highlight();
-
-	// NEED EVENT MANAGER TO CALL UPDATE() ON ALL BUTTONS
+	EventManager::set_current_button(btn_play);
 }
 
 bool spacePressed = false;

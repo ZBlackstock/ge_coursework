@@ -18,6 +18,7 @@ public:
 
 	virtual void on_select();
 	bool is_selected();
+	std::string get_name();
 
 	std::shared_ptr<Button> above = nullptr;
 	std::shared_ptr<Button> below = nullptr;

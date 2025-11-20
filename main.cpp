@@ -4,6 +4,7 @@
 #include "Engine\SceneMan.hpp"
 #include "Engine\Scene.hpp"
 #include "Engine\game_system.h"
+#include "Engine\event_man.hpp"
 
 sf::Vector2i GameSystem::screen_size = sf::Vector2i{ 1920,1080 };
 sf::Vector2f GameSystem::screen_size_f = static_cast<sf::Vector2f>(GameSystem::screen_size);
@@ -23,6 +24,7 @@ int main() {
 		const float dt = clock.restart().asSeconds();
 
 		SceneManager::update(dt);
+		EventManager::update(dt);
 
 		while (window.pollEvent(event))
 		{

@@ -82,6 +82,11 @@ bool b::is_selected()
 	return b::_selected;
 }
 
+std::string b::get_name()
+{
+	return b::_name;
+}
+
 // ____________ Custom Buttons ____________________________
 
 // Add custom button functionality for different button types
