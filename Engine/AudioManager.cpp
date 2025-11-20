@@ -2,9 +2,9 @@
 #include "AudioManager.h"
 #include <iostream>
 
-void AudioManager::initialise() {
+/*void AudioManager::initialise() {
     //activeSounds = new vector
-}
+}*/
 
 void AudioManager::playSounds()
 {
@@ -14,12 +14,12 @@ void AudioManager::playSounds()
     }
 }
 
-void AudioManager::addSounds()
+void AudioManager::addSounds(const std::string& name)
 {
     buffers.emplace_back();
     sf::SoundBuffer& buffer = buffers.back();
     //sf::SoundBuffer buffer;
-    buffer.loadFromFile("../../../../assets/shoot.wav");
+    buffer.loadFromFile("../../../../assets/" + name + ".wav");
     sf::Sound anotherSound(buffer);
     anotherSound.setVolume(100.f);
     //anotherSound.

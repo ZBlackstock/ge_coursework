@@ -5,9 +5,9 @@
 class AudioManager 
 {
 public:
-	void initialise();
+	//void initialise();
 	void playSounds();
-	void addSounds();
+	void addSounds(const std::string& name);
 
 private:
 	std::vector<sf::SoundBuffer> buffers;

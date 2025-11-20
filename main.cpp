@@ -13,7 +13,7 @@ int main() {
     renderer.SetWindow(&window);
 
     //auto sound = std::make_shared<sf::Sound>();
-    audioMan.addSounds();
+    audioMan.addSounds("shoot");
     audioMan.playSounds();
 
     auto circle = std::make_shared<sf::CircleShape>(200.f);
@@ -41,6 +41,7 @@ int main() {
                 window.close();
 
         renderer.RenderWindow();
+
     }
     return 0;
 }
