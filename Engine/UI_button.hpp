@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <memory>
+#include "SceneMan.hpp"
 
 class Button
 {
@@ -35,5 +36,20 @@ class Button_Quit : public Button
 {
 public:
 	virtual void on_select();
-	Button_Quit(std::string name_in_file, sf::Vector2f location, int sort_layer) : Button(name_in_file, location, sort_layer) {}
+	Button_Quit(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
+};
+
+class Button_LoadScene : public Button
+{
+public:
+	virtual void on_select();
+	Button_LoadScene(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
+	void set_scene_to_load(std::shared_ptr<Scene> scene);
+
+private:
+	std::shared_ptr<Scene> _scene = std::shared_ptr<Scene>();
 };

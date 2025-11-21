@@ -97,3 +97,12 @@ void Button_Quit::on_select()
 }
 
 // - Load Scene
+void Button_LoadScene::on_select()
+{
+	SceneManager::set_active_scene(_scene);
+}
+
+void Button_LoadScene::set_scene_to_load(std::shared_ptr<Scene> scene)
+{
+	Button_LoadScene::_scene = scene;
+}
