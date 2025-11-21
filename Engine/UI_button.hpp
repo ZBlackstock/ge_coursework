@@ -30,3 +30,10 @@ private:
 };
 
 // ____________ Custom Buttons ____________________________
+
+class Button_Quit : public Button
+{
+public:
+	virtual void on_select();
+	Button_Quit(std::string name_in_file, sf::Vector2f location, int sort_layer) : Button(name_in_file, location, sort_layer) {}
+};

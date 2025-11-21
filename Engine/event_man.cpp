@@ -67,4 +67,12 @@ void em::button_navigate_detect()
 		}
 		em::input_wait_timer = em::wait_between_input;
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	{
+		if (em::_currentButton)
+		{
+			em::_currentButton->on_select();
+		}
+	}
 }

@@ -74,7 +74,6 @@ void b::select()
 void b::on_select()
 {
 	std::cout << "Button Selected" << std::endl;
-
 }
 
 bool b::is_selected()
@@ -90,6 +89,11 @@ std::string b::get_name()
 // ____________ Custom Buttons ____________________________
 
 // Add custom button functionality for different button types
-//
-// - Load scene
+
 // - Quit game
+void Button_Quit::on_select()
+{
+	RenderMan::GetWindow()->close();
+}
+
+// - Load Scene

@@ -17,6 +17,7 @@ public:
 	// @brief gets a pointer of the window to render to.
 	// @param win points towards the window currently in use
 	static void SetWindow(sf::RenderWindow* win);
+	static sf::RenderWindow* GetWindow();
 	static void create_sprite(std::string tx_file_path, sf::Vector2f pos, int layer);
 	static void set_sprite_pos(std::string name, sf::Vector2f pos);
 

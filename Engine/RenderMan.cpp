@@ -15,6 +15,11 @@ void RenderMan::SetWindow(sf::RenderWindow* win)
 	window = win;
 }
 
+sf::RenderWindow* RenderMan::GetWindow()
+{
+	return window;
+}
+
 void RenderMan::AddDrawable(std::unique_ptr<DrawObj> newObj)
 {
 	drawObjects.push_back(std::move(newObj));

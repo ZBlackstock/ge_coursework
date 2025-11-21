@@ -106,7 +106,7 @@ void MainMenu::on_scene_active()
 
 	std::shared_ptr<Button> btn_play = std::make_shared<Button>
 		("play", sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) + 200.0f }, 1);
-	std::shared_ptr<Button> btn_quit = std::make_shared<Button>
+	std::shared_ptr<Button_Quit> btn_quit = std::make_shared<Button_Quit>
 		("quit", sf::Vector2f{ gs::screen_size_f.x / 2 ,(gs::screen_size_f.y / 2) + 290.0f }, 1);
 
 	btn_play->set_above(btn_quit);
