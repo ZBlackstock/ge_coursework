@@ -1,15 +1,23 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <map>
 #include "RenderMan.h"
+#include "game_system.h"
 //manages render order of drawable pointers
 
 std::vector<std::unique_ptr<DrawObj>> RenderMan::drawObjects{};
 sf::RenderWindow* RenderMan::window = nullptr;
 std::vector<std::shared_ptr<sf::Texture>> RenderMan::textures;
+std::map<std::string, std::shared_ptr<sf::Sprite>> RenderMan::sprites;
 
 void RenderMan::SetWindow(sf::RenderWindow* win)
 {
 	window = win;
+}
+
+sf::RenderWindow* RenderMan::GetWindow()
+{
+	return window;
 }
 
 void RenderMan::AddDrawable(std::unique_ptr<DrawObj> newObj)
@@ -26,26 +34,47 @@ DrawObj* RenderMan::createDrawable(const std::shared_ptr<sf::Drawable> object, i
 	return rawPtr;
 }
 
-void RenderMan::create_sprite(std::string tx_file_path, sf::Vector2f pos, int layer)
+void RenderMan::create_sprite(std::string tx_file_name, sf::Vector2f pos, int layer)
 {
 	// Declare texture and sprite pointers
 	std::shared_ptr <sf::Texture> texture = std::make_shared<sf::Texture>();
 	std::shared_ptr<sf::Sprite> sprite = std::make_shared<sf::Sprite>();
 
+	std::string file_path = GameSystem::sprites_path + tx_file_name;
+
 	// Try to find texture at path
-	if (!texture->loadFromFile(tx_file_path))
+	if (!texture->loadFromFile(file_path))
 	{
-		std::cout << "Couldn't load texture at " << tx_file_path << std::endl;
+		std::cout << "Couldn't load texture at " << file_path << std::endl;
 	}
 
 	// Set sprite texture and position on screen
 	sprite.get()->setTexture(*texture);
 	sprite.get()->setPosition(pos);
-	std::cout << "Set sprite screen pos as " << pos.x << ", " << pos.y << std::endl;
+	sprite.get()->setOrigin(sf::Vector2f(sprite.get()->getLocalBounds().width / 2, sprite.get()->getLocalBounds().height / 2));
+	std::cout << "Set sprite " << tx_file_name << " screen pos as " << pos.x << ", " << pos.y << std::endl;
 
 	//Add texture to global list. Sprite will appear as white box otherwise (as texture will go out of scope)
 	RenderMan::textures.push_back(texture);
 	RenderMan::createDrawable(sprite, layer);
+	RenderMan::sprites.emplace(tx_file_name, sprite); // Map makes sprite easier to find
+}
+
+void RenderMan::set_sprite_pos(std::string name, sf::Vector2f pos)
+{
+	std::shared_ptr<sf::Sprite> sprite;
+	std::map<std::string, std::shared_ptr<sf::Sprite>>::iterator it = sprites.find(name);
+
+	if (it != sprites.end())
+	{
+		std::shared_ptr<sf::Sprite> sprite = it->second;
+		sprite->setPosition(pos);
+	}
+	else
+	{
+		std::cout << "Cannot find sprite " << name << std::endl;
+	}
+
 }
 
 void RenderMan::RenderWindow()

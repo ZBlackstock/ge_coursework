@@ -5,13 +5,16 @@
 #include "Scene.hpp"
 #include "RenderMan.h"
 #include "game_system.h"
+#include "UI_button.hpp"
+#include "event_man.hpp"
 
 using sm = SceneManager;
 using gs = GameSystem;
+using b = Button;
 // _______________________ Scene Manager ______________________________________________
 
 // These must be re-declared here because theyre static
-std::vector<std::shared_ptr<Scene>> sm::scenes;
+std::vector<std::shared_ptr<Scene>> sm::scenes; // Should change this to Map or something
 std::shared_ptr<Scene> sm::active_scene;
 
 void sm::init()
@@ -93,16 +96,27 @@ MainMenu::MainMenu(std::string scene_name)
 	name = scene_name;
 }
 
-// MOVE THIS TO RENDER MANAGER
-// CREATE FUNCTION IN RENDERMAN THAT MAKES SPRITE WITH PATH AND TEXTURE
-// create_sprite(string tx_file_path, sf::Vector2f pos, int layer)
-
 // Load sprites for MainMenu HERE
 void MainMenu::on_scene_active()
 {
 	std::cout << "MainMenu on_scene_active()" << std::endl;
+
 	// Load MainMenu sprites
-	RenderMan::create_sprite(gs::sprites_path + "title.png", { 0,0 }, 0);
+	RenderMan::create_sprite("title.png", { gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) - 200 }, 0);
+
+	std::shared_ptr<Button_LoadScene> btn_play = std::make_shared<Button_LoadScene>
+		("play", sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) + 200.0f }, 1);
+	std::shared_ptr<Button_Quit> btn_quit = std::make_shared<Button_Quit>
+		("quit", sf::Vector2f{ gs::screen_size_f.x / 2 ,(gs::screen_size_f.y / 2) + 290.0f }, 1);
+
+	btn_play->set_above(btn_quit);
+	btn_play->set_below(btn_quit);
+	btn_play->set_scene_to_load(SceneManager::scenes[1]); // Map. 
+
+	btn_quit->set_above(btn_play);
+	btn_quit->set_below(btn_play);
+
+	EventManager::set_current_button(btn_play);
 }
 
 bool spacePressed = false;
@@ -119,6 +133,7 @@ void MainMenu::update(const float& dt)
 void MainMenu::on_scene_inactive()
 {
 	std::cout << "MainMenu on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
 }
 
 // _______________________Map_________________________________________
