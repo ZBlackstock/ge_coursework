@@ -144,8 +144,20 @@ void Map::on_scene_active()
 	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
 
 	// Left fight
-	std::shared_ptr<Button_LoadScene> btn_play = std::make_shared<Button_LoadScene>
-		("play", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 200.0f }, 1);
+	std::shared_ptr<Button_LoadScene> btn_fight_left = std::make_shared<Button_LoadScene>
+		("mapButton", sf::Vector2f{ gs::screen_mid.x - 395, gs::screen_mid.y }, 1);
+
+	// Middle fight
+	std::shared_ptr<Button_LoadScene> btn_fight_mid = std::make_shared<Button_LoadScene>
+		("mapButton", gs::screen_mid, 1);
+
+	// Right fight
+	std::shared_ptr<Button_LoadScene> btn_fight_right = std::make_shared<Button_LoadScene>
+		("mapButton", sf::Vector2f{ gs::screen_mid.x + 395, gs::screen_mid.y }, 1);
+
+	// Final fight
+	std::shared_ptr<Button_LoadScene> btn_fight_final = std::make_shared<Button_LoadScene>
+		("mapButton", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y - 350 }, 1);
 }
 void Map::update(const float& dt)
 {
