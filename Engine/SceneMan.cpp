@@ -214,8 +214,6 @@ void Map::on_scene_inactive()
 
 
 // NEXT:
-//
-// - Button functionality (Load fight scene)
 // - UI Sprites. Douglas do enemy designs before make enemy sprites?
 // - Press esc for main menu. Put code for this in its own script probs. "UI_exit_to_menu" or something
 
