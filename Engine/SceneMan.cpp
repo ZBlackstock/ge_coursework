@@ -25,6 +25,12 @@ void sm::init()
 	// Declare scenes
 	std::shared_ptr<MainMenu> main_menu = std::make_shared<MainMenu>("MainMenu");
 	std::shared_ptr<Map> map = std::make_shared<Map>("Map");
+	//Fight Scenes
+	std::shared_ptr<Fight0> fight0 = std::make_shared<Fight0>("Fight0"); // Left
+	std::shared_ptr<Fight1> fight1 = std::make_shared<Fight1>("Fight1"); // Middle
+	std::shared_ptr<Fight2> fight2 = std::make_shared<Fight2>("Fight2"); // Right
+	std::shared_ptr<Fight3> fight3 = std::make_shared<Fight3>("Fight3"); // Final
+
 
 	sm::add_scene(main_menu);
 	sm::add_scene(map);
@@ -145,19 +151,19 @@ void Map::on_scene_active()
 	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
 
 	// Left fight
-	std::shared_ptr<Button> btn_fight_left = std::make_shared<Button>
+	std::shared_ptr<Button_LoadScene> btn_fight_left = std::make_shared<Button_LoadScene>
 		("mapButtonLeft", sf::Vector2f{ gs::screen_mid.x - 395, gs::screen_mid.y }, 1);
 
 	// Middle fight
-	std::shared_ptr<Button> btn_fight_mid = std::make_shared<Button>
+	std::shared_ptr<Button_LoadScene> btn_fight_mid = std::make_shared<Button_LoadScene>
 		("mapButtonMid", gs::screen_mid, 1);
 
 	// Right fight
-	std::shared_ptr<Button> btn_fight_right = std::make_shared<Button>
+	std::shared_ptr<Button_LoadScene> btn_fight_right = std::make_shared<Button_LoadScene>
 		("mapButtonRight", sf::Vector2f{ gs::screen_mid.x + 395, gs::screen_mid.y }, 1);
 
 	// Final fight
-	std::shared_ptr<Button> btn_fight_final = std::make_shared<Button>
+	std::shared_ptr<Button_LoadScene> btn_fight_final = std::make_shared<Button_LoadScene>
 		("mapButtonBig", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y - 350 }, 1);
 
 	EventManager::set_current_button(btn_fight_mid);
@@ -183,10 +189,12 @@ void Map::on_scene_active()
 	btn_fight_final->set_left(btn_fight_left);
 	btn_fight_final->set_right(btn_fight_right);
 
-	// NEXT:
-	//
-	// - Button functionality (Load fight scene)
-	// - Press esc for main menu. Put code for this in its own script probs. "UI_exit_to_menu" or something
+	//Set button attached scenes
+	btn_fight_left->set_scene_to_load(SceneManager::scenes[2]);
+	btn_fight_mid->set_scene_to_load(SceneManager::scenes[3]);
+	btn_fight_right->set_scene_to_load(SceneManager::scenes[4]);
+	btn_fight_final->set_scene_to_load(SceneManager::scenes[5]);
+
 }
 void Map::update(const float& dt)
 {
@@ -198,4 +206,86 @@ void Map::on_scene_inactive()
 }
 
 
-// NEED TO ADD SCENES FOR FIGHTS
+// NEXT:
+//
+// - Button functionality (Load fight scene)
+// - UI Sprites. Douglas do enemy designs before make enemy sprites?
+// - Press esc for main menu. Put code for this in its own script probs. "UI_exit_to_menu" or something
+
+
+
+// _______________________Fight0 (Left)_________________________________________
+Fight0::Fight0(std::string scene_name)
+{
+	name = scene_name;
+}
+// Load sprites for Map HERE
+void Fight0::on_scene_active()
+{
+
+}
+void Fight0::update(const float& dt)
+{
+
+}
+void Fight0::on_scene_inactive()
+{
+	std::cout << "Fight0 (Left) on_scene_inactive()" << std::endl;
+}
+
+// _______________________Fight1 (Middle)_________________________________________
+Fight1::Fight1(std::string scene_name)
+{
+	name = scene_name;
+}
+// Load sprites for Map HERE
+void Fight1::on_scene_active()
+{
+
+}
+void Fight1::update(const float& dt)
+{
+
+}
+void Fight1::on_scene_inactive()
+{
+	std::cout << "Fight1 (Middle) on_scene_inactive()" << std::endl;
+}
+
+// _______________________Fight2 (Right)_________________________________________
+Fight2::Fight2(std::string scene_name)
+{
+	name = scene_name;
+}
+// Load sprites for Map HERE
+void Fight2::on_scene_active()
+{
+
+}
+void Fight2::update(const float& dt)
+{
+
+}
+void Fight2::on_scene_inactive()
+{
+	std::cout << "Fight2 (Right) on_scene_inactive()" << std::endl;
+}
+
+// _______________________Fight3 (Final)_________________________________________
+Fight3::Fight3(std::string scene_name)
+{
+	name = scene_name;
+}
+// Load sprites for Map HERE
+void Fight3::on_scene_active()
+{
+
+}
+void Fight3::update(const float& dt)
+{
+
+}
+void Fight3::on_scene_inactive()
+{
+	std::cout << "Fight3 (Final) on_scene_inactive()" << std::endl;
+}

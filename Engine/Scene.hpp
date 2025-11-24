@@ -33,3 +33,43 @@ public:
 	virtual void on_scene_inactive();
 	virtual void update(const float& dt);
 };
+
+// Left
+class Fight0 : public Scene
+{
+public:
+	Fight0(std::string scene_name);
+	virtual void on_scene_active();
+	virtual void on_scene_inactive();
+	virtual void update(const float& dt);
+};
+
+// Middle
+class Fight1 : public Scene
+{
+public:
+	Fight1(std::string scene_name);
+	virtual void on_scene_active();
+	virtual void on_scene_inactive();
+	virtual void update(const float& dt);
+};
+
+// Right
+class Fight2 : public Scene
+{
+public:
+	Fight2(std::string scene_name);
+	virtual void on_scene_active();
+	virtual void on_scene_inactive();
+	virtual void update(const float& dt);
+};
+
+// Final
+class Fight3 : public Scene
+{
+public:
+	Fight3(std::string scene_name);
+	virtual void on_scene_active();
+	virtual void on_scene_inactive();
+	virtual void update(const float& dt);
+};
