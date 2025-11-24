@@ -139,6 +139,10 @@ Map::Map(std::string scene_name)
 void Map::on_scene_active()
 {
 	std::cout << "Map on_scene_active()" << std::endl;
+
+	// Load map sprite
+	RenderMan::create_sprite("map.png", { gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) - 200 }, 0);
+
 }
 void Map::update(const float& dt)
 {
