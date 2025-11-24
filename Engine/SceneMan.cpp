@@ -161,6 +161,27 @@ void Map::on_scene_active()
 		("mapButtonBig", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y - 350 }, 1);
 
 	EventManager::set_current_button(btn_fight_mid);
+
+	//Set button neighbours
+	btn_fight_left->set_above(btn_fight_final);
+	btn_fight_left->set_below(btn_fight_final);
+	btn_fight_left->set_left(btn_fight_right);
+	btn_fight_left->set_right(btn_fight_mid);
+
+	btn_fight_mid->set_above(btn_fight_final);
+	btn_fight_mid->set_below(btn_fight_final);
+	btn_fight_mid->set_left(btn_fight_left);
+	btn_fight_mid->set_right(btn_fight_right);
+
+	btn_fight_right->set_above(btn_fight_final);
+	btn_fight_right->set_below(btn_fight_final);
+	btn_fight_right->set_left(btn_fight_mid);
+	btn_fight_right->set_right(btn_fight_left);
+
+	btn_fight_final->set_above(btn_fight_mid);
+	btn_fight_final->set_below(btn_fight_mid);
+	btn_fight_final->set_left(btn_fight_left);
+	btn_fight_final->set_right(btn_fight_right);
 }
 void Map::update(const float& dt)
 {
