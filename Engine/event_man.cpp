@@ -30,6 +30,15 @@ void em::set_current_button(std::shared_ptr<Button> button)
 
 }
 
+void em::clear_current_button()
+{
+	// Set prev current button to idle sprite
+	if (em::_currentButton)
+	{
+		em::_currentButton = nullptr;
+	}
+}
+
 void em::update(const float& dt)
 {
 	//Timer stops accidental spamming

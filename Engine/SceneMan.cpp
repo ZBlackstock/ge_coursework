@@ -128,6 +128,7 @@ void MainMenu::on_scene_inactive()
 {
 	std::cout << "MainMenu on_scene_inactive()" << std::endl;
 	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 // _______________________Map_________________________________________
@@ -144,20 +145,22 @@ void Map::on_scene_active()
 	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
 
 	// Left fight
-	std::shared_ptr<Button_LoadScene> btn_fight_left = std::make_shared<Button_LoadScene>
-		("mapButton", sf::Vector2f{ gs::screen_mid.x - 395, gs::screen_mid.y }, 1);
+	std::shared_ptr<Button> btn_fight_left = std::make_shared<Button>
+		("mapButtonLeft", sf::Vector2f{ gs::screen_mid.x - 395, gs::screen_mid.y }, 1);
 
 	// Middle fight
-	std::shared_ptr<Button_LoadScene> btn_fight_mid = std::make_shared<Button_LoadScene>
-		("mapButton", gs::screen_mid, 1);
+	std::shared_ptr<Button> btn_fight_mid = std::make_shared<Button>
+		("mapButtonMid", gs::screen_mid, 1);
 
 	// Right fight
-	std::shared_ptr<Button_LoadScene> btn_fight_right = std::make_shared<Button_LoadScene>
-		("mapButton", sf::Vector2f{ gs::screen_mid.x + 395, gs::screen_mid.y }, 1);
+	std::shared_ptr<Button> btn_fight_right = std::make_shared<Button>
+		("mapButtonRight", sf::Vector2f{ gs::screen_mid.x + 395, gs::screen_mid.y }, 1);
 
 	// Final fight
-	std::shared_ptr<Button_LoadScene> btn_fight_final = std::make_shared<Button_LoadScene>
-		("mapButton", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y - 350 }, 1);
+	std::shared_ptr<Button> btn_fight_final = std::make_shared<Button>
+		("mapButtonBig", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y - 350 }, 1);
+
+	EventManager::set_current_button(btn_fight_mid);
 }
 void Map::update(const float& dt)
 {
