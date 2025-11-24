@@ -92,6 +92,7 @@ void sm::set_active_scene(const std::string& name)
 
 // _______________________________ Scene ______________________________________________
 
+// Need to declare these to avoid LNK error. These are only used by inherited classes
 void Scene::init() {}
 void Scene::update(const float& dt) {}
 void Scene::on_scene_active() {}
@@ -207,6 +208,8 @@ void Map::update(const float& dt)
 void Map::on_scene_inactive()
 {
 	std::cout << "Map on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 

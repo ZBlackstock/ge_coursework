@@ -107,5 +107,6 @@ void em::button_navigate_detect()
 		{
 			em::_currentButton->on_select();
 		}
+		em::input_wait_timer = em::wait_between_input;
 	}
 }
