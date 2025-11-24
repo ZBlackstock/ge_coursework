@@ -102,6 +102,8 @@ void RenderMan::RemoveDrawObjByDrawable(const std::shared_ptr<sf::Drawable>& dra
 void RenderMan::RemoveAllDrawObj()
 {
 	drawObjects.clear();
+	textures.clear();
+	sprites.clear();
 }
 
 void RenderMan::RenderWindowClear()

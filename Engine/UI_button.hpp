@@ -12,6 +12,8 @@ public:
 
 	void set_above(std::shared_ptr<Button> button);
 	void set_below(std::shared_ptr<Button> button);
+	void set_left(std::shared_ptr<Button> button);
+	void set_right(std::shared_ptr<Button> button);
 	void update();
 	void idle();
 	void highlight();
@@ -23,6 +25,8 @@ public:
 
 	std::shared_ptr<Button> above = nullptr;
 	std::shared_ptr<Button> below = nullptr;
+	std::shared_ptr<Button> left = nullptr;
+	std::shared_ptr<Button> right = nullptr;
 private:
 
 	bool _selected;

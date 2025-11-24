@@ -36,6 +36,16 @@ void b::set_below(std::shared_ptr<Button> button)
 	b::below = button;
 }
 
+void b::set_left(std::shared_ptr<Button> button)
+{
+	b::left = button;
+}
+
+void b::set_right(std::shared_ptr<Button> button)
+{
+	b::right = button;
+}
+
 
 // Needs to be called by event manager, which should have a list of buttons
 void b::update()

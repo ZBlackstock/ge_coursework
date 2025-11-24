@@ -6,12 +6,14 @@
 #include "Engine\game_system.h"
 #include "Engine\event_man.hpp"
 
-sf::Vector2i GameSystem::screen_size = sf::Vector2i{ 1920,1080 };
-sf::Vector2f GameSystem::screen_size_f = static_cast<sf::Vector2f>(GameSystem::screen_size);
+using gs = GameSystem;
+sf::Vector2i gs::screen_size = sf::Vector2i{ 1920,1080 };
+sf::Vector2f gs::screen_size_f = static_cast<sf::Vector2f>(gs::screen_size);
+sf::Vector2f gs::screen_mid = sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2)};
 std::string GameSystem::sprites_path = "../../../../res/sprites/";
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(GameSystem::screen_size.x, GameSystem::screen_size.y), "SFML Test");
+	sf::RenderWindow window(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "SFML Test");
 
 	RenderMan::SetWindow(&window);
 	SceneManager::init();
