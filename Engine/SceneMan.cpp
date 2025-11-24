@@ -102,12 +102,12 @@ void MainMenu::on_scene_active()
 	std::cout << "MainMenu on_scene_active()" << std::endl;
 
 	// Load MainMenu sprites
-	RenderMan::create_sprite("title.png", { gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) - 200 }, 0);
+	RenderMan::create_sprite("title.png", { gs::screen_mid.x, gs::screen_mid.y - 200 }, 0);
 
 	std::shared_ptr<Button_LoadScene> btn_play = std::make_shared<Button_LoadScene>
-		("play", sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) + 200.0f }, 1);
+		("play", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 200.0f }, 1);
 	std::shared_ptr<Button_Quit> btn_quit = std::make_shared<Button_Quit>
-		("quit", sf::Vector2f{ gs::screen_size_f.x / 2 ,(gs::screen_size_f.y / 2) + 290.0f }, 1);
+		("quit", sf::Vector2f{ gs::screen_mid.x,gs::screen_mid.y + 290.0f }, 1);
 
 	btn_play->set_above(btn_quit);
 	btn_play->set_below(btn_quit);
@@ -141,8 +141,11 @@ void Map::on_scene_active()
 	std::cout << "Map on_scene_active()" << std::endl;
 
 	// Load map sprite
-	RenderMan::create_sprite("map.png", { gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2) - 200 }, 0);
+	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
 
+	// Left fight
+	std::shared_ptr<Button_LoadScene> btn_play = std::make_shared<Button_LoadScene>
+		("play", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 200.0f }, 1);
 }
 void Map::update(const float& dt)
 {
