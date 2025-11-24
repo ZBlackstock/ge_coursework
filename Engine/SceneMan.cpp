@@ -182,6 +182,11 @@ void Map::on_scene_active()
 	btn_fight_final->set_below(btn_fight_mid);
 	btn_fight_final->set_left(btn_fight_left);
 	btn_fight_final->set_right(btn_fight_right);
+
+	// NEXT:
+	//
+	// - Button functionality (Load fight scene)
+	// - Press esc for main menu. Put code for this in its own script probs. "UI_exit_to_menu" or something
 }
 void Map::update(const float& dt)
 {
