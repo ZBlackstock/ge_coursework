@@ -34,6 +34,10 @@ void sm::init()
 
 	sm::add_scene(main_menu);
 	sm::add_scene(map);
+	sm::add_scene(fight0);
+	sm::add_scene(fight1);
+	sm::add_scene(fight2);
+	sm::add_scene(fight3);
 
 	sm::set_active_scene("MainMenu");
 }
