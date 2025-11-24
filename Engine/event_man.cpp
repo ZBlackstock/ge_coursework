@@ -77,6 +77,30 @@ void em::button_navigate_detect()
 		em::input_wait_timer = em::wait_between_input;
 	}
 
+	//Check for key left input
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		//Check current selected button, and selected button left not null
+		if (em::_currentButton && em::_currentButton->left)
+		{
+			//Set new button
+			em::set_current_button(em::_currentButton.get()->left);
+		}
+		em::input_wait_timer = em::wait_between_input;
+	}
+
+	//Check for right input
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		//Check current selected button, and selected button right not null
+		if (em::_currentButton && em::_currentButton->right)
+		{
+			//Set new button
+			em::set_current_button(em::_currentButton.get()->right);
+		}
+		em::input_wait_timer = em::wait_between_input;
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
 		if (em::_currentButton)
