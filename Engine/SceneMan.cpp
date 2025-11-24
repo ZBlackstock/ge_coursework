@@ -122,13 +122,7 @@ void MainMenu::on_scene_active()
 bool spacePressed = false;
 void MainMenu::update(const float& dt)
 {
-	// Temporary test for scene changes
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !spacePressed)
-	{
-		std::cout << "Space key pressed" << std::endl;
-		sm::set_active_scene("Map");
-		spacePressed = true;
-	}
+
 }
 void MainMenu::on_scene_inactive()
 {
