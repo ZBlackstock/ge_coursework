@@ -7,6 +7,8 @@
 #include "game_system.h"
 #include "UI_button.hpp"
 #include "event_man.hpp"
+#include "UI_exit_to_mainmenu.hpp"
+
 
 using sm = SceneManager;
 using gs = GameSystem;
@@ -152,6 +154,8 @@ void Map::on_scene_active()
 {
 	std::cout << "Map on_scene_active()" << std::endl;
 
+	ExitToMainMenu::init();
+
 	// Load map sprite
 	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
 
@@ -203,7 +207,11 @@ void Map::on_scene_active()
 }
 void Map::update(const float& dt)
 {
-
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && EventManager::can_press_button())
+	{
+		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
+		EventManager::reset_input_timer();
+	}
 }
 void Map::on_scene_inactive()
 {

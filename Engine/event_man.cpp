@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include "event_man.hpp"
-
+// make timer globally accessible and setable
 
 using em = EventManager;
 
@@ -26,8 +26,18 @@ void em::set_current_button(std::shared_ptr<Button> button)
 	}
 	em::_currentButton = button;
 	em::_currentButton.get()->highlight();
-	std::cout << "current button = " << button.get()->get_name() << std::endl;
 
+	std::cout << "current button = " << button.get()->get_name() << std::endl;
+}
+
+bool em::can_press_button()
+{
+	return em::input_wait_timer < 0;
+}
+
+void em::reset_input_timer()
+{
+	em::input_wait_timer = em::wait_between_input;
 }
 
 void em::clear_current_button()

@@ -99,24 +99,6 @@ void RenderMan::RemoveDrawObjByDrawable(const std::shared_ptr<sf::Drawable>& dra
 		drawObjects.end()
 	);
 }
-
-void RenderMan::RemoveDrawObjBySpriteName(std::string sprite_name)
-{
-	std::shared_ptr<sf::Sprite> sprite;
-	std::map<std::string, std::shared_ptr<sf::Sprite>>::iterator it = sprites.find(sprite_name);
-
-	if (it != sprites.end())
-	{
-		std::shared_ptr<sf::Sprite> sprite = it->second;
-		RenderMan::RemoveDrawObjByDrawable(sprite);
-	}
-	else
-	{
-		std::cout << "Cannot find sprite " << sprite_name << std::endl;
-	}
-}
-
-
 void RenderMan::RemoveAllDrawObj()
 {
 	drawObjects.clear();
