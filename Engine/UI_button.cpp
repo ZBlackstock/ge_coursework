@@ -4,6 +4,7 @@
 #include "game_system.h"
 #include "event_man.hpp"
 #include "UI_exit_to_mainmenu.hpp"
+#include "SceneMan.hpp"
 #include <iostream>
 #include <string>
 
@@ -129,4 +130,5 @@ void Button_LoadScene::set_scene_to_load(std::shared_ptr<Scene> scene)
 void Button_Popup_No::on_select()
 {
 	ExitToMainMenu::set_active(false);
+	EventManager::set_current_button(SceneManager::btn_fight_mid);
 }

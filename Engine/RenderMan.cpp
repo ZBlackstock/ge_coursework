@@ -69,12 +69,12 @@ void RenderMan::set_sprite_pos(std::string name, sf::Vector2f pos)
 	{
 		std::shared_ptr<sf::Sprite> sprite = it->second;
 		sprite->setPosition(pos);
+		std::cout << "Set sprite " << name << " pos to " << pos.x << ", " << pos.y << std::endl;
 	}
 	else
 	{
 		std::cout << "Cannot find sprite " << name << std::endl;
 	}
-
 }
 
 void RenderMan::RenderWindow()
