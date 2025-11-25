@@ -10,6 +10,9 @@ public:
 	Button(std::string name_in_file, sf::Vector2f location, int sort_layer);
 	~Button() = default;
 
+	void set_offscreen(bool offscreen);
+
+
 	void set_above(std::shared_ptr<Button> button);
 	void set_below(std::shared_ptr<Button> button);
 	void set_left(std::shared_ptr<Button> button);

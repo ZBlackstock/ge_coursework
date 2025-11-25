@@ -2,6 +2,7 @@
 #include "RenderMan.h"
 #include <SFML/Graphics.hpp>
 #include "game_system.h"
+#include "event_man.hpp"
 #include <iostream>
 #include <string>
 
@@ -94,6 +95,13 @@ bool b::is_selected()
 std::string b::get_name()
 {
 	return b::_name;
+}
+
+void b::set_offscreen(bool offscreen)
+{
+	rm::set_sprite_pos(_name + "_highlighted.png", { 10000,10000 });
+	rm::set_sprite_pos(_name + "_idle.png", !offscreen ? b::_pos : sf::Vector2f{ 10000,10000 });
+	rm::set_sprite_pos(_name + "_selected.png", { 10000,10000 });
 }
 
 // ____________ Custom Buttons ____________________________

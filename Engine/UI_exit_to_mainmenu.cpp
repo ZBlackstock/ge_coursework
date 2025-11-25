@@ -6,7 +6,7 @@
 using popup = ExitToMainMenu;
 using gs = GameSystem;
 
-
+// Need add button navigation and Buton deconstructor
 std::shared_ptr<Button_LoadScene> popup::yes = nullptr;
 std::shared_ptr<Button> popup::no = nullptr;
 std::shared_ptr<bool> popup::_active = std::make_shared<bool>(false);
@@ -15,6 +15,15 @@ void popup::init() // Need to link to main.cpp
 {
 	// Create sprite
 	RenderMan::create_sprite("exit_to_main_menu.png", sf::Vector2f{ 10000,10000 }, 10);
+	// Define yes and no buttons
+	popup::yes = std::make_shared<Button_LoadScene>
+		("yes", sf::Vector2f{ gs::screen_mid.x - 100, gs::screen_mid.y + 50 }, 11);
+	popup::no = std::make_shared<Button>
+		("no", sf::Vector2f{ gs::screen_mid.x + 100, gs::screen_mid.y + 50 }, 11);
+
+	// Set button nav, and positions off screen
+	popup::yes.get()->set_offscreen(true);
+	popup::no.get()->set_offscreen(true);
 }
 
 void popup::set_active(bool active)
@@ -27,12 +36,11 @@ void popup::set_active(bool active)
 		// Set popup pos to middle
 		RenderMan::set_sprite_pos("exit_to_main_menu.png", gs::screen_mid);
 
-		// Define yes and no buttons
-		popup::yes = std::make_shared<Button_LoadScene>
-			("yes", sf::Vector2f{ gs::screen_mid.x - 100, gs::screen_mid.y + 50 }, 11);
-		popup::no = std::make_shared<Button>
-			("no", sf::Vector2f{ gs::screen_mid.x + 100, gs::screen_mid.y + 50 }, 11);
+		// Set Yes/No to off screen	
+		popup::yes.get()->set_offscreen(false);
+		popup::no.get()->set_offscreen(false);
 
+		// Set current button
 		EventManager::set_current_button(popup::no);
 	}
 	else if (!active)
@@ -42,10 +50,11 @@ void popup::set_active(bool active)
 		//Set popup pos to off screen
 		RenderMan::set_sprite_pos("exit_to_main_menu.png", sf::Vector2f{ 10000,10000 });
 
-		// Set Yes/No to null
-		popup::yes = nullptr;
-		popup::no = nullptr;
-		
+		// Set Yes/No to off screen	
+		popup::yes.get()->set_offscreen(true);
+		popup::no.get()->set_offscreen(true);
+
+		// Clear current button
 		EventManager::clear_current_button();
 	}
 
