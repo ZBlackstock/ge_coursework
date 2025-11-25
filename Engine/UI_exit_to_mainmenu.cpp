@@ -17,13 +17,20 @@ void popup::init() // Need to link to main.cpp
 	RenderMan::create_sprite("exit_to_main_menu.png", sf::Vector2f{ 10000,10000 }, 10);
 	// Define yes and no buttons
 	popup::yes = std::make_shared<Button_LoadScene>
-		("yes", sf::Vector2f{ gs::screen_mid.x - 100, gs::screen_mid.y + 50 }, 11);
+		("yes", sf::Vector2f{ gs::screen_mid.x + 100, gs::screen_mid.y + 50 }, 11);
 	popup::no = std::make_shared<Button>
-		("no", sf::Vector2f{ gs::screen_mid.x + 100, gs::screen_mid.y + 50 }, 11);
+		("no", sf::Vector2f{ gs::screen_mid.x - 100, gs::screen_mid.y + 50 }, 11);
 
 	// Set button nav, and positions off screen
 	popup::yes.get()->set_offscreen(true);
 	popup::no.get()->set_offscreen(true);
+
+	//Set button navigation
+	popup::yes.get()->set_left(popup::no);
+	popup::yes.get()->set_right(popup::no);
+
+	popup::no.get()->set_left(popup::yes);
+	popup::no.get()->set_right(popup::yes);
 }
 
 void popup::set_active(bool active)
