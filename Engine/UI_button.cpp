@@ -2,6 +2,8 @@
 #include "RenderMan.h"
 #include <SFML/Graphics.hpp>
 #include "game_system.h"
+#include "event_man.hpp"
+#include "UI_exit_to_mainmenu.hpp"
 #include <iostream>
 #include <string>
 
@@ -96,6 +98,13 @@ std::string b::get_name()
 	return b::_name;
 }
 
+void b::set_offscreen(bool offscreen)
+{
+	rm::set_sprite_pos(_name + "_highlighted.png", { 10000,10000 });
+	rm::set_sprite_pos(_name + "_idle.png", !offscreen ? b::_pos : sf::Vector2f{ 10000,10000 });
+	rm::set_sprite_pos(_name + "_selected.png", { 10000,10000 });
+}
+
 // ____________ Custom Buttons ____________________________
 
 // Add custom button functionality for different button types
@@ -115,4 +124,9 @@ void Button_LoadScene::on_select()
 void Button_LoadScene::set_scene_to_load(std::shared_ptr<Scene> scene)
 {
 	Button_LoadScene::_scene = scene;
+}
+
+void Button_Popup_No::on_select()
+{
+	ExitToMainMenu::set_active(false);
 }
