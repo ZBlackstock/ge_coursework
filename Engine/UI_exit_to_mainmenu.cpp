@@ -2,6 +2,7 @@
 #include "game_system.h"
 #include <iostream>
 #include "event_man.hpp"
+#include "SceneMan.hpp"
 
 using popup = ExitToMainMenu;
 using gs = GameSystem;
@@ -18,8 +19,10 @@ void popup::init() // Need to link to main.cpp
 	// Define yes and no buttons
 	popup::yes = std::make_shared<Button_LoadScene>
 		("yes", sf::Vector2f{ gs::screen_mid.x + 100, gs::screen_mid.y + 50 }, 11);
-	popup::no = std::make_shared<Button>
+	popup::no = std::make_shared<Button_Popup_No>
 		("no", sf::Vector2f{ gs::screen_mid.x - 100, gs::screen_mid.y + 50 }, 11);
+
+	popup::yes.get()->set_scene_to_load(SceneManager::scenes[0]);
 
 	// Set button nav, and positions off screen
 	popup::yes.get()->set_offscreen(true);

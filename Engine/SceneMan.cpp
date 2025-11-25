@@ -80,7 +80,7 @@ void sm::set_active_scene(const std::string& name)
 	for (int i = 0; i < sm::scenes.size(); ++i)
 	{
 		std::shared_ptr<Scene> scene = sm::scenes.at(i);
-		std::cout << "Comparing string " << name << " to scene_name " << scene.get()->name << std::endl;
+		std::cout << "Comparing string " << name << " to scne_name " << scene.get()->name << std::endl;
 
 		// Compare string name to each scene name
 		if (scene.get()->name == name)

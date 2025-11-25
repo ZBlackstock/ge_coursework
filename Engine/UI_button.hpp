@@ -60,3 +60,12 @@ public:
 private:
 	std::shared_ptr<Scene> _scene = std::shared_ptr<Scene>();
 };
+
+class Button_Popup_No : public Button
+{
+public:
+	virtual void on_select();
+	Button_Popup_No(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
+};

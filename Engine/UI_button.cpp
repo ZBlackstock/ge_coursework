@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "game_system.h"
 #include "event_man.hpp"
+#include "UI_exit_to_mainmenu.hpp"
 #include <iostream>
 #include <string>
 
@@ -123,4 +124,9 @@ void Button_LoadScene::on_select()
 void Button_LoadScene::set_scene_to_load(std::shared_ptr<Scene> scene)
 {
 	Button_LoadScene::_scene = scene;
+}
+
+void Button_Popup_No::on_select()
+{
+	ExitToMainMenu::set_active(false);
 }
