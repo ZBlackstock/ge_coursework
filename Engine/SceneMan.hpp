@@ -3,6 +3,9 @@
 #include <string>
 #include <memory> // For pointers
 #include "Scene.hpp"
+#include "UI_button.hpp"
+
+class Button_LoadScene;
 
 class SceneManager
 {
@@ -23,6 +26,11 @@ public:
 	static void set_active_scene(const std::string& name);
 	// @brief Returns active_scene
 	static std::shared_ptr<Scene> get_active_scene();
+
+	static std::shared_ptr<Button_LoadScene> btn_fight_left;
+	static std::shared_ptr<Button_LoadScene> btn_fight_mid;
+	static std::shared_ptr<Button_LoadScene> btn_fight_right;
+	static std::shared_ptr<Button_LoadScene> btn_fight_final;
 
 private:
 	// @brief The currently active scene
