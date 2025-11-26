@@ -5,6 +5,8 @@
 #include "Engine\Scene.hpp"
 #include "Engine\game_system.h"
 #include "Engine\event_man.hpp"
+#include "Engine\input_man.hpp"
+
 
 
 using gs = GameSystem;
@@ -27,6 +29,7 @@ int main() {
 
 		SceneManager::update(dt);
 		EventManager::update(dt);
+		InputManager::Update(dt);
 
 		while (window.pollEvent(event))
 		{
