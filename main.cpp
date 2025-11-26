@@ -17,9 +17,10 @@ sf::Vector2f gs::screen_mid = sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen
 std::string GameSystem::sprites_path = "../../../../res/sprites/";
 sf::Font gs::font;
 sf::Font gs::font_bold;
+bool gs::fullscreen = true;
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "SFML Test", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "Black Dragon", sf::Style::Fullscreen);
 	RenderMan::SetWindow(&window);
 	SceneManager::init();
 

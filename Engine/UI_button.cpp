@@ -132,3 +132,11 @@ void Button_Popup_No::on_select()
 	ExitToMainMenu::set_active(false);
 	EventManager::set_current_button(SceneManager::btn_fight_mid);
 }
+
+void Button_ToggleFullscreen::on_select()
+{
+	GameSystem::fullscreen = !GameSystem::fullscreen;
+
+	sf::RenderWindow* window = RenderMan::GetWindow();
+	window->create(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "Black Dragon", gs::fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
+}
