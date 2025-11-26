@@ -10,4 +10,6 @@ public:
 	static sf::Vector2f screen_size_f; // float version, for sprite positioning
 	static sf::Vector2f screen_mid; // float version, for sprite positioning
 	static std::string sprites_path;
+	static sf::Font font;
+	static sf::Font font_bold;
 };

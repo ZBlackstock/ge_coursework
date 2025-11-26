@@ -345,6 +345,8 @@ void Settings::on_scene_active()
 	// Assign back button scene and set it to highlighted
 	EventManager::set_current_button(btn_back);
 	btn_back->set_scene_to_load(SceneManager::scenes[0]); // Main Menu
+
+
 }
 
 void Settings::update(const float& dt)
@@ -381,10 +383,6 @@ void Settings::set_resolution(int i)
 	//Maintain size on screen. Otherwise the window size would change
 	sf::View view(sf::FloatRect(0, 0, 1920, 1080));
 	window->setView(view);
-
-	// Reset current scene. resets sprites pos according to new res
-	Settings::on_scene_inactive();
-	Settings::on_scene_active();
 
 	std::cout << "Set res to " << Settings::resolutions[Settings::current_res_index].width <<
 		Settings::resolutions[Settings::current_res_index].height << std::endl;
