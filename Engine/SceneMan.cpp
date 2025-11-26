@@ -331,7 +331,11 @@ Settings::Settings(std::string scene_name)
 // Load sprites for Map HERE
 void Settings::on_scene_active()
 {
+	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
 
+
+	std::shared_ptr<Button_LoadScene> btn_back = std::make_shared<Button_LoadScene>
+		("back", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 380.0f }, 1);
 }
 void Settings::update(const float& dt)
 {
@@ -340,4 +344,7 @@ void Settings::update(const float& dt)
 void Settings::on_scene_inactive()
 {
 	std::cout << "Settings on_scene_inactive()" << std::endl;
+
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
