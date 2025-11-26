@@ -122,8 +122,6 @@ bool im::gamepad_connected()
 
 bool im::can_press_button()
 {
-	std::cout << "InputManager::input_wait_timer = " << im::input_wait_timer << std::endl;
-
 	return im::input_wait_timer < 0;
 }
 

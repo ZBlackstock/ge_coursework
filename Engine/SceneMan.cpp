@@ -328,18 +328,67 @@ Settings::Settings(std::string scene_name)
 {
 	name = scene_name;
 }
-// Load sprites for Map HERE
+
+int Settings::current_res_index = 1;
+const std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFullscreenModes();;
+
+// Initiate Settings
 void Settings::on_scene_active()
 {
-	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
+	// Load sprite
+	RenderMan::create_sprite("settings.png", gs::screen_mid, 0);
 
-
+	// Load back button
 	std::shared_ptr<Button_LoadScene> btn_back = std::make_shared<Button_LoadScene>
 		("back", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 380.0f }, 1);
+
+	// Assign back button scene and set it to highlighted
+	EventManager::set_current_button(btn_back);
+	btn_back->set_scene_to_load(SceneManager::scenes[0]); // Main Menu
 }
+
 void Settings::update(const float& dt)
 {
+	if (InputManager::press_left())
+	{
 
+		Settings::set_resolution(Settings::current_res_index - 1);
+	}
+	else if (InputManager::press_right())
+	{
+
+		Settings::set_resolution(Settings::current_res_index + 1);
+	}
+}
+
+void Settings::set_resolution(int i)
+{
+	if (i > Settings::resolutions.size() - 1)
+	{
+		i = 0;
+	}
+	else if (i < 0)
+	{
+		i = Settings::resolutions.size() - 1;
+	}
+
+	Settings::current_res_index = i;
+
+	// Recreate window
+	sf::RenderWindow* window = RenderMan::GetWindow();
+	window->create(Settings::resolutions[Settings::current_res_index], "Black Dragon", sf::Style::Fullscreen);
+
+	//Maintain size on screen. Otherwise the window size would change
+	sf::View view(sf::FloatRect(0, 0, 1920, 1080));
+	window->setView(view);
+
+	// Reset current scene. resets sprites pos according to new res
+	Settings::on_scene_inactive();
+	Settings::on_scene_active();
+
+	std::cout << "Set res to " << Settings::resolutions[Settings::current_res_index].width <<
+		Settings::resolutions[Settings::current_res_index].height << std::endl;
+	std::cout << "i = " << Settings::current_res_index << std::endl;
 }
 void Settings::on_scene_inactive()
 {

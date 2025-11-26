@@ -16,7 +16,7 @@ sf::Vector2f gs::screen_mid = sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen
 std::string GameSystem::sprites_path = "../../../../res/sprites/";
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "SFML Test");
+	sf::RenderWindow window(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "SFML Test", sf::Style::Fullscreen);
 	RenderMan::SetWindow(&window);
 	SceneManager::init();
 

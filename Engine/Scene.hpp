@@ -81,5 +81,9 @@ public:
 	Settings(std::string scene_name);
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
+	void set_resolution(int i);
 	virtual void update(const float& dt);
+private:
+	static int current_res_index;
+	static const std::vector<sf::VideoMode> resolutions;
 };
