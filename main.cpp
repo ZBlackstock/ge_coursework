@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <iostream>
 #include "Engine\RenderMan.h"
 #include "Engine\SceneMan.hpp"
 #include "Engine\Scene.hpp"
@@ -14,11 +15,23 @@ sf::Vector2i gs::screen_size = sf::Vector2i{ 1920,1080 };
 sf::Vector2f gs::screen_size_f = static_cast<sf::Vector2f>(gs::screen_size);
 sf::Vector2f gs::screen_mid = sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2)};
 std::string GameSystem::sprites_path = "../../../../res/sprites/";
+sf::Font gs::font;
+sf::Font gs::font_bold;
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "SFML Test");
+	sf::RenderWindow window(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "SFML Test", sf::Style::Fullscreen);
 	RenderMan::SetWindow(&window);
 	SceneManager::init();
+
+	if (!gs::font.loadFromFile("../../../../res/fonts/COPRGTL.ttf"))
+	{
+		std::cout << "Couldnt load font" << std::endl;
+	}
+
+	if (!gs::font_bold.loadFromFile("../../../../res/fonts/COPRGTB.ttf"))
+	{
+		std::cout << "Couldnt load font_bold" << std::endl;
+	}
 
 	while (window.isOpen()) {
 		RenderMan::RenderWindowClear();
