@@ -331,6 +331,7 @@ Settings::Settings(std::string scene_name)
 
 int Settings::current_res_index = 1;
 const std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFullscreenModes();;
+std::shared_ptr<sf::Text> Settings::res_text = std::make_shared<sf::Text>();
 
 // Initiate Settings
 void Settings::on_scene_active()
@@ -346,14 +347,21 @@ void Settings::on_scene_active()
 	EventManager::set_current_button(btn_back);
 	btn_back->set_scene_to_load(SceneManager::scenes[0]); // Main Menu
 
-
+	// Set current resolution text
+	Settings::res_text->setString(std::to_string(Settings::resolutions[Settings::current_res_index].width)
+		+ " X " + std::to_string(Settings::resolutions[Settings::current_res_index].height));
+	Settings::res_text->setFont(gs::font_bold);
+	Settings::res_text->setOrigin(Settings::res_text->getScale().x / 2, Settings::res_text->getScale().y / 2);
+	Settings::res_text->setPosition(1150, 630);
+	Settings::res_text->setColor(sf::Color::White);
+	Settings::res_text->setCharacterSize(40);
+	RenderMan::createDrawable(Settings::res_text, 2);
 }
 
 void Settings::update(const float& dt)
 {
 	if (InputManager::press_left())
 	{
-
 		Settings::set_resolution(Settings::current_res_index - 1);
 	}
 	else if (InputManager::press_right())
@@ -383,6 +391,14 @@ void Settings::set_resolution(int i)
 	//Maintain size on screen. Otherwise the window size would change
 	sf::View view(sf::FloatRect(0, 0, 1920, 1080));
 	window->setView(view);
+
+	// Resolution text
+	Settings::res_text->setString(std::to_string(RenderMan::GetWindow()->getSize().x)
+		+ " X " + std::to_string(RenderMan::GetWindow()->getSize().y));
+
+	// Set text origin and pos
+	Settings::res_text->setOrigin(Settings::res_text->getScale().x / 2, Settings::res_text->getScale().y / 2);
+	Settings::res_text->setPosition(1150, 630);
 
 	std::cout << "Set res to " << Settings::resolutions[Settings::current_res_index].width <<
 		Settings::resolutions[Settings::current_res_index].height << std::endl;
