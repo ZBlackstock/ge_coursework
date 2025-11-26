@@ -18,7 +18,7 @@ link_directories("${CMAKE_BINARY_DIR}/lib/SFML/lib")
 #### Practical 1 ####
 add_executable(BlackDragon main.cpp  ${CMAKE_SOURCE_DIR}/Engine/RenderMan.cpp 
 "Engine/SceneMan.cpp" "Engine/game_system.h" "Engine/UI_button.cpp" "Engine/event_man.cpp" 
-"Engine/UI_exit_to_mainmenu.cpp")
+"Engine/UI_exit_to_mainmenu.cpp" "Engine/input_man.cpp")
 target_include_directories(BlackDragon PRIVATE ${SFML_INCS})
 target_link_libraries(BlackDragon sfml-graphics)
 set_property(TARGET BlackDragon PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")

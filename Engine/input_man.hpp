@@ -8,14 +8,15 @@ class InputManager
 {
 public:
 
-	void Update();
-	const int gamepad_a = 0; // Submit
-	const int gamepad_b = 1; // Back
-	const int gamepad_start = 7; // Menu
-	const int lstick_x = 0;
-	const int lstick_y = 1;
-	const int dpad_x = 0;
-	const int dpad_y = 1;
+	static void Update();
+	static const int gamepad_a; // Submit
+	static const int gamepad_b; // Back
+	static const int gamepad_start; // Menu
+	static int lstick_x;
+	static int lstick_y;
+	static float dpad_x;
+	static float dpad_y;
+	static const float dpad_dead;
 
 	static bool press_submit(); // enter, space, a
 	static bool press_back(); // b
@@ -29,5 +30,5 @@ private:
 	static bool a_pressed;
 	static bool b_pressed;
 	static bool start_pressed;
-
+	static bool gamepad_connected();
 };
