@@ -16,7 +16,8 @@ float im::input_wait_timer = im::wait_between_input;
 
 void im::Update(const float& dt)
 {
-	// Tiimdpad_x = sf::Joystick::getAxisPosition(0, sf::Joystick::Aximdpad_y = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::PovY);
+	im::dpad_x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::PovX);
+	im::dpad_y = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::PovY);
 
 	//Timer stops accidental spamming
 	if (im::input_wait_timer < 0)
