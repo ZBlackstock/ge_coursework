@@ -11,7 +11,7 @@ float InputManager::dpad_y = 0;
 const float InputManager::dpad_dead = 0.1f;
 
 
-void InputManager::Update()
+void InputManager::Update(const float& dt)
 {
 	// Timer stuff
 

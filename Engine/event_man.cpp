@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include "event_man.hpp"
+#include "input_man.hpp"
+
 // make timer globally accessible and setable
 
 using em = EventManager;
@@ -64,7 +66,7 @@ void em::update(const float& dt)
 void em::button_navigate_detect()
 {
 	//Check for key up input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (InputManager::press_up())
 	{
 		//Check current selected button, and selected button above not null
 		if (em::_currentButton && em::_currentButton->above)
@@ -76,7 +78,7 @@ void em::button_navigate_detect()
 	}
 
 	//Check for key down input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (InputManager::press_down())
 	{
 		//Check current selected button, and selected button below not null
 		if (em::_currentButton && em::_currentButton->below)
@@ -88,7 +90,7 @@ void em::button_navigate_detect()
 	}
 
 	//Check for key left input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (InputManager::press_left())
 	{
 		//Check current selected button, and selected button left not null
 		if (em::_currentButton && em::_currentButton->left)
@@ -100,7 +102,7 @@ void em::button_navigate_detect()
 	}
 
 	//Check for right input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (InputManager::press_right())
 	{
 		//Check current selected button, and selected button right not null
 		if (em::_currentButton && em::_currentButton->right)
@@ -111,7 +113,7 @@ void em::button_navigate_detect()
 		em::input_wait_timer = em::wait_between_input;
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	if (InputManager::press_submit())
 	{
 		if (em::_currentButton)
 		{

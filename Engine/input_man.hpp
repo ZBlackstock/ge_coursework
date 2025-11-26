@@ -8,7 +8,7 @@ class InputManager
 {
 public:
 
-	static void Update();
+	static void Update(const float& dt);
 	static const int gamepad_a; // Submit
 	static const int gamepad_b; // Back
 	static const int gamepad_start; // Menu
