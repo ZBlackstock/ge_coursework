@@ -69,3 +69,12 @@ public:
 		Button(name_in_file, location, sort_layer) {
 	}
 };
+
+class Button_ToggleFullscreen : public Button
+{
+public:
+	virtual void on_select();
+	Button_ToggleFullscreen(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
+};

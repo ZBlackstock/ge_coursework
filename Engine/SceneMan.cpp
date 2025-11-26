@@ -339,13 +339,21 @@ void Settings::on_scene_active()
 	// Load sprite
 	RenderMan::create_sprite("settings.png", gs::screen_mid, 0);
 
-	// Load back button
+	// Load back button and fullscreen toggle
 	std::shared_ptr<Button_LoadScene> btn_back = std::make_shared<Button_LoadScene>
 		("back", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 380.0f }, 1);
+	std::shared_ptr<Button_ToggleFullscreen> btn_togglefullscreen = std::make_shared<Button_ToggleFullscreen>
+		("togglefullscreen", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 290.0f }, 1);
 
 	// Assign back button scene and set it to highlighted
-	EventManager::set_current_button(btn_back);
+	EventManager::set_current_button(btn_togglefullscreen);
 	btn_back->set_scene_to_load(SceneManager::scenes[0]); // Main Menu
+
+	btn_togglefullscreen->set_above(btn_back);
+	btn_togglefullscreen->set_below(btn_back);
+
+	btn_back->set_above(btn_togglefullscreen);
+	btn_back->set_below(btn_togglefullscreen);
 
 	// Set current resolution text
 	Settings::res_text->setString(std::to_string(Settings::resolutions[Settings::current_res_index].width)
@@ -386,7 +394,7 @@ void Settings::set_resolution(int i)
 
 	// Recreate window
 	sf::RenderWindow* window = RenderMan::GetWindow();
-	window->create(Settings::resolutions[Settings::current_res_index], "Black Dragon", sf::Style::Fullscreen);
+	window->create(Settings::resolutions[Settings::current_res_index], "Black Dragon", gs::fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
 
 	//Maintain size on screen. Otherwise the window size would change
 	sf::View view(sf::FloatRect(0, 0, 1920, 1080));

@@ -12,4 +12,5 @@ public:
 	static std::string sprites_path;
 	static sf::Font font;
 	static sf::Font font_bold;
+	static bool fullscreen;
 };
