@@ -11,8 +11,7 @@ using em = EventManager;
 
 class Button;
 std::shared_ptr<Button> em::_currentButton = nullptr;
-float em::wait_between_input = 0.25f; // To stop holding down keys spamming buttons
-float em::input_wait_timer = em::wait_between_input;
+
 
 std::shared_ptr<Button>  em::get_current_button()
 {
@@ -32,16 +31,6 @@ void em::set_current_button(std::shared_ptr<Button> button)
 	std::cout << "current button = " << button.get()->get_name() << std::endl;
 }
 
-bool em::can_press_button()
-{
-	return em::input_wait_timer < 0;
-}
-
-void em::reset_input_timer()
-{
-	em::input_wait_timer = em::wait_between_input;
-}
-
 void em::clear_current_button()
 {
 	// Set prev current button to idle sprite
@@ -53,14 +42,8 @@ void em::clear_current_button()
 
 void em::update(const float& dt)
 {
-	//Timer stops accidental spamming
-	if (em::input_wait_timer < 0)
-	{
-		em::input_wait_timer = -1.0f;
-		em::button_navigate_detect();
-	}
+	em::button_navigate_detect();
 
-	em::input_wait_timer -= dt;
 }
 
 void em::button_navigate_detect()
@@ -74,7 +57,6 @@ void em::button_navigate_detect()
 			//Set new button
 			em::set_current_button(em::_currentButton.get()->above);
 		}
-		em::input_wait_timer = em::wait_between_input;
 	}
 
 	//Check for key down input
@@ -86,7 +68,6 @@ void em::button_navigate_detect()
 			//Set new button
 			em::set_current_button(em::_currentButton.get()->below);
 		}
-		em::input_wait_timer = em::wait_between_input;
 	}
 
 	//Check for key left input
@@ -98,7 +79,6 @@ void em::button_navigate_detect()
 			//Set new button
 			em::set_current_button(em::_currentButton.get()->left);
 		}
-		em::input_wait_timer = em::wait_between_input;
 	}
 
 	//Check for right input
@@ -110,7 +90,6 @@ void em::button_navigate_detect()
 			//Set new button
 			em::set_current_button(em::_currentButton.get()->right);
 		}
-		em::input_wait_timer = em::wait_between_input;
 	}
 
 	if (InputManager::press_submit())
@@ -119,6 +98,5 @@ void em::button_navigate_detect()
 		{
 			em::_currentButton->on_select();
 		}
-		em::input_wait_timer = em::wait_between_input;
 	}
 }

@@ -214,10 +214,9 @@ void Map::on_scene_active()
 }
 void Map::update(const float& dt)
 {
-	if (InputManager::press_menu() && EventManager::can_press_button())
+	if (InputManager::press_menu())
 	{
 		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
-		EventManager::reset_input_timer();
 
 		if (!ExitToMainMenu::get_active())
 		{
