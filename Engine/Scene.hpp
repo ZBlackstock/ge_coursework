@@ -73,3 +73,13 @@ public:
 	virtual void on_scene_inactive();
 	virtual void update(const float& dt);
 };
+
+// Settings
+class Settings : public Scene
+{
+public:
+	Settings(std::string scene_name);
+	virtual void on_scene_active();
+	virtual void on_scene_inactive();
+	virtual void update(const float& dt);
+};

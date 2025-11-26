@@ -34,6 +34,8 @@ void sm::init()
 	std::shared_ptr<Fight2> fight2 = std::make_shared<Fight2>("Fight2"); // Right
 	std::shared_ptr<Fight3> fight3 = std::make_shared<Fight3>("Fight3"); // Final
 
+	std::shared_ptr<Settings> settings = std::make_shared<Settings>("Settings"); // Settings
+
 
 	sm::add_scene(main_menu);
 	sm::add_scene(map);
@@ -41,6 +43,7 @@ void sm::init()
 	sm::add_scene(fight1);
 	sm::add_scene(fight2);
 	sm::add_scene(fight3);
+	sm::add_scene(settings);
 
 	sm::set_active_scene("MainMenu");
 }
@@ -120,14 +123,20 @@ void MainMenu::on_scene_active()
 
 	std::shared_ptr<Button_LoadScene> btn_play = std::make_shared<Button_LoadScene>
 		("play", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 200.0f }, 1);
+	std::shared_ptr<Button_LoadScene> btn_settings = std::make_shared<Button_LoadScene>
+		("settings", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 290.0f }, 1);
 	std::shared_ptr<Button_Quit> btn_quit = std::make_shared<Button_Quit>
-		("quit", sf::Vector2f{ gs::screen_mid.x,gs::screen_mid.y + 290.0f }, 1);
+		("quit", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 380.0f }, 1);
 
 	btn_play->set_above(btn_quit);
-	btn_play->set_below(btn_quit);
+	btn_play->set_below(btn_settings);
 	btn_play->set_scene_to_load(SceneManager::scenes[1]); // Map. 
 
-	btn_quit->set_above(btn_play);
+	btn_settings->set_above(btn_play);
+	btn_settings->set_below(btn_quit);
+	btn_settings->set_scene_to_load(SceneManager::scenes[6]); // Settings
+
+	btn_quit->set_above(btn_settings);
 	btn_quit->set_below(btn_play);
 
 	EventManager::set_current_button(btn_play);
@@ -312,4 +321,23 @@ void Fight3::update(const float& dt)
 void Fight3::on_scene_inactive()
 {
 	std::cout << "Fight3 (Final) on_scene_inactive()" << std::endl;
+}
+
+// _______________________Settings_________________________________________
+Settings::Settings(std::string scene_name)
+{
+	name = scene_name;
+}
+// Load sprites for Map HERE
+void Settings::on_scene_active()
+{
+
+}
+void Settings::update(const float& dt)
+{
+
+}
+void Settings::on_scene_inactive()
+{
+	std::cout << "Settings on_scene_inactive()" << std::endl;
 }
