@@ -7,6 +7,7 @@
 
 // Forward definition
 class Consumable;
+class Button_Consumable;
 
 class ConsumableManager
 {
@@ -22,9 +23,10 @@ class Consumable
 public:
 	Consumable(std::string name, sf::Vector2f pos);
 
-	std::shared_ptr<Button> button;
+	std::shared_ptr<Button_Consumable> button = nullptr;
 	virtual void on_use();
 	void set_pos(sf::Vector2f pos);
+	std::string get_name();
 
 private:
 	std::string _name;

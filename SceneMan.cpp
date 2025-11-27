@@ -273,6 +273,8 @@ void Fight0::update(const float& dt)
 void Fight0::on_scene_inactive()
 {
 	std::cout << "Fight0 (Left) on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 // _______________________Fight1 (Middle)_________________________________________

@@ -20,6 +20,7 @@ public:
 	void idle();
 	void highlight();
 	void select();
+	void disable();
 
 	virtual void on_select();
 	void set_pos(sf::Vector2f pos);

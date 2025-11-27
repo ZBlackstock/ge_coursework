@@ -76,6 +76,22 @@ void cman::init()
 	std::shared_ptr<cns_Oil> oil = std::make_shared<cns_Oil>
 		("cns_oil", sf::Vector2f{ 10000,10000 });
 
+	healing_potion0->button->set_consumable(healing_potion0);
+	healing_potion1->button->set_consumable(healing_potion1);
+	healing_potion2->button->set_consumable(healing_potion2);
+	fire_resistance->button->set_consumable(fire_resistance);
+	sharp_resistance->button->set_consumable(sharp_resistance);
+	blunt_resistance->button->set_consumable(blunt_resistance);
+	insight->button->set_consumable(insight);
+	thorns->button->set_consumable(thorns);
+	illusion->button->set_consumable(illusion);
+	whetstone->button->set_consumable(whetstone);
+	fire_blessing->button->set_consumable(fire_blessing);
+	strength_blessing->button->set_consumable(strength_blessing);
+	rage->button->set_consumable(rage);
+	quick_eye->button->set_consumable(quick_eye);
+	oil->button->set_consumable(oil);
+	
 	cman::all_consumables.push_back(healing_potion0);
 	cman::all_consumables.push_back(healing_potion1);
 	cman::all_consumables.push_back(healing_potion2);
@@ -121,15 +137,21 @@ cns::Consumable(std::string name, sf::Vector2f pos)
 {
 	cns::_name = name;
 	cns::_pos = pos;
-	cns::button = std::make_shared<Button>(name, pos, 3);
+	cns::button = std::make_shared<Button_Consumable>(name, pos, 3);
 }
 void cns::on_use() 
 {
 	FightManager::set_player_consumed_item(true);
+	cns::button->disable();
+	Console::print("on_use()");
 }
 void cns::set_pos(sf::Vector2f pos)
 {
 	cns::button->set_pos(pos);
+}
+std::string cns::get_name()
+{
+	return cns::_name;
 }
 
 //____________________________
@@ -139,77 +161,90 @@ void cns::set_pos(sf::Vector2f pos)
 // Healing Potion
 void cns_HealingPotion::on_use()
 {
+	cns::on_use();
 
 }
 
 // Fire Resistance
 void cns_FireResistance::on_use()
 {
+	cns::on_use();
 
 }
 
 // Sharp Resistance
 void cns_SharpResistance::on_use()
 {
+	cns::on_use();
 
 }
 
 // Blunt resistance
 void cns_BluntResistance::on_use()
 {
+	cns::on_use();
 
 }
 
 // Insight
 void cns_Insight::on_use()
 {
+	cns::on_use();
 
 }
 
 // Thorns
 void cns_Thorns::on_use()
 {
+	cns::on_use();
 
 }
 
 // Illusion
 void cns_Illusion::on_use()
 {
+	cns::on_use();
 
 }
 
 // Fire buff
 void cns_FireBlessing::on_use()
 {
+	cns::on_use();
 
 }
 
 // Sharp buff
 void cns_Whetstone::on_use()
 {
+	cns::on_use();
 
 }
 
 // Strength buff
 void cns_StrengthBlessing::on_use()
 {
+	cns::on_use();
 
 }
 
 // Rage
 void cns_Rage::on_use()
 {
+	cns::on_use();
 
 }
 
 // Quickeye
 void cns_QuickEye::on_use()
 {
+	cns::on_use();
 
 }
 
 // Oil
 void cns_Oil::on_use()
 {
+	cns::on_use();
 
 }
