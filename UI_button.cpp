@@ -1,7 +1,7 @@
 #include "UI_button.hpp"
 #include "RenderMan.h"
 #include <SFML/Graphics.hpp>
-#include "game_system.h"
+#include "game_system.hpp"
 #include "event_man.hpp"
 #include "UI_exit_to_mainmenu.hpp"
 #include "SceneMan.hpp"

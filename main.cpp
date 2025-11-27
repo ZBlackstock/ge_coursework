@@ -4,9 +4,9 @@
 #include "Engine\RenderMan.h"
 #include "SceneMan.hpp"
 #include "Scene.hpp"
-#include "game_system.h"
-#include "Engine\event_man.hpp"
-#include "Engine\input_man.hpp"
+#include "Engine\game_system.hpp"
+#include "event_man.hpp"
+#include "input_man.hpp"
 
 
 
@@ -19,42 +19,10 @@ sf::Font gs::font;
 sf::Font gs::font_bold;
 bool gs::fullscreen = true;
 
-int main() {
-	sf::RenderWindow window(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "Black Dragon", sf::Style::Fullscreen);
-	RenderMan::SetWindow(&window);
+int main() 
+{
 	SceneManager::init();
-
-	if (!gs::font.loadFromFile("../../../../res/fonts/COPRGTL.ttf"))
-	{
-		std::cout << "Couldnt load font" << std::endl;
-	}
-
-	if (!gs::font_bold.loadFromFile("../../../../res/fonts/COPRGTB.ttf"))
-	{
-		std::cout << "Couldnt load font_bold" << std::endl;
-	}
-
-	while (window.isOpen()) {
-		RenderMan::RenderWindowClear();
-		sf::Event event;
-
-		static sf::Clock clock;
-		const float dt = clock.restart().asSeconds();
-
-		SceneManager::update(dt);
-		EventManager::update(dt);
-		InputManager::Update(dt);
-
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				window.close();
-			}
-		}
-
-		RenderMan::RenderWindow();
-	}
+	gs::start(gs::screen_size.x, gs::screen_size.y, "Black Dragon", 0.017f, false);
 	return 0;
 }
 

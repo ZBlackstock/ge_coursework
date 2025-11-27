@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <memory> // For pointers
-#include "RenderMan.h"
+#include "Engine\RenderMan.h"
 
 class Scene
 {

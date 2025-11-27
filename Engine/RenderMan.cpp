@@ -2,7 +2,7 @@
 #include <iostream>
 #include <map>
 #include "RenderMan.h"
-#include "game_system.h"
+#include "game_system.hpp"
 //manages render order of drawable pointers
 
 std::vector<std::unique_ptr<DrawObj>> RenderMan::drawObjects{};
