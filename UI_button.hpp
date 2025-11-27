@@ -4,9 +4,10 @@
 #include <memory>
 #include "SceneMan.hpp"
 #include "event_man.hpp"
+#include "consumable_man.hpp"
 
 
-
+class Consumable;
 // ____________ Custom Buttons ____________________________
 
 class Button_Quit : public Button
@@ -47,4 +48,17 @@ public:
 	Button_ToggleFullscreen(std::string name_in_file, sf::Vector2f location, int sort_layer) :
 		Button(name_in_file, location, sort_layer) {
 	}
+};
+
+class Button_Consumable : public Button
+{
+public:
+	virtual void on_select();
+	Button_Consumable(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
+	void set_consumable(std::shared_ptr<Consumable> cns);
+
+private:
+	std::shared_ptr<Consumable> _consumable = nullptr;
 };

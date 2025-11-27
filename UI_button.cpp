@@ -5,6 +5,7 @@
 #include "event_man.hpp"
 #include "UI_exit_to_mainmenu.hpp"
 #include "SceneMan.hpp"
+#include "Console.hpp"
 #include <iostream>
 #include <string>
 
@@ -65,6 +66,12 @@ void b::update()
 	}
 }
 
+void b::set_pos(sf::Vector2f pos)
+{
+	b::_pos = pos;
+	rm::set_sprite_pos(_name + "_idle.png", b::_pos);
+}
+
 void b::idle()
 {
 	rm::set_sprite_pos(_name + "_idle.png", b::_pos);
@@ -81,7 +88,24 @@ void b::highlight()
 void b::select()
 {
 	rm::set_sprite_pos(_name + "_selected.png", b::_pos);
+	rm::set_sprite_pos(_name + "_idle.png", { 10000,10000 });
 	rm::set_sprite_pos(_name + "_highlighted.png", { 10000,10000 });
+}
+
+void b::disable()
+{
+	rm::set_sprite_pos(_name + "_selected.png", b::_pos);
+	rm::set_sprite_pos(_name + "_idle.png", { 10000,10000 });
+	rm::set_sprite_pos(_name + "_highlighted.png", { 10000,10000 });
+
+	if (b::above)
+	{
+		b::below->set_above(b::above);
+	}
+	if (b::below)
+	{
+		b::above->set_below(b::below);
+	}
 }
 
 void b::on_select()
@@ -139,4 +163,15 @@ void Button_ToggleFullscreen::on_select()
 
 	sf::RenderWindow* window = RenderMan::GetWindow();
 	window->create(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "Black Dragon", gs::fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
+}
+
+void Button_Consumable::on_select()
+{
+	Console::print("on_select() " + Button_Consumable::_consumable->get_name());
+	Button_Consumable::_consumable->on_use();
+}
+
+void Button_Consumable::set_consumable(std::shared_ptr<Consumable> cns)
+{
+	Button_Consumable::_consumable = cns;
 }

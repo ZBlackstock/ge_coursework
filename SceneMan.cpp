@@ -9,6 +9,7 @@
 #include "event_man.hpp"
 #include "UI_exit_to_mainmenu.hpp"
 #include "input_man.hpp"
+#include "consumable_man.hpp"
 
 
 using sm = SceneManager;
@@ -245,8 +246,6 @@ void Map::on_scene_inactive()
 // - UI Sprites. Douglas do enemy designs before make enemy sprites?
 // - Press esc for main menu. Put code for this in its own script probs. "UI_exit_to_menu" or something
 
-
-
 // _______________________Fight0 (Left)_________________________________________
 Fight0::Fight0(std::string scene_name)
 {
@@ -255,15 +254,27 @@ Fight0::Fight0(std::string scene_name)
 // Load sprites for Map HERE
 void Fight0::on_scene_active()
 {
-
+	ConsumableManager::init();
+	EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
+	ExitToMainMenu::init();
 }
 void Fight0::update(const float& dt)
 {
+	if (InputManager::press_menu())
+	{
+		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
 
+		if (!ExitToMainMenu::get_active())
+		{
+			EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
+		}
+	}
 }
 void Fight0::on_scene_inactive()
 {
 	std::cout << "Fight0 (Left) on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 // _______________________Fight1 (Middle)_________________________________________
@@ -283,6 +294,8 @@ void Fight1::update(const float& dt)
 void Fight1::on_scene_inactive()
 {
 	std::cout << "Fight1 (Middle) on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 // _______________________Fight2 (Right)_________________________________________
@@ -293,7 +306,7 @@ Fight2::Fight2(std::string scene_name)
 // Load sprites for Map HERE
 void Fight2::on_scene_active()
 {
-
+	
 }
 void Fight2::update(const float& dt)
 {
@@ -302,6 +315,8 @@ void Fight2::update(const float& dt)
 void Fight2::on_scene_inactive()
 {
 	std::cout << "Fight2 (Right) on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 // _______________________Fight3 (Final)_________________________________________
@@ -321,6 +336,8 @@ void Fight3::update(const float& dt)
 void Fight3::on_scene_inactive()
 {
 	std::cout << "Fight3 (Final) on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 // _______________________Settings_________________________________________

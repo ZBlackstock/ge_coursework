@@ -1,5 +1,6 @@
 #pragma once
 #include<memory>
+#include<SFML/Graphics.hpp>
 
 
 class Button
@@ -19,8 +20,10 @@ public:
 	void idle();
 	void highlight();
 	void select();
+	void disable();
 
 	virtual void on_select();
+	void set_pos(sf::Vector2f pos);
 	bool is_selected();
 	std::string get_name();
 
