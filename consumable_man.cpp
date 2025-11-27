@@ -106,11 +106,24 @@ void cman::init()
 	sf::Vector2f consumable_pos = { 100, 100 };
 	for (int i = 0; i < cman::num_player_consumables; ++i)
 	{
+		srand(time(0));
 		int random = rand() % cman::all_consumables.size();
 		cman::all_consumables[random]->set_pos(consumable_pos);
 		cman::player_consumables.push_back(cman::all_consumables[random]);
 		cman::all_consumables.erase(cman::all_consumables.begin() + random);
 		consumable_pos.y += 120;
+
+		if (cman::player_consumables.size() > 1)
+		{
+			cman::player_consumables[i]->button->set_above(cman::player_consumables[i - 1]->button);
+			cman::player_consumables[i - 1]->button->set_below(cman::player_consumables[i]->button);
+
+			if (i == cman::num_player_consumables - 1)
+			{
+				cman::player_consumables[i]->button->set_below(cman::player_consumables[0]->button);
+				cman::player_consumables[0]->button->set_above(cman::player_consumables[i]->button);
+			}
+		}
 	}
 }
 
