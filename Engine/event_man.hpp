@@ -1,7 +1,39 @@
 #pragma once
 #include<memory>
-#include"UI_button.hpp"
 
+
+class Button
+{
+public:
+	Button(std::string name_in_file, sf::Vector2f location, int sort_layer);
+	~Button() = default;
+
+	void set_offscreen(bool offscreen);
+
+
+	void set_above(std::shared_ptr<Button> button);
+	void set_below(std::shared_ptr<Button> button);
+	void set_left(std::shared_ptr<Button> button);
+	void set_right(std::shared_ptr<Button> button);
+	void update();
+	void idle();
+	void highlight();
+	void select();
+
+	virtual void on_select();
+	bool is_selected();
+	std::string get_name();
+
+	std::shared_ptr<Button> above = nullptr;
+	std::shared_ptr<Button> below = nullptr;
+	std::shared_ptr<Button> left = nullptr;
+	std::shared_ptr<Button> right = nullptr;
+private:
+
+	bool _selected;
+	sf::Vector2f _pos;
+	std::string _name;
+};
 
 class EventManager
 {
