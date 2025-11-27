@@ -2,9 +2,9 @@
 #include <string>
 #include <iostream>
 #include "Engine\RenderMan.h"
-#include "Engine\SceneMan.hpp"
-#include "Engine\Scene.hpp"
-#include "Engine\game_system.h"
+#include "SceneMan.hpp"
+#include "Scene.hpp"
+#include "game_system.h"
 #include "Engine\event_man.hpp"
 #include "Engine\input_man.hpp"
 
