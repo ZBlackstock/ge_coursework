@@ -2,7 +2,11 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <SFML/Graphics.hpp>
 #include "UI_button.hpp"
+
+// Forward definition
+class Consumable;
 
 class ConsumableManager
 {
@@ -10,6 +14,7 @@ public:
 	static std::vector<std::shared_ptr<Consumable>> all_consumables;
 	static std::vector<std::shared_ptr<Consumable>> player_consumables;
 	static void init();
+	static int num_player_consumables;
 };
 
 class Consumable
@@ -19,6 +24,7 @@ public:
 
 	std::shared_ptr<Button> button;
 	virtual void on_use();
+	void set_pos(sf::Vector2f pos);
 
 private:
 	std::string _name;

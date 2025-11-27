@@ -9,6 +9,7 @@
 #include "event_man.hpp"
 #include "UI_exit_to_mainmenu.hpp"
 #include "input_man.hpp"
+#include "consumable_man.hpp"
 
 
 using sm = SceneManager;
@@ -255,7 +256,8 @@ Fight0::Fight0(std::string scene_name)
 // Load sprites for Map HERE
 void Fight0::on_scene_active()
 {
-
+	ConsumableManager::init();
+	EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
 }
 void Fight0::update(const float& dt)
 {
@@ -293,7 +295,7 @@ Fight2::Fight2(std::string scene_name)
 // Load sprites for Map HERE
 void Fight2::on_scene_active()
 {
-
+	
 }
 void Fight2::update(const float& dt)
 {
