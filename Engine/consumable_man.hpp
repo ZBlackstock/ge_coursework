@@ -51,7 +51,7 @@ private:
 class cns_SharpResistance : public Consumable
 {
 public:
-	cns_SharpResistance(std::string name, sf::Vector2f pos, , int resistance) : Consumable(name, pos) {}
+	cns_SharpResistance(std::string name, sf::Vector2f pos, int resistance) : Consumable(name, pos) {}
 	virtual void on_use();
 
 private:
@@ -62,7 +62,7 @@ private:
 class cns_BluntResistance : public Consumable
 {
 public:
-	cns_BluntResistance(std::string name, sf::Vector2f pos, , int resistance) : Consumable(name, pos) {}
+	cns_BluntResistance(std::string name, sf::Vector2f pos, int resistance) : Consumable(name, pos) {}
 	virtual void on_use();
 
 private:
@@ -129,7 +129,7 @@ public:
 class cns_QuickEye : public Consumable
 {
 public:
-	cns_Rage(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
+	cns_QuickEye(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
 	virtual void on_use();
 };
 
