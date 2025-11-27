@@ -2,6 +2,7 @@
 #include <iostream>
 #include "console.hpp"
 #include <cstdlib>
+#include "fight_manager.hpp"
 
 using cns = Consumable;
 using cman = ConsumableManager;
@@ -122,7 +123,10 @@ cns::Consumable(std::string name, sf::Vector2f pos)
 	cns::_pos = pos;
 	cns::button = std::make_shared<Button>(name, pos, 3);
 }
-void cns::on_use() {}
+void cns::on_use() 
+{
+	FightManager::set_player_consumed_item(true);
+}
 void cns::set_pos(sf::Vector2f pos)
 {
 	cns::button->set_pos(pos);

@@ -246,8 +246,6 @@ void Map::on_scene_inactive()
 // - UI Sprites. Douglas do enemy designs before make enemy sprites?
 // - Press esc for main menu. Put code for this in its own script probs. "UI_exit_to_menu" or something
 
-
-
 // _______________________Fight0 (Left)_________________________________________
 Fight0::Fight0(std::string scene_name)
 {
