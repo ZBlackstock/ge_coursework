@@ -258,10 +258,19 @@ void Fight0::on_scene_active()
 {
 	ConsumableManager::init();
 	EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
+	ExitToMainMenu::init();
 }
 void Fight0::update(const float& dt)
 {
+	if (InputManager::press_menu())
+	{
+		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
 
+		if (!ExitToMainMenu::get_active())
+		{
+			EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
+		}
+	}
 }
 void Fight0::on_scene_inactive()
 {
@@ -285,6 +294,8 @@ void Fight1::update(const float& dt)
 void Fight1::on_scene_inactive()
 {
 	std::cout << "Fight1 (Middle) on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 // _______________________Fight2 (Right)_________________________________________
@@ -304,6 +315,8 @@ void Fight2::update(const float& dt)
 void Fight2::on_scene_inactive()
 {
 	std::cout << "Fight2 (Right) on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 // _______________________Fight3 (Final)_________________________________________
@@ -323,6 +336,8 @@ void Fight3::update(const float& dt)
 void Fight3::on_scene_inactive()
 {
 	std::cout << "Fight3 (Final) on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
 }
 
 // _______________________Settings_________________________________________

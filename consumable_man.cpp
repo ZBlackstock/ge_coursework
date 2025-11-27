@@ -15,25 +15,16 @@ void cman::init()
 {
 	Console::print("ConsumableManager Init()");
 
-	// ____________________Small healing potions_____________________
-	std::shared_ptr<cns_HealingPotion> healing_potion0_0 = std::make_shared<cns_HealingPotion>
+	// ____________________Small healing potion_____________________
+	std::shared_ptr<cns_HealingPotion> healing_potion0 = std::make_shared<cns_HealingPotion>
 		("cns_health_potion", sf::Vector2f{ 10000,10000 }, 30);
 
-	std::shared_ptr<cns_HealingPotion> healing_potion0_1 = std::make_shared<cns_HealingPotion>
-		("cns_health_potion", sf::Vector2f{ 10000,10000 }, 30);
-
-	std::shared_ptr<cns_HealingPotion> healing_potion0_2 = std::make_shared<cns_HealingPotion>
-		("cns_health_potion", sf::Vector2f{ 10000,10000 }, 30);
-
-	// ____________________Medium healing potions_____________________
-	std::shared_ptr<cns_HealingPotion> healing_potion1_0 = std::make_shared<cns_HealingPotion>
-		("cns_health_potion1", sf::Vector2f{ 10000,10000 }, 30);
-
-	std::shared_ptr<cns_HealingPotion> healing_potion1_1 = std::make_shared<cns_HealingPotion>
+	// ____________________Medium healing potion_____________________
+	std::shared_ptr<cns_HealingPotion> healing_potion1 = std::make_shared<cns_HealingPotion>
 		("cns_health_potion1", sf::Vector2f{ 10000,10000 }, 30);
 
 	// ____________________Large healing potion_____________________
-	std::shared_ptr<cns_HealingPotion> healing_potion2_0 = std::make_shared<cns_HealingPotion>
+	std::shared_ptr<cns_HealingPotion> healing_potion2 = std::make_shared<cns_HealingPotion>
 		("cns_health_potion2", sf::Vector2f{ 10000,10000 }, 30);
 
 	// ____________________Fire Resistance_____________________
@@ -84,12 +75,9 @@ void cman::init()
 	std::shared_ptr<cns_Oil> oil = std::make_shared<cns_Oil>
 		("cns_oil", sf::Vector2f{ 10000,10000 });
 
-	cman::all_consumables.push_back(healing_potion0_0);
-	cman::all_consumables.push_back(healing_potion0_1);
-	cman::all_consumables.push_back(healing_potion0_2);
-	cman::all_consumables.push_back(healing_potion1_0);
-	cman::all_consumables.push_back(healing_potion1_1);
-	cman::all_consumables.push_back(healing_potion2_0);
+	cman::all_consumables.push_back(healing_potion0);
+	cman::all_consumables.push_back(healing_potion1);
+	cman::all_consumables.push_back(healing_potion2);
 	cman::all_consumables.push_back(fire_resistance);
 	cman::all_consumables.push_back(sharp_resistance);
 	cman::all_consumables.push_back(blunt_resistance);
@@ -141,6 +129,8 @@ void cns::set_pos(sf::Vector2f pos)
 }
 
 //____________________________
+
+// Need to wait for louis to do player entity so I can modify values via these
 
 // Healing Potion
 void cns_HealingPotion::on_use()
