@@ -4,7 +4,7 @@
 #include "SceneMan.hpp"
 #include "Scene.hpp"
 #include "RenderMan.h"
-#include "game_system.h"
+#include "game_system.hpp"
 #include "UI_button.hpp"
 #include "event_man.hpp"
 #include "UI_exit_to_mainmenu.hpp"

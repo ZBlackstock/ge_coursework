@@ -1,5 +1,5 @@
 #include "UI_exit_to_mainmenu.hpp"
-#include "game_system.h"
+#include "game_system.hpp"
 #include <iostream>
 #include "event_man.hpp"
 #include "SceneMan.hpp"

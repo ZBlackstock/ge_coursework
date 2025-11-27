@@ -16,13 +16,11 @@ set(SFML_INCS "lib/SFML/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/SFML/lib")
 
 #### Engine ####
-add_library(engine STATIC
-							engine/RenderMan.cpp
-							engine/event_man.cpp
-							engine/input_man.cpp
-							engine/EntityMan.cpp
-							console.cpp  
-							fight_manager.cpp)
+add_library(engine STATIC engine/game_system.cpp 
+                        engine/renderer.cpp 
+                        engine/ecm.cpp
+						engine/RenderMan.cpp
+)
 
 target_include_directories(engine INTERFACE engine ${SFML_INCS})
 target_link_libraries(engine sfml-graphics)
@@ -33,7 +31,12 @@ add_executable(BlackDragon
 	SceneMan.cpp
 	consumable_man.cpp
 	UI_button.cpp
-	UI_exit_to_mainmenu.cpp "console.cpp"  "fight_manager.cpp")
+	UI_exit_to_mainmenu.cpp
+	input_man.cpp
+	event_man.cpp
+	console.cpp
+	fight_manager.cpp
+)
 
 target_include_directories(BlackDragon PRIVATE ${SFML_INCS} engine)
 target_link_libraries(BlackDragon sfml-graphics engine)
