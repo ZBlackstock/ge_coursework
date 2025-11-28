@@ -175,3 +175,13 @@ void Button_Consumable::set_consumable(std::shared_ptr<Consumable> cns)
 {
 	Button_Consumable::_consumable = cns;
 }
+
+void Button_SetResolution::set_change(int change)
+{
+	Button_SetResolution::_change = change;
+}
+
+void Button_SetResolution::on_select()
+{
+	Settings::set_resolution(_change);
+}

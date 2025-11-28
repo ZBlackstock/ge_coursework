@@ -62,3 +62,17 @@ public:
 private:
 	std::shared_ptr<Consumable> _consumable = nullptr;
 };
+
+class Button_SetResolution : public Button
+{
+public:
+	virtual void on_select();
+	Button_SetResolution(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
+	void set_change(int change);
+
+private:
+	//The number the res changes by
+	int _change = 0;
+};

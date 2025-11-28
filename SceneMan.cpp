@@ -306,7 +306,7 @@ Fight2::Fight2(std::string scene_name)
 // Load sprites for Map HERE
 void Fight2::on_scene_active()
 {
-	
+
 }
 void Fight2::update(const float& dt)
 {
@@ -351,7 +351,6 @@ const std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFulls
 std::shared_ptr<sf::Text> Settings::res_text = std::make_shared<sf::Text>();
 
 
-// Load resolution arrows buttons
 // Make Button_KeyBind
 
 // Initiate Settings
@@ -366,22 +365,42 @@ void Settings::on_scene_active()
 	std::shared_ptr<Button_ToggleFullscreen> btn_togglefullscreen = std::make_shared<Button_ToggleFullscreen>
 		("togglefullscreen", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y + 290.0f }, 1);
 
+	// Load resolution arrows buttons
+	std::shared_ptr<Button_SetResolution> btn_res_arrow_left = std::make_shared<Button_SetResolution>
+		("arrow_left", sf::Vector2f{ 960, 680 }, 1);
+	btn_res_arrow_left->set_change(-1);
+
+	std::shared_ptr<Button_SetResolution> btn_res_arrow_right = std::make_shared<Button_SetResolution>
+		("arrow_right", sf::Vector2f{ 1480,680 }, 1);
+	btn_res_arrow_left->set_change(1);
+
+	//Load Keybind buttons
+
 	// Assign back button scene and set it to highlighted
 	EventManager::set_current_button(btn_togglefullscreen);
 	btn_back->set_scene_to_load(SceneManager::scenes[0]); // Main Menu
 
-	btn_togglefullscreen->set_above(btn_back);
+	btn_togglefullscreen->set_above(btn_res_arrow_left);
 	btn_togglefullscreen->set_below(btn_back);
 
 	btn_back->set_above(btn_togglefullscreen);
-	btn_back->set_below(btn_togglefullscreen);
+	btn_back->set_below(btn_res_arrow_left);
+
+	btn_res_arrow_left->set_left(btn_res_arrow_right);
+	btn_res_arrow_left->set_right(btn_res_arrow_right);
+	btn_res_arrow_left->set_below(btn_togglefullscreen);
+
+	btn_res_arrow_right->set_left(btn_res_arrow_left);
+	btn_res_arrow_right->set_right(btn_res_arrow_left);
+	btn_res_arrow_right->set_below(btn_togglefullscreen);
+
 
 	// Set current resolution text
 	Settings::res_text->setString(std::to_string(Settings::resolutions[Settings::current_res_index].width)
 		+ " X " + std::to_string(Settings::resolutions[Settings::current_res_index].height));
 	Settings::res_text->setFont(gs::font_bold);
 	Settings::res_text->setOrigin(Settings::res_text->getScale().x / 2, Settings::res_text->getScale().y / 2);
-	Settings::res_text->setPosition(1150, 630);
+	Settings::res_text->setPosition(1100, 650);
 	Settings::res_text->setColor(sf::Color::White);
 	Settings::res_text->setCharacterSize(40);
 	RenderMan::createDrawable(Settings::res_text, 2);
@@ -389,14 +408,7 @@ void Settings::on_scene_active()
 
 void Settings::update(const float& dt)
 {
-	if (InputManager::press_left())
-	{
-		Settings::set_resolution(Settings::current_res_index - 1);
-	}
-	else if (InputManager::press_right())
-	{
-		Settings::set_resolution(Settings::current_res_index + 1);
-	}
+
 }
 
 void Settings::set_resolution(int i)
@@ -426,7 +438,7 @@ void Settings::set_resolution(int i)
 
 	// Set text origin and pos
 	Settings::res_text->setOrigin(Settings::res_text->getScale().x / 2, Settings::res_text->getScale().y / 2);
-	Settings::res_text->setPosition(1150, 630);
+	Settings::res_text->setPosition(1100, 650);
 
 	std::cout << "Set res to " << Settings::resolutions[Settings::current_res_index].width <<
 		Settings::resolutions[Settings::current_res_index].height << std::endl;
