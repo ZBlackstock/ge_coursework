@@ -89,8 +89,9 @@ public:
 	sf::Vector2f txt_pos;
 	void text_init();
 	void set_text();
+	void clear_text();
 
 private:
 	// Target key to change
-	sf::Keyboard::Key _target_Input;
+	sf::Keyboard::Key _target_input;
 };

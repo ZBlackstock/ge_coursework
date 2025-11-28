@@ -189,15 +189,48 @@ void Button_SetResolution::on_select()
 
 void Button_KeyBind::set_input(sf::Keyboard::Key key)
 {
-	Button_KeyBind::_target_Input = key;
+	Button_KeyBind::_target_input = key;
 }
 
 void Button_KeyBind::on_select()
 {
-	Console::print("Button_KeyBind::on_select()");
+	Button_KeyBind::clear_text();
 
+	RenderMan::RenderWindow();
 
-	Button_KeyBind::set_text();
+	bool key_assigned = false;
+	while (!key_assigned)
+	{
+		sf::Event event;
+		while (RenderMan::GetWindow()->pollEvent(event))
+		{
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (Button_KeyBind::_target_input == InputManager::submit)
+				{
+					InputManager::assign_submit(event.key.code);
+				}
+				else if(Button_KeyBind::_target_input == InputManager::up)
+				{
+					InputManager::assign_up(event.key.code);
+				}	
+				else if (Button_KeyBind::_target_input == InputManager::down)
+				{
+					InputManager::assign_down(event.key.code);
+				}
+				else if (Button_KeyBind::_target_input == InputManager::left)
+				{
+					InputManager::assign_left(event.key.code);
+				}
+				else if (Button_KeyBind::_target_input == InputManager::right)
+				{
+					InputManager::assign_right(event.key.code);
+				}
+				key_assigned = true;
+			}
+		}
+	}
+	//Button_KeyBind::set_text();
 }
 
 void Button_KeyBind::text_init()
@@ -214,8 +247,13 @@ void Button_KeyBind::text_init()
 
 void Button_KeyBind::set_text()
 {
-	Button_KeyBind::text->setString(InputManager::key_to_string(Button_KeyBind::_target_Input));
+	Button_KeyBind::text->setString(InputManager::key_to_string(Button_KeyBind::_target_input));
+	Console::print("set_text()");
 
 	Console::print("Button_KeyBind::set_text()");
+}
 
+void Button_KeyBind::clear_text()
+{
+	Button_KeyBind::text->setString("Assign Key");
 }

@@ -1,5 +1,7 @@
 #include "input_man.hpp"
+#include "Engine/RenderMan.h"
 #include <iostream>
+#include "console.hpp"
 
 using im = InputManager;
 const int im::gamepad_a = 0; // Submit
@@ -10,7 +12,7 @@ int im::lstick_y = 1;
 float im::dpad_x = 0;
 float im::dpad_y = 0;
 const float im::dpad_dead = 0.1f;
-float im::wait_between_input = 0.25f; // To stop holding down keys spamming buttons
+float im::wait_between_input = 0.15f; // To stop holding down keys spamming buttons
 float im::input_wait_timer = im::wait_between_input;
 
 sf::Keyboard::Key im::submit = sf::Keyboard::Space;
@@ -137,6 +139,7 @@ void im::reset_input_timer()
 // Used for key bindings
 void im::assign_submit(sf::Keyboard::Key key)
 {
+	Console::print("im::assign_submit: " + key);
 	im::submit = key;
 }
 
@@ -169,6 +172,14 @@ void im::reset_key_binds()
 	im::right = sf::Keyboard::Right;
 }
 
+static bool is_any_key_pressed()
+{
+
+}
+static sf::Keyboard::Key any_key_pressed()
+{
+
+}
 
 std::string im::key_to_string(sf::Keyboard::Key key)
 {
@@ -219,6 +230,10 @@ std::string im::key_to_string(sf::Keyboard::Key key)
 	case sf::Keyboard::RShift: return "Right Shift";
 	case sf::Keyboard::LControl: return "Left Ctrl";
 	case sf::Keyboard::RControl: return "Right Ctrl";
+	case sf::Keyboard::Up: return "Up";
+	case sf::Keyboard::Down: return "Down";
+	case sf::Keyboard::Left: return "Left";
+	case sf::Keyboard::Right: return "Right";
 
 	default: return "Unknown";
 	}

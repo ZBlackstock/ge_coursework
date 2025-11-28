@@ -373,12 +373,36 @@ void Settings::on_scene_active()
 		("arrow_right", sf::Vector2f{ 1480,680 }, 1);
 	btn_res_arrow_left->set_change(1);
 
-	//Load Keybind buttons
+	// Load Keybind buttons
 	std::shared_ptr<Button_KeyBind> btn_key_bind_select = std::make_shared<Button_KeyBind>
 		("settings_select", sf::Vector2f{ 1100,200 }, 1);
 	btn_key_bind_select->set_input(InputManager::submit);
 	btn_key_bind_select->txt_pos = sf::Vector2f{ 1450,170 };
 	btn_key_bind_select->text_init();
+
+	std::shared_ptr<Button_KeyBind> btn_key_bind_up = std::make_shared<Button_KeyBind>
+		("settings_up", sf::Vector2f{ 1100,250 }, 1);
+	btn_key_bind_up->set_input(InputManager::up);
+	btn_key_bind_up->txt_pos = sf::Vector2f{ 1450,240 };
+	btn_key_bind_up->text_init();
+
+	std::shared_ptr<Button_KeyBind> btn_key_bind_down = std::make_shared<Button_KeyBind>
+		("settings_down", sf::Vector2f{ 1100,310 }, 1);
+	btn_key_bind_down->set_input(InputManager::down);
+	btn_key_bind_down->txt_pos = sf::Vector2f{ 1450,310 };
+	btn_key_bind_down->text_init();
+
+	std::shared_ptr<Button_KeyBind> btn_key_bind_left = std::make_shared<Button_KeyBind>
+		("settings_left", sf::Vector2f{ 1100,390 }, 1);
+	btn_key_bind_left->set_input(InputManager::left);
+	btn_key_bind_left->txt_pos = sf::Vector2f{ 1450,390 };
+	btn_key_bind_left->text_init();
+
+	std::shared_ptr<Button_KeyBind> btn_key_bind_right = std::make_shared<Button_KeyBind>
+		("settings_right", sf::Vector2f{ 1100,460 }, 1);
+	btn_key_bind_right->set_input(InputManager::right);
+	btn_key_bind_right->txt_pos = sf::Vector2f{ 1450,460 };
+	btn_key_bind_right->text_init();
 
 	// Assign back button scene and set it to highlighted
 	EventManager::set_current_button(btn_togglefullscreen);
@@ -393,13 +417,27 @@ void Settings::on_scene_active()
 	btn_res_arrow_left->set_left(btn_res_arrow_right);
 	btn_res_arrow_left->set_right(btn_res_arrow_right);
 	btn_res_arrow_left->set_below(btn_togglefullscreen);
+	btn_res_arrow_left->set_above(btn_key_bind_right);
 
 	btn_res_arrow_right->set_left(btn_res_arrow_left);
 	btn_res_arrow_right->set_right(btn_res_arrow_left);
 	btn_res_arrow_right->set_below(btn_togglefullscreen);
+	btn_res_arrow_right->set_above(btn_key_bind_right);
 
 	btn_key_bind_select->set_above(btn_back);
+	btn_key_bind_select->set_below(btn_key_bind_up);
 
+	btn_key_bind_up->set_above(btn_key_bind_select);
+	btn_key_bind_up->set_below(btn_key_bind_down);
+
+	btn_key_bind_down->set_above(btn_key_bind_up);
+	btn_key_bind_down->set_below(btn_key_bind_left);
+
+	btn_key_bind_left->set_above(btn_key_bind_down);
+	btn_key_bind_left->set_below(btn_key_bind_right);
+
+	btn_key_bind_right->set_above(btn_key_bind_left);
+	btn_key_bind_right->set_below(btn_res_arrow_left);
 
 	// Set current resolution text
 	Settings::res_text->setString(std::to_string(Settings::resolutions[Settings::current_res_index].width)

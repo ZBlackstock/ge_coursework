@@ -52,7 +52,6 @@ void RenderMan::create_sprite(std::string tx_file_name, sf::Vector2f pos, int la
 	sprite.get()->setTexture(*texture);
 	sprite.get()->setPosition(pos);
 	sprite.get()->setOrigin(sf::Vector2f(sprite.get()->getLocalBounds().width / 2, sprite.get()->getLocalBounds().height / 2));
-	std::cout << "Set sprite " << tx_file_name << " screen pos as " << pos.x << ", " << pos.y << std::endl;
 
 	//Add texture to global list. Sprite will appear as white box otherwise (as texture will go out of scope)
 	RenderMan::textures.push_back(texture);
@@ -69,7 +68,6 @@ void RenderMan::set_sprite_pos(std::string name, sf::Vector2f pos)
 	{
 		std::shared_ptr<sf::Sprite> sprite = it->second;
 		sprite->setPosition(pos);
-		std::cout << "Set sprite " << name << " pos to " << pos.x << ", " << pos.y << std::endl;
 	}
 	else
 	{
