@@ -28,7 +28,7 @@ void AudioManager::addSounds(const std::string& S_name)
     sf::SoundBuffer& buffer = buffers.back();
 
     // Load file into the buffer
-    if (!buffer.loadFromFile("../../../../assets/sounds/" + S_name + ".wav"))
+    if (!buffer.loadFromFile("../../../../res/sounds/" + S_name + ".wav"))
     {
         std::cerr << "Failed to load " << S_name << "\n";
 
@@ -78,7 +78,7 @@ void AudioManager::addMusic(const std::string& M_name)
     currentSong = std::make_unique<sf::Music>();
 
     // Attempt to load the file
-    if (!currentSong->openFromFile("../../../../assets/music/" + M_name + ".ogg"))
+    if (!currentSong->openFromFile("../../../../res/music/" + M_name + ".ogg"))
     {
         std::cerr << "Failed to load music\n";
         return;
