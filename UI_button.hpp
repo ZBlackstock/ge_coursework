@@ -62,3 +62,37 @@ public:
 private:
 	std::shared_ptr<Consumable> _consumable = nullptr;
 };
+
+class Button_SetResolution : public Button
+{
+public:
+	virtual void on_select();
+	Button_SetResolution(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
+	void set_change(int change);
+
+private:
+	//The number the res changes by
+	int _change = 0;
+};
+
+class Button_KeyBind : public Button
+{
+public:
+	virtual void on_select();
+	Button_KeyBind(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
+	void set_input(sf::Keyboard::Key key);
+	std::shared_ptr< sf::Text> text = std::make_shared<sf::Text>();
+	sf::Vector2f txt_pos;
+	void text_init();
+	void set_text();
+	void clear_text();
+	static bool assigning_key;
+
+private:
+	// Target key to change
+	sf::Keyboard::Key _target_input;
+};

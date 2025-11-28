@@ -31,6 +31,22 @@ public:
 	//@brief sets input timer to wait_between_inputs
 	static void reset_input_timer();
 
+	static sf::Keyboard::Key submit;
+	static sf::Keyboard::Key up;
+	static sf::Keyboard::Key down;
+	static sf::Keyboard::Key left;
+	static sf::Keyboard::Key right;
+
+	static void assign_submit(sf::Keyboard::Key key);
+	static void assign_up(sf::Keyboard::Key key);
+	static void assign_down(sf::Keyboard::Key key);
+	static void assign_left(sf::Keyboard::Key key);
+	static void assign_right(sf::Keyboard::Key key);
+	static void reset_key_binds();
+	static std::string key_to_string(sf::Keyboard::Key key);
+	static bool is_any_key_pressed();
+	static sf::Keyboard::Key any_key_pressed();
+
 private:
 	static bool a_pressed;
 	static bool b_pressed;

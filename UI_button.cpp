@@ -5,6 +5,7 @@
 #include "event_man.hpp"
 #include "UI_exit_to_mainmenu.hpp"
 #include "SceneMan.hpp"
+#include "input_man.hpp"
 #include "Console.hpp"
 #include <iostream>
 #include <string>
@@ -85,7 +86,7 @@ void b::highlight()
 	rm::set_sprite_pos(_name + "_selected.png", { 10000,10000 });
 }
 
-void b::select()
+void b::submit()
 {
 	rm::set_sprite_pos(_name + "_selected.png", b::_pos);
 	rm::set_sprite_pos(_name + "_idle.png", { 10000,10000 });
@@ -174,4 +175,97 @@ void Button_Consumable::on_select()
 void Button_Consumable::set_consumable(std::shared_ptr<Consumable> cns)
 {
 	Button_Consumable::_consumable = cns;
+}
+
+void Button_SetResolution::set_change(int change)
+{
+	Button_SetResolution::_change = change;
+}
+
+void Button_SetResolution::on_select()
+{
+	Settings::set_resolution(_change);
+}
+
+bool Button_KeyBind::assigning_key = false;
+void Button_KeyBind::set_input(sf::Keyboard::Key key)
+{
+	Button_KeyBind::_target_input = key;
+}
+
+void Button_KeyBind::on_select()
+{
+	if (!Button_KeyBind::assigning_key)
+	{
+		Button_KeyBind::assigning_key = true;
+		Button_KeyBind::clear_text();
+
+		RenderMan::RenderWindow();
+
+		bool key_assigned = false;
+		while (!key_assigned)
+		{
+			sf::Event event;
+			while (RenderMan::GetWindow()->pollEvent(event))
+			{
+				if (event.type == sf::Event::KeyPressed)
+				{
+					if (event.key.code != sf::Keyboard::Escape)
+					{
+						if (Button_KeyBind::_target_input == InputManager::submit)
+						{
+							InputManager::assign_submit(event.key.code);
+						}
+						else if (Button_KeyBind::_target_input == InputManager::up)
+						{
+							InputManager::assign_up(event.key.code);
+						}
+						else if (Button_KeyBind::_target_input == InputManager::down)
+						{
+							InputManager::assign_down(event.key.code);
+						}
+						else if (Button_KeyBind::_target_input == InputManager::left)
+						{
+							InputManager::assign_left(event.key.code);
+						}
+						else if (Button_KeyBind::_target_input == InputManager::right)
+						{
+							InputManager::assign_right(event.key.code);
+						}
+
+						Button_KeyBind::_target_input = event.key.code;
+						key_assigned = true;
+					}
+				}
+			}
+		}
+		Button_KeyBind::set_text();
+		Button_KeyBind::assigning_key = false;
+		sf::sleep(sf::seconds(0.5)); //Stops funky behaviour with already assigned keys
+	}
+}
+
+void Button_KeyBind::text_init()
+{
+	Button_KeyBind::text->setPosition(Button_KeyBind::txt_pos);
+	Button_KeyBind::text->setFont(GameSystem::font_bold);
+	Button_KeyBind::text->setCharacterSize(40);
+	Button_KeyBind::text->setColor(sf::Color::White);
+	Button_KeyBind::set_text();
+
+	RenderMan::createDrawable(Button_KeyBind::text, 2);
+	Console::print("Button_KeyBind::text_init()");
+}
+
+void Button_KeyBind::set_text()
+{
+	Button_KeyBind::text->setString(InputManager::key_to_string(Button_KeyBind::_target_input));
+	Console::print("set_text()");
+
+	Console::print("Button_KeyBind::set_text()");
+}
+
+void Button_KeyBind::clear_text()
+{
+	Button_KeyBind::text->setString("Assign Key");
 }

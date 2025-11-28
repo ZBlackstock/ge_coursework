@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <SFML/Graphics.hpp>
 #include <memory> // For pointers
 #include "Engine\RenderMan.h"
 
@@ -81,8 +82,9 @@ public:
 	Settings(std::string scene_name);
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
-	void set_resolution(int i);
+	static void set_resolution(int i);
 	virtual void update(const float& dt);
+
 private:
 	static int current_res_index;
 	static const std::vector<sf::VideoMode> resolutions;
