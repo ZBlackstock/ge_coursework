@@ -350,6 +350,9 @@ int Settings::current_res_index = 1;
 const std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFullscreenModes();;
 std::shared_ptr<sf::Text> Settings::res_text = std::make_shared<sf::Text>();
 
+
+//Make resolution arrows buttons
+
 // Initiate Settings
 void Settings::on_scene_active()
 {
@@ -391,7 +394,6 @@ void Settings::update(const float& dt)
 	}
 	else if (InputManager::press_right())
 	{
-
 		Settings::set_resolution(Settings::current_res_index + 1);
 	}
 }
