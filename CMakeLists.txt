@@ -19,8 +19,7 @@ link_directories("${CMAKE_BINARY_DIR}/lib/SFML/lib")
 add_library(engine STATIC engine/game_system.cpp 
                         engine/renderer.cpp 
                         engine/ecm.cpp
-						engine/RenderMan.cpp
-)
+						engine/RenderMan.cpp "BasicEntityStats.cpp")
 
 target_include_directories(engine INTERFACE engine ${SFML_INCS})
 target_link_libraries(engine sfml-graphics)
@@ -36,7 +35,7 @@ add_executable(BlackDragon
 	event_man.cpp
 	console.cpp
 	fight_manager.cpp
-)
+	 "BasicEntityStats.cpp")
 
 target_include_directories(BlackDragon PRIVATE ${SFML_INCS} engine)
 target_link_libraries(BlackDragon sfml-graphics engine)
