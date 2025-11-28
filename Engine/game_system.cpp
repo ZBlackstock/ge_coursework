@@ -3,8 +3,10 @@
 #include "..\SceneMan.hpp"
 #include "..\input_man.hpp"
 #include "renderer.hpp"
+#include "AudioManager.h"
 
 using gs = GameSystem;
+using am = AudioManager;
 
 void GameSystem::start(unsigned int width, unsigned int height, const std::string& name, const float& time_step, bool physics_enabled)
 {
@@ -12,6 +14,12 @@ void GameSystem::start(unsigned int width, unsigned int height, const std::strin
 	sf::RenderWindow window(sf::VideoMode(width, height), "Black Dragon", sf::Style::Fullscreen);
 	RenderMan::SetWindow(&window);
 	sf::Event event;
+
+	am::addSounds("shoot");
+
+	am::playSounds();
+
+	am::addMusic("background");
 
 	while (window.isOpen())
 	{

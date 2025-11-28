@@ -20,10 +20,11 @@ add_library(engine STATIC engine/game_system.cpp
                         engine/renderer.cpp 
                         engine/ecm.cpp
 						engine/RenderMan.cpp
+						engine/AudioManager.cpp
 )
 
 target_include_directories(engine INTERFACE engine ${SFML_INCS})
-target_link_libraries(engine sfml-graphics)
+target_link_libraries(engine sfml-graphics sfml-audio sfml-system)
 
 ### executable ###
 add_executable(BlackDragon
@@ -39,5 +40,12 @@ add_executable(BlackDragon
 )
 
 target_include_directories(BlackDragon PRIVATE ${SFML_INCS} engine)
-target_link_libraries(BlackDragon sfml-graphics engine)
+target_link_libraries(BlackDragon sfml-graphics sfml-audio sfml-system engine)
 set_property(TARGET BlackDragon PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
+add_custom_command(TARGET BlackDragon POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${PROJECT_SOURCE_DIR}/lib/SFMLBIN/bin"
+    "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+)
+
