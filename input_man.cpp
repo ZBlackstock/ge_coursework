@@ -39,7 +39,7 @@ void im::Update(const float& dt)
 
 bool im::press_submit()
 {
-	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
+	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(im::submit)
 		|| (im::gamepad_connected && sf::Joystick::isButtonPressed(0, im::gamepad_a))))
 	{
 		im::reset_input_timer();
@@ -75,7 +75,7 @@ bool im::press_menu()
 
 bool im::press_up()
 {
-	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(im::up)
 		|| (im::gamepad_connected && dpad_y > dpad_dead)))
 	{
 		im::reset_input_timer();
@@ -87,7 +87,7 @@ bool im::press_up()
 
 bool im::press_down()
 {
-	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(im::down)
 		|| (im::gamepad_connected && dpad_y < -dpad_dead)))
 	{
 		im::reset_input_timer();
@@ -99,7 +99,7 @@ bool im::press_down()
 
 bool im::press_left()
 {
-	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(im::left)
 		|| (im::gamepad_connected && dpad_x < -dpad_dead)))
 	{
 		im::reset_input_timer();
@@ -111,7 +111,7 @@ bool im::press_left()
 
 bool im::press_right()
 {
-	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(im::right)
 		|| (im::gamepad_connected && dpad_x > dpad_dead)))
 	{
 		im::reset_input_timer();

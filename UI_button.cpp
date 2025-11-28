@@ -187,6 +187,7 @@ void Button_SetResolution::on_select()
 	Settings::set_resolution(_change);
 }
 
+bool Button_KeyBind::assigning_key = false;
 void Button_KeyBind::set_input(sf::Keyboard::Key key)
 {
 	Button_KeyBind::_target_input = key;
@@ -194,43 +195,54 @@ void Button_KeyBind::set_input(sf::Keyboard::Key key)
 
 void Button_KeyBind::on_select()
 {
-	Button_KeyBind::clear_text();
-
-	RenderMan::RenderWindow();
-
-	bool key_assigned = false;
-	while (!key_assigned)
+	if (!Button_KeyBind::assigning_key)
 	{
-		sf::Event event;
-		while (RenderMan::GetWindow()->pollEvent(event))
+		Button_KeyBind::assigning_key = true;
+		Button_KeyBind::clear_text();
+
+		RenderMan::RenderWindow();
+
+		bool key_assigned = false;
+		while (!key_assigned)
 		{
-			if (event.type == sf::Event::KeyPressed)
+			sf::Event event;
+			while (RenderMan::GetWindow()->pollEvent(event))
 			{
-				if (Button_KeyBind::_target_input == InputManager::submit)
+				if (event.type == sf::Event::KeyPressed)
 				{
-					InputManager::assign_submit(event.key.code);
+					if (event.key.code != sf::Keyboard::Escape)
+					{
+						if (Button_KeyBind::_target_input == InputManager::submit)
+						{
+							InputManager::assign_submit(event.key.code);
+						}
+						else if (Button_KeyBind::_target_input == InputManager::up)
+						{
+							InputManager::assign_up(event.key.code);
+						}
+						else if (Button_KeyBind::_target_input == InputManager::down)
+						{
+							InputManager::assign_down(event.key.code);
+						}
+						else if (Button_KeyBind::_target_input == InputManager::left)
+						{
+							InputManager::assign_left(event.key.code);
+						}
+						else if (Button_KeyBind::_target_input == InputManager::right)
+						{
+							InputManager::assign_right(event.key.code);
+						}
+
+						Button_KeyBind::_target_input = event.key.code;
+						key_assigned = true;
+					}
 				}
-				else if(Button_KeyBind::_target_input == InputManager::up)
-				{
-					InputManager::assign_up(event.key.code);
-				}	
-				else if (Button_KeyBind::_target_input == InputManager::down)
-				{
-					InputManager::assign_down(event.key.code);
-				}
-				else if (Button_KeyBind::_target_input == InputManager::left)
-				{
-					InputManager::assign_left(event.key.code);
-				}
-				else if (Button_KeyBind::_target_input == InputManager::right)
-				{
-					InputManager::assign_right(event.key.code);
-				}
-				key_assigned = true;
 			}
 		}
+		Button_KeyBind::set_text();
+		Button_KeyBind::assigning_key = false;
+		sf::sleep(sf::seconds(0.5)); //Stops funky behaviour with already assigned keys
 	}
-	//Button_KeyBind::set_text();
 }
 
 void Button_KeyBind::text_init()

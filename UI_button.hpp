@@ -90,6 +90,7 @@ public:
 	void text_init();
 	void set_text();
 	void clear_text();
+	static bool assigning_key;
 
 private:
 	// Target key to change
