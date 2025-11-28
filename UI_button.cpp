@@ -5,6 +5,7 @@
 #include "event_man.hpp"
 #include "UI_exit_to_mainmenu.hpp"
 #include "SceneMan.hpp"
+#include "input_man.hpp"
 #include "Console.hpp"
 #include <iostream>
 #include <string>
@@ -194,4 +195,27 @@ void Button_KeyBind::set_input(sf::Keyboard::Key key)
 void Button_KeyBind::on_select()
 {
 	Console::print("Button_KeyBind::on_select()");
+
+
+	Button_KeyBind::set_text();
+}
+
+void Button_KeyBind::text_init()
+{
+	Button_KeyBind::text->setPosition(Button_KeyBind::txt_pos);
+	Button_KeyBind::text->setFont(GameSystem::font_bold);
+	Button_KeyBind::text->setCharacterSize(40);
+	Button_KeyBind::text->setColor(sf::Color::White);
+	Button_KeyBind::set_text();
+
+	RenderMan::createDrawable(Button_KeyBind::text, 2);
+	Console::print("Button_KeyBind::text_init()");
+}
+
+void Button_KeyBind::set_text()
+{
+	Button_KeyBind::text->setString(InputManager::key_to_string(Button_KeyBind::_target_Input));
+
+	Console::print("Button_KeyBind::set_text()");
+
 }

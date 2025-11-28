@@ -350,7 +350,6 @@ int Settings::current_res_index = 1;
 const std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFullscreenModes();;
 std::shared_ptr<sf::Text> Settings::res_text = std::make_shared<sf::Text>();
 
-
 // Make Button_KeyBind
 
 // Initiate Settings
@@ -378,6 +377,8 @@ void Settings::on_scene_active()
 	std::shared_ptr<Button_KeyBind> btn_key_bind_select = std::make_shared<Button_KeyBind>
 		("settings_select", sf::Vector2f{ 1100,200 }, 1);
 	btn_key_bind_select->set_input(InputManager::submit);
+	btn_key_bind_select->txt_pos = sf::Vector2f{ 1450,170 };
+	btn_key_bind_select->text_init();
 
 	// Assign back button scene and set it to highlighted
 	EventManager::set_current_button(btn_togglefullscreen);
@@ -387,7 +388,7 @@ void Settings::on_scene_active()
 	btn_togglefullscreen->set_below(btn_back);
 
 	btn_back->set_above(btn_togglefullscreen);
-	btn_back->set_below(btn_res_arrow_left);
+	btn_back->set_below(btn_key_bind_select);
 
 	btn_res_arrow_left->set_left(btn_res_arrow_right);
 	btn_res_arrow_left->set_right(btn_res_arrow_right);
@@ -396,6 +397,8 @@ void Settings::on_scene_active()
 	btn_res_arrow_right->set_left(btn_res_arrow_left);
 	btn_res_arrow_right->set_right(btn_res_arrow_left);
 	btn_res_arrow_right->set_below(btn_togglefullscreen);
+
+	btn_key_bind_select->set_above(btn_back);
 
 
 	// Set current resolution text
@@ -413,6 +416,7 @@ void Settings::update(const float& dt)
 {
 
 }
+
 
 void Settings::set_resolution(int i)
 {

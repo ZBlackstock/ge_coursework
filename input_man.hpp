@@ -43,7 +43,7 @@ public:
 	static void assign_left(sf::Keyboard::Key key);
 	static void assign_right(sf::Keyboard::Key key);
 	static void reset_key_binds();
-
+	static std::string key_to_string(sf::Keyboard::Key key);
 
 private:
 	static bool a_pressed;

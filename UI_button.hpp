@@ -85,6 +85,10 @@ public:
 		Button(name_in_file, location, sort_layer) {
 	}
 	void set_input(sf::Keyboard::Key key);
+	std::shared_ptr< sf::Text> text = std::make_shared<sf::Text>();
+	sf::Vector2f txt_pos;
+	void text_init();
+	void set_text();
 
 private:
 	// Target key to change
