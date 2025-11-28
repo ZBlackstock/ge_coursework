@@ -37,6 +37,7 @@ add_executable(BlackDragon
 	event_man.cpp
 	console.cpp
 	fight_manager.cpp
+	BasicEntityStats.cpp
 	message_box.cpp
 	UI_fight_loop.cpp
 	healthbar.cpp
