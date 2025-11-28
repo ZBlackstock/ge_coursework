@@ -351,7 +351,8 @@ const std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFulls
 std::shared_ptr<sf::Text> Settings::res_text = std::make_shared<sf::Text>();
 
 
-//Make resolution arrows buttons
+// Load resolution arrows buttons
+// Make Button_KeyBind
 
 // Initiate Settings
 void Settings::on_scene_active()
