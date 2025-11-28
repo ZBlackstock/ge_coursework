@@ -37,6 +37,7 @@ add_executable(BlackDragon
 	event_man.cpp
 	console.cpp
 	fight_manager.cpp
+	message_box.cpp
 )
 
 target_include_directories(BlackDragon PRIVATE ${SFML_INCS} engine)

@@ -9,6 +9,6 @@ public:
 	static void set_text(std::string message);
 
 private:
-	static std::shared_ptr<std::string> message;
+	static std::shared_ptr<sf::Text> _message;
 
 };
