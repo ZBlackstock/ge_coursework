@@ -2,7 +2,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-class MessageBox
+class MsgBox
 {
 public:
 	static void init();
