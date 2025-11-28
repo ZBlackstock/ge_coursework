@@ -76,3 +76,17 @@ private:
 	//The number the res changes by
 	int _change = 0;
 };
+
+class Button_KeyBind : public Button
+{
+public:
+	virtual void on_select();
+	Button_KeyBind(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
+	void set_input(sf::Keyboard::Key key);
+
+private:
+	// Target key to change
+	sf::Keyboard::Key _target_Input;
+};

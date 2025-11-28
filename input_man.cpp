@@ -13,6 +13,11 @@ const float im::dpad_dead = 0.1f;
 float im::wait_between_input = 0.25f; // To stop holding down keys spamming buttons
 float im::input_wait_timer = im::wait_between_input;
 
+sf::Keyboard::Key im::submit = sf::Keyboard::Space;
+sf::Keyboard::Key im::up = sf::Keyboard::Up;
+sf::Keyboard::Key im::down = sf::Keyboard::Down;
+sf::Keyboard::Key im::left = sf::Keyboard::Left;
+sf::Keyboard::Key im::right = sf::Keyboard::Right;
 
 void im::Update(const float& dt)
 {
@@ -33,8 +38,7 @@ void im::Update(const float& dt)
 bool im::press_submit()
 {
 	if (im::can_press_button() && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || (im::gamepad_connected &&
-			sf::Joystick::isButtonPressed(0, im::gamepad_a))))
+		|| (im::gamepad_connected && sf::Joystick::isButtonPressed(0, im::gamepad_a))))
 	{
 		im::reset_input_timer();
 		return true;
@@ -128,4 +132,39 @@ bool im::can_press_button()
 void im::reset_input_timer()
 {
 	im::input_wait_timer = im::wait_between_input;
+}
+
+// Used for key bindings
+void im::assign_submit(sf::Keyboard::Key key)
+{
+	im::submit = key;
+}
+
+void im::assign_up(sf::Keyboard::Key key)
+{
+	im::up = key;
+}
+
+void im::assign_down(sf::Keyboard::Key key)
+{
+	im::down = key;
+}
+
+void im::assign_left(sf::Keyboard::Key key)
+{
+	im::left = key;
+}
+
+void im::assign_right(sf::Keyboard::Key key)
+{
+	im::right = key;
+}
+
+void im::reset_key_binds()
+{
+	im::submit = sf::Keyboard::Space;
+	im::up = sf::Keyboard::Up;
+	im::down = sf::Keyboard::Down;
+	im::left = sf::Keyboard::Left;
+	im::right = sf::Keyboard::Right;
 }

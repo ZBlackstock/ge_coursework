@@ -375,6 +375,9 @@ void Settings::on_scene_active()
 	btn_res_arrow_left->set_change(1);
 
 	//Load Keybind buttons
+	std::shared_ptr<Button_KeyBind> btn_key_bind_select = std::make_shared<Button_KeyBind>
+		("settings_select", sf::Vector2f{ 1100,200 }, 1);
+	btn_key_bind_select->set_input(InputManager::submit);
 
 	// Assign back button scene and set it to highlighted
 	EventManager::set_current_button(btn_togglefullscreen);

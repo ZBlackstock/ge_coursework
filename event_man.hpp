@@ -19,7 +19,7 @@ public:
 	void update();
 	void idle();
 	void highlight();
-	void select();
+	void submit();
 	void disable();
 
 	virtual void on_select();

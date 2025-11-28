@@ -85,7 +85,7 @@ void b::highlight()
 	rm::set_sprite_pos(_name + "_selected.png", { 10000,10000 });
 }
 
-void b::select()
+void b::submit()
 {
 	rm::set_sprite_pos(_name + "_selected.png", b::_pos);
 	rm::set_sprite_pos(_name + "_idle.png", { 10000,10000 });
@@ -184,4 +184,14 @@ void Button_SetResolution::set_change(int change)
 void Button_SetResolution::on_select()
 {
 	Settings::set_resolution(_change);
+}
+
+void Button_KeyBind::set_input(sf::Keyboard::Key key)
+{
+	Button_KeyBind::_target_Input = key;
+}
+
+void Button_KeyBind::on_select()
+{
+	Console::print("Button_KeyBind::on_select()");
 }
