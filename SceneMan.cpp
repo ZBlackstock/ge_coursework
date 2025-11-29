@@ -262,12 +262,27 @@ void Fight0::on_scene_active()
 	ExitToMainMenu::init();
 	auto player = GameSystem::make_entity();
 	auto stats = player->add_component<BasicEntityStats>(100, 20);
-	player->set_position(sf::Vector2f(1920 / 2.f, 1080 / 2.f));
-	auto s = player->add_component<ShapeComponent>();
-	s->set_shape<sf::CircleShape>(10.0f);
-	s->get_shape().setFillColor(sf::Color::Red);
+	auto s = player->add_component<SpriteComponent>();
+	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
+	tex->loadFromFile(gs::sprites_path + "player.png");
+	s->set_texure(tex);
+	s->get_sprite().setPosition(gs::screen_mid);
+
+	stats->take_damage(stats->get_attack_power());
 	auto buff = stats->add_buff<dath>();
 	s->render();
+
+	auto elayer = GameSystem::make_entity();
+	auto etats = elayer->add_component<BasicEntityStats>(100, 20);
+	auto e = elayer->add_component<SpriteComponent>();
+	std::shared_ptr<sf::Texture> etex = std::make_shared<sf::Texture>();
+	etex->loadFromFile(gs::sprites_path + "enemy.png");
+	e->set_texure(etex);
+	e->get_sprite().setPosition(gs::screen_mid.x+100,gs::screen_mid.y-200);
+
+	etats->take_damage(stats->get_attack_power());
+	auto ebuff = etats->add_buff<dath>();
+	e->render();
 
 	MsgBox::init();
 	EventManager::set_current_button(ItemManager::player_consumables[0]->button);
