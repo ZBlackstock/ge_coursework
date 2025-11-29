@@ -10,6 +10,7 @@
 #include "UI_exit_to_mainmenu.hpp"
 #include "input_man.hpp"
 #include "consumable_man.hpp"
+#include "BasicEntityStats.h"
 
 
 using sm = SceneManager;
@@ -257,6 +258,15 @@ void Fight0::on_scene_active()
 	ConsumableManager::init();
 	EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
 	ExitToMainMenu::init();
+	auto player = GameSystem::make_entity();
+	auto stats = player->add_component<BasicEntityStats>(100, 20);
+	player->set_position(sf::Vector2f(1920 / 2.f, 1080 / 2.f));
+	auto s = player->add_component<ShapeComponent>();
+	s->set_shape<sf::CircleShape>(10.0f);
+	s->get_shape().setFillColor(sf::Color::Red);
+	auto buff = stats->add_buff<dath>();
+	s->render();
+
 }
 void Fight0::update(const float& dt)
 {

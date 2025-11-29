@@ -20,6 +20,12 @@ public:
     static sf::Font font_bold;
     static bool fullscreen;
     static void assign_paths();
+    static const std::shared_ptr<Entity>& make_entity();
+    static std::vector<std::shared_ptr<Entity>>& get_entities() { return _entities.list; }
+
+protected:
+    static EntityManager _entities;
+
 
 private:
     static void _update(const float &dt);
