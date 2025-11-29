@@ -100,8 +100,7 @@ SpriteComponent::SpriteComponent(Entity* p)
 }
 
 void SpriteComponent::update(const float& dt) {
-    _sprite->setPosition(_parent->get_position());
-    _sprite->setRotation((_parent->get_rotation()) / M_PI * 180.f);
+
 }
 
 void SpriteComponent::render() { RenderMan::createDrawable(_sprite, 1); }
