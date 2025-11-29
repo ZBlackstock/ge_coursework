@@ -12,6 +12,7 @@
 #include "item_man.hpp"
 #include "message_box.hpp"
 #include "fight_manager.hpp"
+#include "BasicEntityStats.h"
 
 using sm = SceneManager;
 using gs = GameSystem;
@@ -259,6 +260,15 @@ void Fight0::on_scene_active()
 	FightManager::init();
 	ItemManager::init();
 	ExitToMainMenu::init();
+	auto player = GameSystem::make_entity();
+	auto stats = player->add_component<BasicEntityStats>(100, 20);
+	player->set_position(sf::Vector2f(1920 / 2.f, 1080 / 2.f));
+	auto s = player->add_component<ShapeComponent>();
+	s->set_shape<sf::CircleShape>(10.0f);
+	s->get_shape().setFillColor(sf::Color::Red);
+	auto buff = stats->add_buff<dath>();
+	s->render();
+
 	MsgBox::init();
 	EventManager::set_current_button(ItemManager::player_consumables[0]->button);
 

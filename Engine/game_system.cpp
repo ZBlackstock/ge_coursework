@@ -7,6 +7,7 @@
 #include "AudioManager.h"
 
 using gs = GameSystem;
+EntityManager GameSystem::_entities;
 using am = AudioManager;
 
 void GameSystem::start(unsigned int width, unsigned int height, const std::string& name, const float& time_step, bool physics_enabled)
@@ -67,4 +68,10 @@ void GameSystem::assign_paths()
 	{
 		std::cout << "Couldnt load font_bold" << std::endl;
 	}
+}
+
+const std::shared_ptr<Entity>& GameSystem::make_entity() {
+	std::shared_ptr<Entity> entity = std::make_shared<Entity>();
+	_entities.list.push_back(entity);
+	return _entities.list.back();
 }

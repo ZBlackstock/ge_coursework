@@ -6,6 +6,7 @@
 #include "Scene.hpp"
 #include "Engine\game_system.hpp"
 #include "event_man.hpp"
+#include <SFML/Audio.hpp>
 #include "input_man.hpp"
 
 
