@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <map>
+#include <string>
 
 // ============================================================================
 // AudioManager
@@ -12,6 +14,9 @@ class AudioManager
 public:
     // Play all loaded sound effects.
     static void playSounds();
+
+    // play sound by name
+    static void playSound(std::string name);
 
     // Load a .wav sound and store it for playback.
     static void addSounds(const std::string& S_name);
@@ -27,7 +32,7 @@ private:
     static std::vector<sf::SoundBuffer> buffers;
 
     // Active sound objects referencing the buffers.
-    static std::vector<std::shared_ptr<sf::Sound>> activeSounds;
+    static std::map<std::shared_ptr<sf::Sound>, std::string> activeSounds;
 
     // Currently playing background music.
     static std::unique_ptr<sf::Music> currentSong;

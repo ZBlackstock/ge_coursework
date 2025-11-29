@@ -8,7 +8,7 @@
 // These are the actual definitions of the static members declared in the header.
 // They must exist in exactly one .cpp file.
 std::vector<sf::SoundBuffer> AudioManager::buffers;
-std::vector<std::shared_ptr<sf::Sound>> AudioManager::activeSounds;
+std::map<std::shared_ptr<sf::Sound>, std::string> AudioManager::activeSounds;
 std::unique_ptr<sf::Music> AudioManager::currentSong = nullptr;
 
 
@@ -23,27 +23,27 @@ std::unique_ptr<sf::Music> AudioManager::currentSong = nullptr;
 // ============================================================================
 void AudioManager::addSounds(const std::string& S_name)
 {
-    // Create a new buffer in the vector
-    buffers.emplace_back();
-    sf::SoundBuffer& buffer = buffers.back();
+	// Create a new buffer in the vector
+	buffers.emplace_back();
+	sf::SoundBuffer& buffer = buffers.back();
 
-    // Load file into the buffer
-    if (!buffer.loadFromFile("../../../../res/sounds/" + S_name + ".wav"))
-    {
-        std::cerr << "Failed to load " << S_name << "\n";
+	// Load file into the buffer
+	if (!buffer.loadFromFile("../../../../res/sounds/" + S_name + ".wav"))
+	{
+		std::cerr << "Failed to load " << S_name << "\n";
 
-        // Remove the last buffer to avoid storing an invalid buffer
-        buffers.pop_back();
-        return;
-    }
+		// Remove the last buffer to avoid storing an invalid buffer
+		buffers.pop_back();
+		return;
+	}
 
-    // Create a new sound and link it to the buffer
-    auto sound = std::make_shared<sf::Sound>();
-    sound->setBuffer(buffer);
-    sound->setVolume(100.f);
+	// Create a new sound and link it to the buffer
+	auto sound = std::make_shared<sf::Sound>();
+	sound->setBuffer(buffer);
+	sound->setVolume(100.f);
 
-    // Store the sound so we can play it later
-    activeSounds.push_back(sound);
+	// Store the sound so we can play it later
+	activeSounds.emplace(sound, S_name);
 }
 
 
@@ -56,13 +56,27 @@ void AudioManager::addSounds(const std::string& S_name)
 // ============================================================================
 void AudioManager::playSounds()
 {
-    for (auto& sound : activeSounds)
-    {
-        std::cout << "Playing sound\n";
-        sound->play();
-    }
+	int i = 0;
+	for (auto it = activeSounds.begin(); it != activeSounds.end() && i < activeSounds.size(); ++it, ++i)
+	{
+		std::cout << "Playing sound\n";
+		it->first->play();
+	}
 }
 
+// Play sound by name
+void AudioManager::playSound(std::string name)
+{
+	int i = 0;
+	for (auto it = activeSounds.begin(); it != activeSounds.end() && i < activeSounds.size(); ++it, ++i)
+	{
+		if (it->second == name)
+		{
+			it->first->play();
+			break;
+		}
+	}
+}
 
 
 // ============================================================================
@@ -74,19 +88,19 @@ void AudioManager::playSounds()
 // ============================================================================
 void AudioManager::addMusic(const std::string& M_name)
 {
-    // Create a new music object
-    currentSong = std::make_unique<sf::Music>();
+	// Create a new music object
+	currentSong = std::make_unique<sf::Music>();
 
-    // Attempt to load the file
-    if (!currentSong->openFromFile("../../../../res/music/" + M_name + ".ogg"))
-    {
-        std::cerr << "Failed to load music\n";
-        return;
-    }
+	// Attempt to load the file
+	if (!currentSong->openFromFile("../../../../res/music/" + M_name + ".ogg"))
+	{
+		std::cerr << "Failed to load music\n";
+		return;
+	}
 
-    // Enable looping and start playback
-    currentSong->setLoop(true);
-    currentSong->play();
+	// Enable looping and start playback
+	currentSong->setLoop(true);
+	currentSong->play();
 }
 
 
@@ -99,6 +113,6 @@ void AudioManager::addMusic(const std::string& M_name)
 // ============================================================================
 void AudioManager::clearSounds()
 {
-    activeSounds.clear();
-    buffers.clear();
+	activeSounds.clear();
+	buffers.clear();
 }

@@ -17,7 +17,7 @@ void GameSystem::start(unsigned int width, unsigned int height, const std::strin
 
 	am::addSounds("shoot");
 
-	am::playSounds();
+	am::playSound("shoot");
 
 	am::addMusic("background");
 
