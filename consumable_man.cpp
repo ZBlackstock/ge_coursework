@@ -3,10 +3,11 @@
 #include "console.hpp"
 #include <cstdlib>
 #include "fight_manager.hpp"
+#include "message_box.hpp"
 
 using cns = Consumable;
 using cman = ConsumableManager;
-
+using m = MsgBox;
 
 std::vector<std::shared_ptr<Consumable>> cman::all_consumables;
 std::vector<std::shared_ptr<Consumable>> cman::player_consumables;
@@ -162,13 +163,14 @@ std::string cns::get_name()
 void cns_HealingPotion::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Health Potion Used. Regained " + std::to_string( cns_HealingPotion::_heal_amount) + " health!");
 }
 
 // Fire Resistance
 void cns_FireResistance::on_use()
 {
 	cns::on_use();
+	m::set_text("Fire resistance gained! The next fire attack that lands will deal less damage");
 
 }
 
@@ -176,75 +178,75 @@ void cns_FireResistance::on_use()
 void cns_SharpResistance::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Sharp resistance gained! The next fire attack that lands will deal less damage");
 }
 
 // Blunt resistance
 void cns_BluntResistance::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Blunt resistance gained! The next fire attack that lands will deal less damage");
 }
 
 // Insight
 void cns_Insight::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Insight used! Your foes next resource consumption will not be hidden to you");
 }
 
 // Thorns
 void cns_Thorns::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Thorns used! Your foes next landing attack will hurt them too");
 }
 
 // Illusion
 void cns_Illusion::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Illusion cast! Your foe will have a difficult time landing their next hit");
 }
 
 // Fire buff
 void cns_FireBlessing::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Fire blessing recieved! Your next attack will deal additional Fire damage");
 }
 
 // Sharp buff
 void cns_Whetstone::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Whetstone used! Your next attack will deal additional Sharp damage");
 }
 
 // Strength buff
 void cns_StrengthBlessing::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Strenth blessing recieved! Your next attack will deal additional Strenth damage");
 }
 
 // Rage
 void cns_Rage::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Rage!");
 }
 
 // Quickeye
 void cns_QuickEye::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Quick Eye!");
 }
 
 // Oil
 void cns_Oil::on_use()
 {
 	cns::on_use();
-
+	m::set_text("Oil!");
 }
