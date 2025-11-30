@@ -77,6 +77,7 @@ void b::idle()
 {
 	rm::set_sprite_pos(_name + "_idle.png", b::_pos);
 	rm::set_sprite_pos(_name + "_highlighted.png", { 10000,10000 });
+	on_idle();
 }
 
 void b::highlight()
@@ -84,6 +85,7 @@ void b::highlight()
 	rm::set_sprite_pos(_name + "_highlighted.png", b::_pos);
 	rm::set_sprite_pos(_name + "_idle.png", { 10000,10000 });
 	rm::set_sprite_pos(_name + "_selected.png", { 10000,10000 });
+	on_highlight();
 }
 
 void b::submit()
@@ -113,6 +115,9 @@ void b::on_select()
 {
 	std::cout << "Button Selected" << std::endl;
 }
+
+void b::on_highlight() {}
+void b::on_idle() {}
 
 bool b::is_selected()
 {
@@ -166,10 +171,23 @@ void Button_ToggleFullscreen::on_select()
 	window->create(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "Black Dragon", gs::fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
 }
 
+void Button_Consumable::on_idle()
+{
+	Console::print("on_idle() " + Button_Consumable::_consumable->get_name());
+	Button_Consumable::_consumable->display_description(false);
+}
+
+void Button_Consumable::on_highlight()
+{
+	Console::print("on_highlight() " + Button_Consumable::_consumable->get_name());
+	Button_Consumable::_consumable->display_description(true);
+}
+
 void Button_Consumable::on_select()
 {
 	Console::print("on_select() " + Button_Consumable::_consumable->get_name());
 	Button_Consumable::_consumable->on_use();
+	Button_Consumable::_consumable->display_description(false);
 }
 
 void Button_Consumable::set_consumable(std::shared_ptr<Consumable> cns)

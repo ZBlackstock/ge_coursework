@@ -26,19 +26,27 @@ public:
 	std::shared_ptr<Button_Consumable> button = nullptr;
 	virtual void on_use();
 	void set_pos(sf::Vector2f pos);
+	void display_description(bool display);
+	virtual void set_display_texts();
 	std::string get_name();
 
-private:
+protected:
 	std::string _name;
 	sf::Vector2f _pos;
+	std::shared_ptr< sf::Text> _txt_display_name = std::make_shared<sf::Text>();
+	std::shared_ptr< sf::Text> _txt_display_description = std::make_shared<sf::Text>();
+
+	std::string _display_name;
+	std::string _display_description;
 };
 
 // Heal player by amount
 class cns_HealingPotion : public Consumable
 {
 public:
-	cns_HealingPotion(std::string name, sf::Vector2f pos, int heal_amount) : Consumable(name, pos) {}
-	virtual void on_use();
+	cns_HealingPotion(std::string name, sf::Vector2f pos, int heal_amount) : Consumable(name, pos), _heal_amount(heal_amount) {}
+	void on_use() override;
+	void set_display_texts() override;
 
 private:
 	int _heal_amount;
@@ -49,7 +57,8 @@ class cns_FireResistance : public Consumable
 {
 public:
 	cns_FireResistance(std::string name, sf::Vector2f pos, int resistance) : Consumable(name, pos) {}
-	virtual void on_use();
+	void on_use() override;
+	void set_display_texts() override;
 
 private:
 	int _resistance;
@@ -60,29 +69,23 @@ class cns_SharpResistance : public Consumable
 {
 public:
 	cns_SharpResistance(std::string name, sf::Vector2f pos, int resistance) : Consumable(name, pos) {}
-	virtual void on_use();
+	void on_use() override;
+	void set_display_texts() override;
 
 private:
 	int _resistance;
 };
 
 // Resistant to next blunt damage dealt
-class cns_BluntResistance : public Consumable
+class cns_FireBomb : public Consumable
 {
 public:
-	cns_BluntResistance(std::string name, sf::Vector2f pos, int resistance) : Consumable(name, pos) {}
-	virtual void on_use();
+	cns_FireBomb(std::string name, sf::Vector2f pos, int damage) : Consumable(name, pos) {}
+	void on_use() override;
+	void set_display_texts() override;
 
 private:
-	int _resistance;
-};
-
-// enemy's next consumable action is not hidden
-class cns_Insight : public Consumable
-{
-public:
-	cns_Insight(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
+	int _damage;
 };
 
 // If enemy's next attack lands, it will deal half of recieved damage to the enemy
@@ -90,7 +93,8 @@ class cns_Thorns : public Consumable
 {
 public:
 	cns_Thorns(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
+	void on_use() override;
+	void set_display_texts() override;
 };
 
 // Enemy's next attack double likely to miss
@@ -98,7 +102,8 @@ class cns_Illusion : public Consumable
 {
 public:
 	cns_Illusion(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
+	void on_use() override;
+	void set_display_texts() override;
 };
 
 // Next player attack will deal additional fire damage
@@ -106,7 +111,8 @@ class cns_FireBlessing : public Consumable
 {
 public:
 	cns_FireBlessing(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
+	void on_use() override;
+	void set_display_texts() override;
 };
 
 // Next player attack will deal additional sharp damage
@@ -114,15 +120,8 @@ class cns_Whetstone : public Consumable
 {
 public:
 	cns_Whetstone(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
-};
-
-// Next player attack will deal additional Blunt damage
-class cns_StrengthBlessing : public Consumable
-{
-public:
-	cns_StrengthBlessing(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
+	void on_use() override;
+	void set_display_texts() override;
 };
 
 // Next player attack will deal double damage, but is less likely to land
@@ -130,7 +129,8 @@ class cns_Rage : public Consumable
 {
 public:
 	cns_Rage(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
+	void on_use() override;
+	void set_display_texts() override;
 };
 
 // Next player parry is more likely to be successful
@@ -138,7 +138,8 @@ class cns_QuickEye : public Consumable
 {
 public:
 	cns_QuickEye(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
+	void on_use() override;
+	void set_display_texts() override;
 };
 
 // If enemy performs fire attack, they will take the fire damage
@@ -146,5 +147,6 @@ class cns_Oil : public Consumable
 {
 public:
 	cns_Oil(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
+	void on_use() override;
+	void set_display_texts() override;
 };
