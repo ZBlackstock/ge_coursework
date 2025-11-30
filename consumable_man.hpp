@@ -26,11 +26,14 @@ public:
 	std::shared_ptr<Button_Consumable> button = nullptr;
 	virtual void on_use();
 	void set_pos(sf::Vector2f pos);
+	void display_description(bool display);
 	std::string get_name();
 
 private:
 	std::string _name;
 	sf::Vector2f _pos;
+	sf::Text _display_name;
+	sf::Text _display_description;
 };
 
 // Heal player by amount
@@ -67,14 +70,14 @@ private:
 };
 
 // Resistant to next blunt damage dealt
-class cns_BluntResistance : public Consumable
+class cns_FireBomb : public Consumable
 {
 public:
-	cns_BluntResistance(std::string name, sf::Vector2f pos, int resistance) : Consumable(name, pos) {}
+	cns_FireBomb(std::string name, sf::Vector2f pos, int damage) : Consumable(name, pos) {}
 	virtual void on_use();
 
 private:
-	int _resistance;
+	int _damage;
 };
 
 // enemy's next consumable action is not hidden
@@ -114,14 +117,6 @@ class cns_Whetstone : public Consumable
 {
 public:
 	cns_Whetstone(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
-	virtual void on_use();
-};
-
-// Next player attack will deal additional Blunt damage
-class cns_StrengthBlessing : public Consumable
-{
-public:
-	cns_StrengthBlessing(std::string name, sf::Vector2f pos) : Consumable(name, pos) {}
 	virtual void on_use();
 };
 

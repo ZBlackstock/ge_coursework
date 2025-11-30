@@ -37,9 +37,9 @@ void cman::init()
 	std::shared_ptr<cns_SharpResistance> sharp_resistance = std::make_shared<cns_SharpResistance>
 		("cns_sharp_resistance", sf::Vector2f{ 10000,10000 }, 50);
 
-	// ____________________Blunt Resistance_____________________
-	std::shared_ptr<cns_BluntResistance> blunt_resistance = std::make_shared<cns_BluntResistance>
-		("cns_blunt_resistance", sf::Vector2f{ 10000,10000 }, 50);
+	// ____________________Fire Damage_____________________
+	std::shared_ptr<cns_FireBomb> firebomb = std::make_shared<cns_FireBomb>
+		("cns_firebomb", sf::Vector2f{ 10000,10000 }, 50);
 
 	// ____________________Insight_____________________
 	std::shared_ptr<cns_Insight> insight = std::make_shared<cns_Insight>
@@ -61,10 +61,6 @@ void cman::init()
 	std::shared_ptr<cns_FireBlessing> fire_blessing = std::make_shared<cns_FireBlessing>
 		("cns_fire_blessing", sf::Vector2f{ 10000,10000 });
 
-	// ____________________Strength Blessing_____________________
-	std::shared_ptr<cns_StrengthBlessing> strength_blessing = std::make_shared<cns_StrengthBlessing>
-		("cns_strength_blessing", sf::Vector2f{ 10000,10000 });
-
 	// ____________________Rage_____________________
 	std::shared_ptr<cns_Rage> rage = std::make_shared<cns_Rage>
 		("cns_rage", sf::Vector2f{ 10000,10000 });
@@ -82,13 +78,12 @@ void cman::init()
 	healing_potion2->button->set_consumable(healing_potion2);
 	fire_resistance->button->set_consumable(fire_resistance);
 	sharp_resistance->button->set_consumable(sharp_resistance);
-	blunt_resistance->button->set_consumable(blunt_resistance);
+	firebomb->button->set_consumable(firebomb);
 	insight->button->set_consumable(insight);
 	thorns->button->set_consumable(thorns);
 	illusion->button->set_consumable(illusion);
 	whetstone->button->set_consumable(whetstone);
 	fire_blessing->button->set_consumable(fire_blessing);
-	strength_blessing->button->set_consumable(strength_blessing);
 	rage->button->set_consumable(rage);
 	quick_eye->button->set_consumable(quick_eye);
 	oil->button->set_consumable(oil);
@@ -98,13 +93,12 @@ void cman::init()
 	cman::all_consumables.push_back(healing_potion2);
 	cman::all_consumables.push_back(fire_resistance);
 	cman::all_consumables.push_back(sharp_resistance);
-	cman::all_consumables.push_back(blunt_resistance);
+	cman::all_consumables.push_back(firebomb);
 	cman::all_consumables.push_back(insight);
 	cman::all_consumables.push_back(thorns);
 	cman::all_consumables.push_back(illusion);
 	cman::all_consumables.push_back(whetstone);
 	cman::all_consumables.push_back(fire_blessing);
-	cman::all_consumables.push_back(strength_blessing);
 	cman::all_consumables.push_back(rage);
 	cman::all_consumables.push_back(quick_eye);
 	cman::all_consumables.push_back(oil);
@@ -139,6 +133,8 @@ cns::Consumable(std::string name, sf::Vector2f pos)
 	cns::_name = name;
 	cns::_pos = pos;
 	cns::button = std::make_shared<Button_Consumable>(name, pos, 3);
+
+
 }
 void cns::on_use() 
 {
@@ -154,6 +150,12 @@ std::string cns::get_name()
 {
 	return cns::_name;
 }
+
+void cns::display_description(bool display)
+{
+
+}
+
 
 //____________________________
 
@@ -182,10 +184,10 @@ void cns_SharpResistance::on_use()
 }
 
 // Blunt resistance
-void cns_BluntResistance::on_use()
+void cns_FireBomb::on_use()
 {
 	cns::on_use();
-	m::set_text("Blunt resistance gained! The next fire attack that lands will deal less damage");
+	m::set_text("Fire Bomb thrown at enemy!");
 }
 
 // Insight
@@ -221,13 +223,6 @@ void cns_Whetstone::on_use()
 {
 	cns::on_use();
 	m::set_text("Whetstone used! Your next attack will deal additional Sharp damage");
-}
-
-// Strength buff
-void cns_StrengthBlessing::on_use()
-{
-	cns::on_use();
-	m::set_text("Strenth blessing recieved! Your next attack will deal additional Strenth damage");
 }
 
 // Rage
