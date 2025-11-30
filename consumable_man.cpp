@@ -3,6 +3,7 @@
 #include "console.hpp"
 #include <cstdlib>
 #include "fight_manager.hpp"
+#include "game_system.hpp"
 #include "message_box.hpp"
 
 using cns = Consumable;
@@ -41,10 +42,6 @@ void cman::init()
 	std::shared_ptr<cns_FireBomb> firebomb = std::make_shared<cns_FireBomb>
 		("cns_firebomb", sf::Vector2f{ 10000,10000 }, 50);
 
-	// ____________________Insight_____________________
-	std::shared_ptr<cns_Insight> insight = std::make_shared<cns_Insight>
-		("cns_insight", sf::Vector2f{ 10000,10000 });
-
 	// ____________________Thorns_____________________
 	std::shared_ptr<cns_Thorns> thorns = std::make_shared<cns_Thorns>
 		("cns_thorns", sf::Vector2f{ 10000,10000 });
@@ -79,7 +76,6 @@ void cman::init()
 	fire_resistance->button->set_consumable(fire_resistance);
 	sharp_resistance->button->set_consumable(sharp_resistance);
 	firebomb->button->set_consumable(firebomb);
-	insight->button->set_consumable(insight);
 	thorns->button->set_consumable(thorns);
 	illusion->button->set_consumable(illusion);
 	whetstone->button->set_consumable(whetstone);
@@ -87,14 +83,13 @@ void cman::init()
 	rage->button->set_consumable(rage);
 	quick_eye->button->set_consumable(quick_eye);
 	oil->button->set_consumable(oil);
-	
+
 	cman::all_consumables.push_back(healing_potion0);
 	cman::all_consumables.push_back(healing_potion1);
 	cman::all_consumables.push_back(healing_potion2);
 	cman::all_consumables.push_back(fire_resistance);
 	cman::all_consumables.push_back(sharp_resistance);
 	cman::all_consumables.push_back(firebomb);
-	cman::all_consumables.push_back(insight);
 	cman::all_consumables.push_back(thorns);
 	cman::all_consumables.push_back(illusion);
 	cman::all_consumables.push_back(whetstone);
@@ -110,6 +105,7 @@ void cman::init()
 		int random = rand() % cman::all_consumables.size();
 		cman::all_consumables[random]->set_pos(consumable_pos);
 		cman::player_consumables.push_back(cman::all_consumables[random]);
+		cman::all_consumables[random]->set_display_texts();
 		cman::all_consumables.erase(cman::all_consumables.begin() + random);
 		consumable_pos.y += 120;
 
@@ -134,9 +130,20 @@ cns::Consumable(std::string name, sf::Vector2f pos)
 	cns::_pos = pos;
 	cns::button = std::make_shared<Button_Consumable>(name, pos, 3);
 
+	_txt_display_name->setFont(GameSystem::font_bold);
+	_txt_display_name->setCharacterSize(50);
+	_txt_display_name->setColor(sf::Color::White);
+	_txt_display_name->setPosition(200, 80);
 
+	_txt_display_description->setFont(GameSystem::font);
+	_txt_display_description->setCharacterSize(30);
+	_txt_display_description->setColor(sf::Color::White);
+	_txt_display_description->setPosition(200, 150);
+
+	RenderMan::createDrawable(_txt_display_name, 3);
+	RenderMan::createDrawable(_txt_display_description, 3);
 }
-void cns::on_use() 
+void cns::on_use()
 {
 	FightManager::set_player_consumed_item(true);
 	cns::button->disable();
@@ -153,19 +160,31 @@ std::string cns::get_name()
 
 void cns::display_description(bool display)
 {
+	Console::print("cns::display_description() " + std::to_string(display));
+	Console::print(_display_name);
+	Console::print(_display_description);
+	_txt_display_name->setString(display ? _display_name : "");
+	_txt_display_description->setString(display ? _display_description : "");
 
+	_txt_display_name->setOrigin(0, _txt_display_name->getLocalBounds().height / 2);
+	_txt_display_description->setOrigin(0, 0);
 }
-
+void cns::set_display_texts() {}
 
 //____________________________
-
-// Need to wait for louis to do player entity so I can modify values via these
 
 // Healing Potion
 void cns_HealingPotion::on_use()
 {
 	cns::on_use();
-	m::set_text("Health Potion Used. Regained " + std::to_string( cns_HealingPotion::_heal_amount) + " health!");
+	m::set_text("Health Potion Used. Regained " + std::to_string(cns_HealingPotion::_heal_amount) + " health!");
+}
+void cns_HealingPotion::set_display_texts()
+{
+	Console::print("hello");
+	_display_name = "Healing Potion";
+	_display_description =
+		"A common concoction found in a variety of sizes. \n \nGrants " + std::to_string(_heal_amount) + " health";
 }
 
 // Fire Resistance
@@ -173,7 +192,11 @@ void cns_FireResistance::on_use()
 {
 	cns::on_use();
 	m::set_text("Fire resistance gained! The next fire attack that lands will deal less damage");
-
+}
+void cns_FireResistance::set_display_texts()
+{
+	_display_name = "Fire Resistance";
+	_display_description = "Provides resistance to fire \ndamage for a limited time";
 }
 
 // Sharp Resistance
@@ -182,6 +205,11 @@ void cns_SharpResistance::on_use()
 	cns::on_use();
 	m::set_text("Sharp resistance gained! The next fire attack that lands will deal less damage");
 }
+void cns_SharpResistance::set_display_texts()
+{
+	_display_name = "Sharp Resistance";
+	_display_description = "Provides resistance to sharp \ndamage for a limited time";
+}
 
 // Blunt resistance
 void cns_FireBomb::on_use()
@@ -189,59 +217,95 @@ void cns_FireBomb::on_use()
 	cns::on_use();
 	m::set_text("Fire Bomb thrown at enemy!");
 }
-
-// Insight
-void cns_Insight::on_use()
+void cns_FireBomb::set_display_texts()
 {
-	cns::on_use();
-	m::set_text("Insight used! Your foes next resource consumption will not be hidden to you");
+	_display_name = "Fire Bomb";
+	_display_description = "Throw at foes to \ninflict fire damage";
 }
 
 // Thorns
 void cns_Thorns::on_use()
 {
 	cns::on_use();
-	m::set_text("Thorns used! Your foes next landing attack will hurt them too");
+	m::set_text("Thorns used!");
+}
+void cns_Thorns::set_display_texts()
+{
+	_display_name = "Thorns";
+	_display_description = "Your foes next landing \nattack will hurt them too";
 }
 
 // Illusion
 void cns_Illusion::on_use()
 {
 	cns::on_use();
-	m::set_text("Illusion cast! Your foe will have a difficult time landing their next hit");
+	m::set_text("Illusion cast!");
+}
+void cns_Illusion::set_display_texts()
+{
+	_display_name = "Illusion";
+	_display_description = 
+		"Casts an illusory self, \nconfusing your opponent and \navoiding damage from \ntheir next attack";
 }
 
 // Fire buff
 void cns_FireBlessing::on_use()
 {
 	cns::on_use();
-	m::set_text("Fire blessing recieved! Your next attack will deal additional Fire damage");
+	m::set_text("Fire blessing recieved!");
+}
+void cns_FireBlessing::set_display_texts()
+{
+	_display_name = "Fire Blessing";
+	_display_description = 
+		"Temporarily wraps your blade \nin flames. \n\nYour next attack will also \ndeal Fire damage";
 }
 
 // Sharp buff
 void cns_Whetstone::on_use()
 {
 	cns::on_use();
-	m::set_text("Whetstone used! Your next attack will deal additional Sharp damage");
+	m::set_text("Blade sharpened by Whetstone!");
+}
+void cns_Whetstone::set_display_texts()
+{
+	_display_name = "Whetstone";
+	_display_description = "Sharpens blade, allowing for \nadditional sharp damage on your \nnext attack";
 }
 
 // Rage
 void cns_Rage::on_use()
 {
 	cns::on_use();
-	m::set_text("Rage!");
+	m::set_text("Enraged!");
+}
+void cns_Rage::set_display_texts()
+{
+	_display_name = "Rage";
+	_display_description = 
+		"Unleashes your fury. \n\nYour next attack will deal additional \ndamage, but your unstable anger reduces \nlikelihood of a connection";
 }
 
 // Quickeye
 void cns_QuickEye::on_use()
 {
 	cns::on_use();
-	m::set_text("Quick Eye!");
+	m::set_text("Utilising Quick Eye!");
+}
+void cns_QuickEye::set_display_texts()
+{
+	_display_name = "Quick Eye";
+	_display_description = "Momentarily improve awareness.\n\nTemporarily increases likelihood \nof parry success.";
 }
 
 // Oil
 void cns_Oil::on_use()
 {
 	cns::on_use();
-	m::set_text("Oil!");
+	m::set_text("Oil thrown!");
+}
+void cns_Oil::set_display_texts()
+{
+	_display_name = "Oil";
+	_display_description = "Coats foe in oil.\n\nYour foes next fire \nattack will ignite them.";
 }

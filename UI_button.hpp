@@ -53,12 +53,13 @@ public:
 class Button_Consumable : public Button
 {
 public:
-	virtual void on_select();
+	void on_idle() override;
+	void on_highlight() override;
+	void on_select() override;
 	Button_Consumable(std::string name_in_file, sf::Vector2f location, int sort_layer) :
 		Button(name_in_file, location, sort_layer) {
 	}
 	void set_consumable(std::shared_ptr<Consumable> cns);
-
 private:
 	std::shared_ptr<Consumable> _consumable = nullptr;
 };
