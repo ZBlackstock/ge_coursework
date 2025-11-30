@@ -187,6 +187,7 @@ void Button_Consumable::on_select()
 {
 	Console::print("on_select() " + Button_Consumable::_consumable->get_name());
 	Button_Consumable::_consumable->on_use();
+	Button_Consumable::_consumable->display_description(false);
 }
 
 void Button_Consumable::set_consumable(std::shared_ptr<Consumable> cns)
