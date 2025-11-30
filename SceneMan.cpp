@@ -11,12 +11,11 @@
 #include "input_man.hpp"
 #include "consumable_man.hpp"
 #include "message_box.hpp"
-#include "UI_fight_loop.hpp"
+#include "fight_manager.hpp"
 
 using sm = SceneManager;
 using gs = GameSystem;
 using b = Button;
-using fli = FightLoopIndicator;
 
 // _______________________ Scene Manager ______________________________________________
 
@@ -257,12 +256,12 @@ Fight0::Fight0(std::string scene_name)
 // Load sprites for Map HERE
 void Fight0::on_scene_active()
 {
-	fli::init();
+	FightManager::init();
 	ConsumableManager::init();
-	EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
 	ExitToMainMenu::init();
 	MsgBox::init();
-	fli::set_fight_loop_state(0);
+	EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
+
 }
 void Fight0::update(const float& dt)
 {

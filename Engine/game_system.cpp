@@ -2,6 +2,7 @@
 #include "game_system.hpp"
 #include "..\SceneMan.hpp"
 #include "..\input_man.hpp"
+#include "..\fight_manager.hpp"
 #include "renderer.hpp"
 #include "AudioManager.h"
 
@@ -48,6 +49,7 @@ void GameSystem::_update(const float& dt)
 	SceneManager::update(dt);
 	EventManager::update(dt);
 	InputManager::Update(dt);
+	FightManager::update(dt);
 }
 
 void GameSystem::_render()

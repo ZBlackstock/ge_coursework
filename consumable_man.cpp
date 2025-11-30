@@ -125,6 +125,14 @@ void cman::init()
 	}
 }
 
+void cman::visible(bool visible)
+{
+	for (int i = 0; i < cman::num_player_consumables; ++i)
+	{
+		cman::player_consumables[i]->set_pos(visible ? cman::player_consumables[i]->get_pos() : sf::Vector2f{ 10000, 10000 });
+	}
+}
+
 //____________________Consumables_________________________________________________________________________
 cns::Consumable(std::string name, sf::Vector2f pos)
 {
@@ -152,10 +160,17 @@ void cns::on_use()
 	fli::set_fight_loop_state(1);
 	Console::print("on_use()");
 }
+
 void cns::set_pos(sf::Vector2f pos)
 {
 	cns::button->set_pos(pos);
 }
+
+sf::Vector2f cns::get_pos()
+{
+	return _pos;
+}
+
 std::string cns::get_name()
 {
 	return cns::_name;
