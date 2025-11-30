@@ -15,5 +15,4 @@ h::Healthbar(sf::Vector2f size, sf::Vector2f pos, float max)
 void h::set_healthbar_value(float& value)
 {
 	*_value = value;
-	
 }

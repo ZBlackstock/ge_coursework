@@ -1,13 +1,20 @@
 #include "fight_manager.hpp"
 
 using fli = FightLoopIndicator;
+using h = Healthbar;
+
 bool FightManager::_player_consumed_item = false;
 bool FightManager::_player_attacked = false;
+std::shared_ptr<Healthbar> _player_healthbar = std::shared_ptr<Healthbar>();
+std::shared_ptr<Healthbar> _enemy_healthbar = std::shared_ptr<Healthbar>();
 
 void FightManager::init()
 {
 	fli::init();
 	fli::set_fight_loop_state(0);
+	*_player_healthbar = h::Healthbar(sf::Vector2f{ 200,10 }, sf::Vector2f{ 1000,1000 }, 100);
+	*_enemy_healthbar = h::Healthbar(sf::Vector2f{ 200,10 }, sf::Vector2f{ 1500,500 }, 100);
+	// ^^ Just size, position, max health value
 }
 
 void FightManager::update(const float& dt)
