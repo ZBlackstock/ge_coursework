@@ -20,7 +20,6 @@ void FightManager::update(const float& dt)
 
 		//Move to attack stage
 		fli::set_fight_loop_state(1);
-
 		set_player_consumed_item(false);
 	}
 }

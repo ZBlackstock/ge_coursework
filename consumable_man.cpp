@@ -105,7 +105,7 @@ void cman::init()
 	{
 		srand(time(0));
 		int random = rand() % cman::all_consumables.size();
-		cman::all_consumables[random]->set_pos(consumable_pos);
+		cman::all_consumables[random]->button->set_pos(consumable_pos);
 		cman::player_consumables.push_back(cman::all_consumables[random]);
 		cman::all_consumables[random]->set_display_texts();
 		cman::all_consumables.erase(cman::all_consumables.begin() + random);
@@ -129,7 +129,7 @@ void cman::visible(bool visible)
 {
 	for (int i = 0; i < cman::num_player_consumables; ++i)
 	{
-		cman::player_consumables[i]->set_pos(visible ? cman::player_consumables[i]->get_pos() : sf::Vector2f{ 10000, 10000 });
+		cman::player_consumables[i]->button->set_all_sprites_pos(visible ? cman::player_consumables[i]->get_pos() : sf::Vector2f{ 10000, 10000 });
 	}
 }
 
@@ -159,11 +159,6 @@ void cns::on_use()
 	cns::button->disable();
 	fli::set_fight_loop_state(1);
 	Console::print("on_use()");
-}
-
-void cns::set_pos(sf::Vector2f pos)
-{
-	cns::button->set_pos(pos);
 }
 
 sf::Vector2f cns::get_pos()

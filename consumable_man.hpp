@@ -26,7 +26,6 @@ public:
 
 	std::shared_ptr<Button_Consumable> button = nullptr;
 	virtual void on_use();
-	void set_pos(sf::Vector2f pos);
 	sf::Vector2f get_pos();
 	void display_description(bool display);
 	virtual void set_display_texts();
