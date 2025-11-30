@@ -15,6 +15,7 @@ public:
 	static std::vector<std::shared_ptr<Consumable>> all_consumables;
 	static std::vector<std::shared_ptr<Consumable>> player_consumables;
 	static void init();
+	static void visible(bool visible);
 	static int num_player_consumables;
 };
 
@@ -25,7 +26,7 @@ public:
 
 	std::shared_ptr<Button_Consumable> button = nullptr;
 	virtual void on_use();
-	void set_pos(sf::Vector2f pos);
+	sf::Vector2f get_pos();
 	void display_description(bool display);
 	virtual void set_display_texts();
 	std::string get_name();

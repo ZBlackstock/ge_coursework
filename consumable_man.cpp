@@ -5,10 +5,12 @@
 #include "fight_manager.hpp"
 #include "game_system.hpp"
 #include "message_box.hpp"
+#include "UI_fight_loop.hpp"
 
 using cns = Consumable;
 using cman = ConsumableManager;
 using m = MsgBox;
+using fli = FightLoopIndicator;
 
 std::vector<std::shared_ptr<Consumable>> cman::all_consumables;
 std::vector<std::shared_ptr<Consumable>> cman::player_consumables;
@@ -103,7 +105,7 @@ void cman::init()
 	{
 		srand(time(0));
 		int random = rand() % cman::all_consumables.size();
-		cman::all_consumables[random]->set_pos(consumable_pos);
+		cman::all_consumables[random]->button->set_pos(consumable_pos);
 		cman::player_consumables.push_back(cman::all_consumables[random]);
 		cman::all_consumables[random]->set_display_texts();
 		cman::all_consumables.erase(cman::all_consumables.begin() + random);
@@ -120,6 +122,14 @@ void cman::init()
 				cman::player_consumables[0]->button->set_above(cman::player_consumables[i]->button);
 			}
 		}
+	}
+}
+
+void cman::visible(bool visible)
+{
+	for (int i = 0; i < cman::num_player_consumables; ++i)
+	{
+		cman::player_consumables[i]->button->set_all_sprites_pos(visible ? cman::player_consumables[i]->get_pos() : sf::Vector2f{ 10000, 10000 });
 	}
 }
 
@@ -147,12 +157,15 @@ void cns::on_use()
 {
 	FightManager::set_player_consumed_item(true);
 	cns::button->disable();
+	fli::set_fight_loop_state(1);
 	Console::print("on_use()");
 }
-void cns::set_pos(sf::Vector2f pos)
+
+sf::Vector2f cns::get_pos()
 {
-	cns::button->set_pos(pos);
+	return _pos;
 }
+
 std::string cns::get_name()
 {
 	return cns::_name;
@@ -244,7 +257,7 @@ void cns_Illusion::on_use()
 void cns_Illusion::set_display_texts()
 {
 	_display_name = "Illusion";
-	_display_description = 
+	_display_description =
 		"Casts an illusory self, \nconfusing your opponent and \navoiding damage from \ntheir next attack";
 }
 
@@ -257,7 +270,7 @@ void cns_FireBlessing::on_use()
 void cns_FireBlessing::set_display_texts()
 {
 	_display_name = "Fire Blessing";
-	_display_description = 
+	_display_description =
 		"Temporarily wraps your blade \nin flames. \n\nYour next attack will also \ndeal Fire damage";
 }
 
@@ -282,7 +295,7 @@ void cns_Rage::on_use()
 void cns_Rage::set_display_texts()
 {
 	_display_name = "Rage";
-	_display_description = 
+	_display_description =
 		"Unleashes your fury. \n\nYour next attack will deal additional \ndamage, but your unstable anger reduces \nlikelihood of a connection";
 }
 

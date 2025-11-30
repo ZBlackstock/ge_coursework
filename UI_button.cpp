@@ -73,6 +73,15 @@ void b::set_pos(sf::Vector2f pos)
 	rm::set_sprite_pos(_name + "_idle.png", b::_pos);
 }
 
+// For Disabling entire HUD elements
+void b::set_all_sprites_pos(sf::Vector2f pos)
+{
+	b::_pos = pos;
+	rm::set_sprite_pos(_name + "_idle.png", b::_pos);
+	rm::set_sprite_pos(_name + "_highlighted.png", b::_pos);
+	rm::set_sprite_pos(_name + "_selected.png", b::_pos);
+}
+
 void b::idle()
 {
 	rm::set_sprite_pos(_name + "_idle.png", b::_pos);

@@ -26,6 +26,7 @@ public:
 	virtual void on_select();
 	virtual void on_highlight();
 	void set_pos(sf::Vector2f pos);
+	void set_all_sprites_pos(sf::Vector2f pos);
 	bool is_selected();
 	std::string get_name();
 

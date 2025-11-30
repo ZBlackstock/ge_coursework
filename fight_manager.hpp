@@ -1,13 +1,23 @@
 #pragma once
 #include <memory>
+#include "message_box.hpp"
+#include "UI_fight_loop.hpp"
+#include "consumable_man.hpp"
+#include "event_man.hpp"
 
 class FightManager
 {
 public:
+	static void init();
 	static void update(const float& dt);
+
 	static void set_player_consumed_item(bool consumed);
 	static bool get_player_consumed_item();
 
+	static void set_player_attacked(bool attacked);
+	static bool get_player_attacked();
+
 private:
 	static bool _player_consumed_item;
+	static bool _player_attacked;
 };
