@@ -21,7 +21,7 @@ add_library(engine STATIC engine/game_system.cpp
                         engine/ecm.cpp
 						engine/RenderMan.cpp
 						engine/AudioManager.cpp
- "UI_fight_loop.cpp")
+)
 
 target_include_directories(engine INTERFACE engine ${SFML_INCS})
 target_link_libraries(engine sfml-graphics sfml-audio sfml-system)
@@ -38,7 +38,9 @@ add_executable(BlackDragon
 	console.cpp
 	fight_manager.cpp
 	message_box.cpp
- "UI_fight_loop.cpp")
+	UI_fight_loop.cpp
+	healthbar.cpp
+)
 
 target_include_directories(BlackDragon PRIVATE ${SFML_INCS} engine)
 target_link_libraries(BlackDragon sfml-graphics sfml-audio sfml-system engine)
