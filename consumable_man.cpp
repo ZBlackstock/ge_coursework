@@ -5,10 +5,12 @@
 #include "fight_manager.hpp"
 #include "game_system.hpp"
 #include "message_box.hpp"
+#include "UI_fight_loop.hpp"
 
 using cns = Consumable;
 using cman = ConsumableManager;
 using m = MsgBox;
+using fli = FightLoopIndicator;
 
 std::vector<std::shared_ptr<Consumable>> cman::all_consumables;
 std::vector<std::shared_ptr<Consumable>> cman::player_consumables;
@@ -147,6 +149,7 @@ void cns::on_use()
 {
 	FightManager::set_player_consumed_item(true);
 	cns::button->disable();
+	fli::set_fight_loop_state(1);
 	Console::print("on_use()");
 }
 void cns::set_pos(sf::Vector2f pos)
@@ -244,7 +247,7 @@ void cns_Illusion::on_use()
 void cns_Illusion::set_display_texts()
 {
 	_display_name = "Illusion";
-	_display_description = 
+	_display_description =
 		"Casts an illusory self, \nconfusing your opponent and \navoiding damage from \ntheir next attack";
 }
 
@@ -257,7 +260,7 @@ void cns_FireBlessing::on_use()
 void cns_FireBlessing::set_display_texts()
 {
 	_display_name = "Fire Blessing";
-	_display_description = 
+	_display_description =
 		"Temporarily wraps your blade \nin flames. \n\nYour next attack will also \ndeal Fire damage";
 }
 
@@ -282,7 +285,7 @@ void cns_Rage::on_use()
 void cns_Rage::set_display_texts()
 {
 	_display_name = "Rage";
-	_display_description = 
+	_display_description =
 		"Unleashes your fury. \n\nYour next attack will deal additional \ndamage, but your unstable anger reduces \nlikelihood of a connection";
 }
 
