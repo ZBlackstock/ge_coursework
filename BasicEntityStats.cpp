@@ -73,19 +73,21 @@ void BasicEntityStats::heal(int amount) {
         current_health = max_overheal;
 }
 
-void ShapeComponent::update(const float& dt) {
-    _shape->setPosition(_parent->get_position());
+void BasicEntityStats::take_fire_damage(int dmg)
+{
+    float mult = 1.0f;
+    for (auto& b : buffs)
+        mult *= b->fire_attack_power;
+    take_damage(static_cast<int>(dmg * mult));
 }
 
-void ShapeComponent::render() 
-{ 
-    RenderMan::createDrawable(_shape, 1); 
+void BasicEntityStats::take_sharp_damage(int dmg) 
+{
+    float mult = 1.0f;
+    for (auto& b : buffs)
+        mult *= b->sharp_attack_power;
+    take_damage(static_cast<int>(dmg * mult));
 }
-
-sf::Shape& ShapeComponent::get_shape() const { return *_shape; }
-
-ShapeComponent::ShapeComponent(Entity* p) : Component(p), _shape(std::make_shared<sf::CircleShape>()) {}
-
 
 void SpriteComponent::set_texure(std::shared_ptr<sf::Texture> tex)
 {

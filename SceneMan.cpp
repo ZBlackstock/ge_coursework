@@ -7,6 +7,7 @@
 #include "game_system.hpp"
 #include "UI_button.hpp"
 #include "event_man.hpp"
+#include "console.hpp"
 #include "UI_exit_to_mainmenu.hpp"
 #include "input_man.hpp"
 #include "item_man.hpp"
@@ -307,6 +308,7 @@ void Fight0::on_scene_inactive()
 	std::cout << "Fight0 (Left) on_scene_inactive()" << std::endl;
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
+	ItemManager::clean();
 }
 
 // _______________________Fight1 (Middle)_________________________________________
