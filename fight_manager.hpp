@@ -18,9 +18,13 @@ public:
 	static void set_player_attacked(bool attacked);
 	static bool get_player_attacked();
 
+	static void set_player_defended(bool defended);
+	static bool get_player_defended();
+
 private:
 	static bool _player_consumed_item;
 	static bool _player_attacked;
+	static bool _player_defended;
 	static std::shared_ptr<Healthbar> _player_healthbar;
 	static std::shared_ptr<Healthbar> _enemy_healthbar;
 };

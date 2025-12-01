@@ -430,7 +430,7 @@ void atk_Heavy::set_display_texts()
 
 void id::on_use()
 {
-	FightManager::set_player_attacked(true);
+	FightManager::set_player_defended(true);
 }
 
 // Light
@@ -454,10 +454,9 @@ void dfn_Parry::on_use()
 	m::set_text("Preparing to parry!");
 
 	//Code for parrying here
-
 }
 void dfn_Parry::set_display_texts()
 {
 	_display_name = "Parry";
-	_display_description = "Prepare to block your opponents \nnext attack.\n\nA risky maneuvre resulting in no damage \ntaken if successful. Higher chance \nof success against heavy attacks.";
+	_display_description = "Prepare to parry your opponents \nnext attack.\n\nA risky maneuvre resulting in no damage \ntaken if successful. Higher chance \nof success against heavy attacks.";
 }
