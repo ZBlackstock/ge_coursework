@@ -150,9 +150,16 @@ void iman::init()
 
 void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
 {
-	for (int i = 0; i < iman::num_player_consumables; ++i)
+	for (int i = 0; i < list.size(); ++i)
 	{
-		iman::player_consumables[i]->button->set_all_sprites_pos(visible ? iman::player_consumables[i]->get_pos() : sf::Vector2f{ 10000, 10000 });
+		if (visible)
+		{
+			list[i]->button->set_pos(list[i]->get_pos());
+		}
+		else
+		{
+			list[i]->button->set_all_sprites_pos(sf::Vector2f{ 10000, 10000 });
+		}
 	}
 }
 
