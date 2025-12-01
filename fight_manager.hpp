@@ -4,6 +4,7 @@
 #include "UI_fight_loop.hpp"
 #include "consumable_man.hpp"
 #include "event_man.hpp"
+#include "healthbar.hpp"
 
 class FightManager
 {
@@ -20,4 +21,6 @@ public:
 private:
 	static bool _player_consumed_item;
 	static bool _player_attacked;
+	static std::shared_ptr<Healthbar> _player_healthbar;
+	static std::shared_ptr<Healthbar> _enemy_healthbar;
 };

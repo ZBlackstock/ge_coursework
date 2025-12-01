@@ -49,7 +49,6 @@ void GameSystem::_update(const float& dt)
 	SceneManager::update(dt);
 	EventManager::update(dt);
 	InputManager::Update(dt);
-	FightManager::update(dt);
 }
 
 void GameSystem::_render()

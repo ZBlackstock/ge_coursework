@@ -274,6 +274,8 @@ void Fight0::update(const float& dt)
 			EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
 		}
 	}
+
+	FightManager::update(dt);
 }
 void Fight0::on_scene_inactive()
 {
