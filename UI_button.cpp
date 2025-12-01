@@ -199,7 +199,7 @@ void Button_Consumable::on_select()
 	Button_Consumable::_consumable->display_description(false);
 }
 
-void Button_Consumable::set_consumable(std::shared_ptr<Consumable> cns)
+void Button_Consumable::set_consumable(std::shared_ptr<Item> cns)
 {
 	Button_Consumable::_consumable = cns;
 }

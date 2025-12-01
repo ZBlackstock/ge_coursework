@@ -1,4 +1,4 @@
-#include "consumable_man.hpp"
+#include "item_man.hpp"
 #include <iostream>
 #include "console.hpp"
 #include <cstdlib>
@@ -7,13 +7,13 @@
 #include "message_box.hpp"
 #include "UI_fight_loop.hpp"
 
-using cns = Consumable;
-using cman = ConsumableManager;
+using cns = Item;
+using cman = ItemManager;
 using m = MsgBox;
 using fli = FightLoopIndicator;
 
-std::vector<std::shared_ptr<Consumable>> cman::all_consumables;
-std::vector<std::shared_ptr<Consumable>> cman::player_consumables;
+std::vector<std::shared_ptr<Item>> cman::all_consumables;
+std::vector<std::shared_ptr<Item>> cman::player_consumables;
 int cman::num_player_consumables = 8;
 
 void cman::init()
@@ -134,7 +134,7 @@ void cman::visible(bool visible)
 }
 
 //____________________Consumables_________________________________________________________________________
-cns::Consumable(std::string name, sf::Vector2f pos)
+cns::Item(std::string name, sf::Vector2f pos)
 {
 	cns::_name = name;
 	cns::_pos = pos;

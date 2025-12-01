@@ -23,7 +23,7 @@ void FightManager::update(const float& dt)
 	if (get_player_consumed_item())
 	{
 		//Make consumable invisible
-		ConsumableManager::visible(false);
+		ItemManager::visible(false);
 		EventManager::clear_current_button();
 
 		//Move to attack stage

@@ -2,7 +2,7 @@
 #include <memory>
 #include "message_box.hpp"
 #include "UI_fight_loop.hpp"
-#include "consumable_man.hpp"
+#include "item_man.hpp"
 #include "event_man.hpp"
 #include "healthbar.hpp"
 

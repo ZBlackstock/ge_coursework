@@ -9,7 +9,7 @@
 #include "event_man.hpp"
 #include "UI_exit_to_mainmenu.hpp"
 #include "input_man.hpp"
-#include "consumable_man.hpp"
+#include "item_man.hpp"
 #include "message_box.hpp"
 #include "fight_manager.hpp"
 
@@ -257,10 +257,10 @@ Fight0::Fight0(std::string scene_name)
 void Fight0::on_scene_active()
 {
 	FightManager::init();
-	ConsumableManager::init();
+	ItemManager::init();
 	ExitToMainMenu::init();
 	MsgBox::init();
-	EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
+	EventManager::set_current_button(ItemManager::player_consumables[0]->button);
 
 }
 void Fight0::update(const float& dt)
@@ -271,7 +271,7 @@ void Fight0::update(const float& dt)
 
 		if (!ExitToMainMenu::get_active())
 		{
-			EventManager::set_current_button(ConsumableManager::player_consumables[0]->button);
+			EventManager::set_current_button(ItemManager::player_consumables[0]->button);
 		}
 	}
 
