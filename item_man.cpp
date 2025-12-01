@@ -6,6 +6,7 @@
 #include "game_system.hpp"
 #include "message_box.hpp"
 #include "UI_fight_loop.hpp"
+#include "AudioManager.h"
 
 using i = Item;
 using ic = Item_Consumable;
@@ -13,6 +14,7 @@ using ia = Item_Attack;
 using iman = ItemManager;
 using m = MsgBox;
 using fli = FightLoopIndicator;
+using am = AudioManager;
 
 std::vector<std::shared_ptr<Item>> iman::all_consumables;
 std::vector<std::shared_ptr<Item>> iman::player_consumables;
@@ -225,6 +227,9 @@ void cns_HealingPotion::on_use()
 {
 	ic::on_use();
 	m::set_text("Health Potion Used. Regained " + std::to_string(cns_HealingPotion::_heal_amount) + " health!");
+	
+	am::addSounds("drink");
+	am::playSound("drink");
 }
 void cns_HealingPotion::set_display_texts()
 {
@@ -239,6 +244,9 @@ void cns_FireResistance::on_use()
 {
 	ic::on_use();
 	m::set_text("Fire resistance gained! The next fire attack that lands will deal less damage");
+
+	am::addSounds("fireResistance");
+	am::playSound("fireResistance");
 }
 void cns_FireResistance::set_display_texts()
 {
@@ -251,6 +259,9 @@ void cns_SharpResistance::on_use()
 {
 	ic::on_use();
 	m::set_text("Sharp resistance gained! The next fire attack that lands will deal less damage");
+
+	am::addSounds("sharpResistance");
+	am::playSound("sharpResistance");
 }
 void cns_SharpResistance::set_display_texts()
 {
@@ -263,6 +274,9 @@ void cns_FireBomb::on_use()
 {
 	ic::on_use();
 	m::set_text("Fire Bomb thrown at enemy!");
+
+	am::addSounds("firebomb");
+	am::playSound("firebomb");
 }
 void cns_FireBomb::set_display_texts()
 {
@@ -275,6 +289,9 @@ void cns_Thorns::on_use()
 {
 	ic::on_use();
 	m::set_text("Thorns used!");
+
+	am::addSounds("thorns");
+	am::playSound("thorns");
 }
 void cns_Thorns::set_display_texts()
 {
@@ -287,6 +304,9 @@ void cns_Illusion::on_use()
 {
 	ic::on_use();
 	m::set_text("Illusion cast!");
+
+	am::addSounds("illusion");
+	am::playSound("illusion");
 }
 void cns_Illusion::set_display_texts()
 {
@@ -300,6 +320,9 @@ void cns_FireBlessing::on_use()
 {
 	ic::on_use();
 	m::set_text("Fire blessing recieved!");
+
+	am::addSounds("fire");
+	am::playSound("fire");
 }
 void cns_FireBlessing::set_display_texts()
 {
@@ -313,6 +336,9 @@ void cns_Whetstone::on_use()
 {
 	ic::on_use();
 	m::set_text("Blade sharpened by Whetstone!");
+
+	am::addSounds("whetstone");
+	am::playSound("whetstone");
 }
 void cns_Whetstone::set_display_texts()
 {
@@ -325,6 +351,9 @@ void cns_Rage::on_use()
 {
 	ic::on_use();
 	m::set_text("Enraged!");
+
+	am::addSounds("rage");
+	am::playSound("rage");
 }
 void cns_Rage::set_display_texts()
 {
@@ -338,6 +367,9 @@ void cns_QuickEye::on_use()
 {
 	ic::on_use();
 	m::set_text("Utilising Quick Eye!");
+
+	am::addSounds("quickeye");
+	am::playSound("quickeye");
 }
 void cns_QuickEye::set_display_texts()
 {
@@ -350,6 +382,9 @@ void cns_Oil::on_use()
 {
 	ic::on_use();
 	m::set_text("Oil thrown!");
+
+	am::addSounds("oil");
+	am::playSound("oil");
 }
 void cns_Oil::set_display_texts()
 {
@@ -369,6 +404,9 @@ void atk_Light::on_use()
 {
 	ia::on_use();
 	m::set_text("Light attack!");
+
+	am::addSounds("lightAtk");
+	am::playSound("lightAtk");
 }
 void atk_Light::set_display_texts()
 {
@@ -381,6 +419,9 @@ void atk_Heavy::on_use()
 {
 	ia::on_use();
 	m::set_text("Heavy attack!");
+
+	am::addSounds("heavyAtk");
+	am::playSound("heavyAtk");
 }
 void atk_Heavy::set_display_texts()
 {

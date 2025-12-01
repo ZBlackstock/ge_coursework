@@ -100,6 +100,7 @@ void AudioManager::addMusic(const std::string& M_name)
 
 	// Enable looping and start playback
 	currentSong->setLoop(true);
+	currentSong->setVolume(50.f);
 	currentSong->play();
 }
 
