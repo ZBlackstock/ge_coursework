@@ -18,6 +18,7 @@ using fli = FightLoopIndicator;
 std::vector<std::shared_ptr<Item>> iman::all_consumables;
 std::vector<std::shared_ptr<Item>> iman::player_consumables;
 std::vector<std::shared_ptr<Item>> iman::player_attacks;
+std::vector<std::shared_ptr<Item>> iman::player_defends;
 int iman::num_player_consumables = 8;
 
 void iman::init()
@@ -129,7 +130,7 @@ void iman::init()
 		}
 	}
 
-	// _________________________ADD ATTACKS ____________________________
+	// _________________________ADD ATTACKS____________________________
 
 	// ____________________Light_____________________
 	std::shared_ptr<atk_Light> light = std::make_shared<atk_Light>
@@ -157,6 +158,35 @@ void iman::init()
 	// Move off screen
 	light->button->set_all_sprites_pos({ 10000,10000 });
 	heavy->button->set_all_sprites_pos({ 10000,10000 });
+
+	// _________________________ADD DEFENDS____________________________
+
+	// ____________________Block_____________________
+	std::shared_ptr<dfn_Block> block = std::make_shared<dfn_Block>
+		("dfn_block", sf::Vector2f{ 100,100 });
+
+	// ____________________Parry_____________________
+	std::shared_ptr<dfn_Parry> parry = std::make_shared<dfn_Parry>
+		("dfn_parry", sf::Vector2f{ 100,220 });
+
+	block->button->set_consumable(block);
+	parry->button->set_consumable(parry);
+	block->set_display_texts();
+	parry->set_display_texts();
+
+	//Button navigation
+	block->button->set_above(parry->button);
+	block->button->set_below(parry->button);
+
+	parry->button->set_above(block->button);
+	parry->button->set_below(block->button);
+
+	iman::player_defends.push_back(block);
+	iman::player_defends.push_back(parry);
+
+	// Move off screen
+	block->button->set_all_sprites_pos({ 10000,10000 });
+	parry->button->set_all_sprites_pos({ 10000,10000 });
 }
 
 void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
