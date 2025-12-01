@@ -82,7 +82,7 @@ public:
 	Settings(std::string scene_name);
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
-	static void set_resolution(int ic);
+	static void set_resolution(int i);
 	virtual void update(const float& dt);
 
 private:

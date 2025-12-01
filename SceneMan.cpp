@@ -7,11 +7,13 @@
 #include "game_system.hpp"
 #include "UI_button.hpp"
 #include "event_man.hpp"
+#include "console.hpp"
 #include "UI_exit_to_mainmenu.hpp"
 #include "input_man.hpp"
 #include "item_man.hpp"
 #include "message_box.hpp"
 #include "fight_manager.hpp"
+#include "BasicEntityStats.h"
 
 using sm = SceneManager;
 using gs = GameSystem;
@@ -259,6 +261,30 @@ void Fight0::on_scene_active()
 	FightManager::init();
 	ItemManager::init();
 	ExitToMainMenu::init();
+	auto player = GameSystem::make_entity();
+	auto stats = player->add_component<BasicEntityStats>(100, 20);
+	auto s = player->add_component<SpriteComponent>();
+	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
+	tex->loadFromFile(gs::sprites_path + "player.png");
+	s->set_texure(tex);
+	s->get_sprite().setPosition(gs::screen_mid);
+
+	stats->take_damage(stats->get_attack_power());
+	auto buff = stats->add_buff<dath>();
+	s->render();
+
+	auto elayer = GameSystem::make_entity();
+	auto etats = elayer->add_component<BasicEntityStats>(100, 20);
+	auto e = elayer->add_component<SpriteComponent>();
+	std::shared_ptr<sf::Texture> etex = std::make_shared<sf::Texture>();
+	etex->loadFromFile(gs::sprites_path + "enemy.png");
+	e->set_texure(etex);
+	e->get_sprite().setPosition(gs::screen_mid.x + 100, gs::screen_mid.y - 200);
+
+	etats->take_damage(stats->get_attack_power());
+	auto ebuff = etats->add_buff<dath>();
+	e->render();
+
 	MsgBox::init();
 	EventManager::set_current_button(ItemManager::player_consumables[0]->button);
 	RenderMan::create_sprite("knight_sprite.png", {(gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200)}, 1);
@@ -382,7 +408,7 @@ void Settings::on_scene_active()
 
 	std::shared_ptr<Button_SetResolution> btn_res_arrow_right = std::make_shared<Button_SetResolution>
 		("arrow_right", sf::Vector2f{ 1480,680 }, 1);
-	btn_res_arrow_left->set_change(1);
+	btn_res_arrow_right->set_change(1);
 
 	// Load Keybind buttons
 	std::shared_ptr<Button_KeyBind> btn_key_bind_select = std::make_shared<Button_KeyBind>
@@ -467,18 +493,18 @@ void Settings::update(const float& dt)
 }
 
 
-void Settings::set_resolution(int ic)
+void Settings::set_resolution(int i)
 {
-	if (ic > Settings::resolutions.size() - 1)
-	{
-		ic = 0;
-	}
-	else if (ic < 0)
-	{
-		ic = Settings::resolutions.size() - 1;
-	}
+	Settings::current_res_index += i;
 
-	Settings::current_res_index = ic;
+	if (Settings::current_res_index > Settings::resolutions.size() - 1)
+	{
+		Settings::current_res_index = 0;
+	}
+	else if (Settings::current_res_index < 0)
+	{
+		Settings::current_res_index = Settings::resolutions.size() - 1;
+	}
 
 	// Recreate window
 	sf::RenderWindow* window = RenderMan::GetWindow();

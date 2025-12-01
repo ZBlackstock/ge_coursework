@@ -17,7 +17,6 @@ link_directories("${CMAKE_BINARY_DIR}/lib/SFML/lib")
 
 #### Engine ####
 add_library(engine STATIC engine/game_system.cpp 
-                        engine/renderer.cpp 
                         engine/ecm.cpp
 						engine/RenderMan.cpp
 						engine/AudioManager.cpp
@@ -37,6 +36,7 @@ add_executable(BlackDragon
 	event_man.cpp
 	console.cpp
 	fight_manager.cpp
+	BasicEntityStats.cpp
 	message_box.cpp
 	UI_fight_loop.cpp
 	healthbar.cpp

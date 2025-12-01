@@ -1,16 +1,8 @@
-#include <SFML/Graphics.hpp>
-#include <string>
-#include <iostream>
-#include "Engine\RenderMan.h"
 #include "SceneMan.hpp"
-#include "Scene.hpp"
 #include "Engine\game_system.hpp"
-#include "event_man.hpp"
-#include "input_man.hpp"
-
-
 
 using gs = GameSystem;
+
 sf::Vector2i gs::screen_size = sf::Vector2i{ 1920,1080 };
 sf::Vector2f gs::screen_size_f = static_cast<sf::Vector2f>(gs::screen_size);
 sf::Vector2f gs::screen_mid = sf::Vector2f{ gs::screen_size_f.x / 2, (gs::screen_size_f.y / 2)};

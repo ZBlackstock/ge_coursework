@@ -82,6 +82,7 @@ class Button_KeyBind : public Button
 {
 public:
 	virtual void on_select();
+
 	Button_KeyBind(std::string name_in_file, sf::Vector2f location, int sort_layer) :
 		Button(name_in_file, location, sort_layer) {
 	}
