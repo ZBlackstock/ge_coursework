@@ -217,7 +217,6 @@ void ic::on_use()
 {
 	FightManager::set_player_consumed_item(true);
 	ic::button->disable();
-	fli::set_fight_loop_state(1);
 	Console::print("on_use()");
 }
 
@@ -363,7 +362,6 @@ void cns_Oil::set_display_texts()
 void ia::on_use()
 {
 	FightManager::set_player_attacked(true);
-	fli::set_fight_loop_state(2);
 }
 
 // Light
