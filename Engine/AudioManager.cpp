@@ -56,8 +56,8 @@ void AudioManager::addSounds(const std::string& S_name)
 // ============================================================================
 void AudioManager::playSounds()
 {
-	int i = 0;
-	for (auto it = activeSounds.begin(); it != activeSounds.end() && i < activeSounds.size(); ++it, ++i)
+	int ic = 0;
+	for (auto it = activeSounds.begin(); it != activeSounds.end() && ic < activeSounds.size(); ++it, ++ic)
 	{
 		std::cout << "Playing sound\n";
 		it->first->play();
@@ -67,8 +67,8 @@ void AudioManager::playSounds()
 // Play sound by name
 void AudioManager::playSound(std::string name)
 {
-	int i = 0;
-	for (auto it = activeSounds.begin(); it != activeSounds.end() && i < activeSounds.size(); ++it, ++i)
+	int ic = 0;
+	for (auto it = activeSounds.begin(); it != activeSounds.end() && ic < activeSounds.size(); ++it, ++ic)
 	{
 		if (it->second == name)
 		{

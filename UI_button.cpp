@@ -199,9 +199,9 @@ void Button_Consumable::on_select()
 	Button_Consumable::_consumable->display_description(false);
 }
 
-void Button_Consumable::set_consumable(std::shared_ptr<Consumable> cns)
+void Button_Consumable::set_consumable(std::shared_ptr<Item> ic)
 {
-	Button_Consumable::_consumable = cns;
+	Button_Consumable::_consumable = ic;
 }
 
 void Button_SetResolution::set_change(int change)

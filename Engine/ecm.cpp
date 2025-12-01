@@ -2,14 +2,14 @@
 
 
 void EntityManager::update(const float &dt){
-  for (size_t i = 0; i < list.size(); i++) {
-    if (list[i]->is_for_deletion()) {
-      list.erase(list.begin() + i);
-      --i;
+  for (size_t ic = 0; ic < list.size(); ic++) {
+    if (list[ic]->is_for_deletion()) {
+      list.erase(list.begin() + ic);
+      --ic;
       continue;
     }
-    if (list[i]->is_alive()) {
-      list[i]->update(dt);
+    if (list[ic]->is_alive()) {
+      list[ic]->update(dt);
     }
   }
 }

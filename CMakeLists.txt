@@ -30,7 +30,7 @@ target_link_libraries(engine sfml-graphics sfml-audio sfml-system)
 add_executable(BlackDragon
 	main.cpp
 	SceneMan.cpp
-	consumable_man.cpp
+	item_man.cpp
 	UI_button.cpp
 	UI_exit_to_mainmenu.cpp
 	input_man.cpp

@@ -4,10 +4,10 @@
 #include <memory>
 #include "SceneMan.hpp"
 #include "event_man.hpp"
-#include "consumable_man.hpp"
+#include "item_man.hpp"
 
 
-class Consumable;
+class Item;
 // ____________ Custom Buttons ____________________________
 
 class Button_Quit : public Button
@@ -59,9 +59,9 @@ public:
 	Button_Consumable(std::string name_in_file, sf::Vector2f location, int sort_layer) :
 		Button(name_in_file, location, sort_layer) {
 	}
-	void set_consumable(std::shared_ptr<Consumable> cns);
+	void set_consumable(std::shared_ptr<Item> ic);
 private:
-	std::shared_ptr<Consumable> _consumable = nullptr;
+	std::shared_ptr<Item> _consumable = nullptr;
 };
 
 class Button_SetResolution : public Button

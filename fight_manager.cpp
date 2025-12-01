@@ -20,15 +20,34 @@ void FightManager::init()
 
 void FightManager::update(const float& dt)
 {
+	// Player consumed item, move to player attack
 	if (get_player_consumed_item())
 	{
 		//Make consumable invisible
-		ConsumableManager::visible(false);
+		ItemManager::visible(ItemManager::player_consumables, false);
+		ItemManager::visible(ItemManager::player_attacks, true);
+
 		EventManager::clear_current_button();
+		EventManager::set_current_button(ItemManager::player_attacks[0]->button);
 
 		//Move to attack stage
 		fli::set_fight_loop_state(1);
 		set_player_consumed_item(false);
+	}
+
+	// Player attacked, move to player defend
+	if (get_player_attacked())
+	{
+		//Make attacks invisible
+		ItemManager::visible(ItemManager::player_attacks, false);
+		//ItemManager::visible(ItemManager::player_defends, true); // <- use when we have defends
+
+		EventManager::clear_current_button();
+		//EventManager::set_current_button(ItemManager::player_defends[0]->button); // <- use when we have defends
+
+		//Move to attack stage
+		fli::set_fight_loop_state(2);
+		set_player_attacked(false);
 	}
 }
 
