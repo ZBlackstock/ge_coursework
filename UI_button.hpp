@@ -50,18 +50,18 @@ public:
 	}
 };
 
-class Button_Consumable : public Button
+class Button_Item : public Button
 {
 public:
 	void on_idle() override;
 	void on_highlight() override;
 	void on_select() override;
-	Button_Consumable(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+	Button_Item(std::string name_in_file, sf::Vector2f location, int sort_layer) :
 		Button(name_in_file, location, sort_layer) {
 	}
-	void set_consumable(std::shared_ptr<Item> ic);
+	void set_consumable(std::shared_ptr<Item> i);
 private:
-	std::shared_ptr<Item> _consumable = nullptr;
+	std::shared_ptr<Item> _item = nullptr;
 };
 
 class Button_SetResolution : public Button

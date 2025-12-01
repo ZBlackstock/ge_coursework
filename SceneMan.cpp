@@ -277,9 +277,9 @@ void Fight0::on_scene_active()
 	auto etats = elayer->add_component<BasicEntityStats>(100, 20);
 	auto e = elayer->add_component<SpriteComponent>();
 	std::shared_ptr<sf::Texture> etex = std::make_shared<sf::Texture>();
-	etex->loadFromFile(gs::sprites_path + "enemy.png");
+	etex->loadFromFile(gs::sprites_path + "knight_sprite.png");
 	e->set_texure(etex);
-	e->get_sprite().setPosition(gs::screen_mid.x + 100, gs::screen_mid.y - 200);
+	e->get_sprite().setPosition(sf::Vector2f{gs::screen_mid.x + 250, gs::screen_mid.y - 450});
 
 	etats->take_damage(stats->get_attack_power());
 	auto ebuff = etats->add_buff<dath>();
@@ -287,7 +287,6 @@ void Fight0::on_scene_active()
 
 	MsgBox::init();
 	EventManager::set_current_button(ItemManager::player_consumables[0]->button);
-	RenderMan::create_sprite("knight_sprite.png", {(gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200)}, 1);
 }
 void Fight0::update(const float& dt)
 {

@@ -180,28 +180,28 @@ void Button_ToggleFullscreen::on_select()
 	window->create(sf::VideoMode(gs::screen_size.x, gs::screen_size.y), "Black Dragon", gs::fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
 }
 
-void Button_Consumable::on_idle()
+void Button_Item::on_idle()
 {
-	Console::print("on_idle() " + Button_Consumable::_consumable->get_name());
-	Button_Consumable::_consumable->display_description(false);
+	Console::print("on_idle() " + Button_Item::_item->get_name());
+	Button_Item::_item->display_description(false);
 }
 
-void Button_Consumable::on_highlight()
+void Button_Item::on_highlight()
 {
-	Console::print("on_highlight() " + Button_Consumable::_consumable->get_name());
-	Button_Consumable::_consumable->display_description(true);
+	Console::print("on_highlight() " + Button_Item::_item->get_name());
+	Button_Item::_item->display_description(true);
 }
 
-void Button_Consumable::on_select()
+void Button_Item::on_select()
 {
-	Console::print("on_select() " + Button_Consumable::_consumable->get_name());
-	Button_Consumable::_consumable->on_use();
-	Button_Consumable::_consumable->display_description(false);
+	Console::print("on_select() " + Button_Item::_item->get_name());
+	Button_Item::_item->on_use();
+	Button_Item::_item->display_description(false);
 }
 
-void Button_Consumable::set_consumable(std::shared_ptr<Item> ic)
+void Button_Item::set_consumable(std::shared_ptr<Item> i)
 {
-	Button_Consumable::_consumable = ic;
+	Button_Item::_item = i;
 }
 
 void Button_SetResolution::set_change(int change)

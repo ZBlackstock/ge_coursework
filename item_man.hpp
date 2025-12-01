@@ -7,7 +7,7 @@
 
 // Forward definition
 class Item;
-class Button_Consumable;
+class Button_Item;
 
 class ItemManager
 {
@@ -15,6 +15,7 @@ public:
 	static std::vector<std::shared_ptr<Item>> all_consumables;
 	static std::vector<std::shared_ptr<Item>> player_consumables;
 	static std::vector<std::shared_ptr<Item>> player_attacks;
+	static std::vector<std::shared_ptr<Item>> player_defends;
 	static void init();
 	static void visible(std::vector<std::shared_ptr<Item>> list, bool visible);
 	static int num_player_consumables;
@@ -25,7 +26,7 @@ class Item
 public:
 	Item(std::string name, sf::Vector2f pos);
 
-	std::shared_ptr<Button_Consumable> button = nullptr;
+	std::shared_ptr<Button_Item> button = nullptr;
 	virtual void on_use();
 	sf::Vector2f get_pos();
 	void display_description(bool display);
@@ -53,6 +54,13 @@ class Item_Attack : public Item
 {
 public:
 	Item_Attack(std::string name, sf::Vector2f pos) : Item(name, pos) {};
+	void on_use() override;
+};
+
+class Item_Defend : public Item
+{
+public:
+	Item_Defend(std::string name, sf::Vector2f pos) : Item(name, pos) {};
 	void on_use() override;
 };
 
@@ -185,6 +193,26 @@ class atk_Heavy : public Item_Attack
 {
 public:
 	atk_Heavy(std::string name, sf::Vector2f pos) : Item_Attack(name, pos) {}
+	void on_use() override;
+	void set_display_texts() override;
+};
+
+// ______________CUSTOM DEFENDS__________________
+
+// Light Attack
+class dfn_Block : public Item_Defend
+{
+public:
+	dfn_Block(std::string name, sf::Vector2f pos) : Item_Defend(name, pos) {}
+	void on_use() override;
+	void set_display_texts() override;
+};
+
+// Heavy Attack
+class dfn_Parry : public Item_Defend
+{
+public:
+	dfn_Parry(std::string name, sf::Vector2f pos) : Item_Defend(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };

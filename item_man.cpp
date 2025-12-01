@@ -10,6 +10,7 @@
 using i = Item;
 using ic = Item_Consumable;
 using ia = Item_Attack;
+using id = Item_Defend;
 using iman = ItemManager;
 using m = MsgBox;
 using fli = FightLoopIndicator;
@@ -17,11 +18,11 @@ using fli = FightLoopIndicator;
 std::vector<std::shared_ptr<Item>> iman::all_consumables;
 std::vector<std::shared_ptr<Item>> iman::player_consumables;
 std::vector<std::shared_ptr<Item>> iman::player_attacks;
+std::vector<std::shared_ptr<Item>> iman::player_defends;
 int iman::num_player_consumables = 8;
 
 void iman::init()
 {
-	Console::print("ConsumableManager Init()");
 
 	// ________________ADD CONSUMABLES________________________________________
 
@@ -129,7 +130,7 @@ void iman::init()
 		}
 	}
 
-	// _________________________ADD ATTACKS ____________________________
+	// _________________________ADD ATTACKS____________________________
 
 	// ____________________Light_____________________
 	std::shared_ptr<atk_Light> light = std::make_shared<atk_Light>
@@ -141,6 +142,8 @@ void iman::init()
 
 	light->button->set_consumable(light);
 	heavy->button->set_consumable(heavy);
+	light->set_display_texts();
+	heavy->set_display_texts();
 
 	//Button navigation
 	light->button->set_above(heavy->button);
@@ -155,6 +158,35 @@ void iman::init()
 	// Move off screen
 	light->button->set_all_sprites_pos({ 10000,10000 });
 	heavy->button->set_all_sprites_pos({ 10000,10000 });
+
+	// _________________________ADD DEFENDS____________________________
+
+	// ____________________Block_____________________
+	std::shared_ptr<dfn_Block> block = std::make_shared<dfn_Block>
+		("dfn_block", sf::Vector2f{ 100,100 });
+
+	// ____________________Parry_____________________
+	std::shared_ptr<dfn_Parry> parry = std::make_shared<dfn_Parry>
+		("dfn_parry", sf::Vector2f{ 100,220 });
+
+	block->button->set_consumable(block);
+	parry->button->set_consumable(parry);
+	block->set_display_texts();
+	parry->set_display_texts();
+
+	//Button navigation
+	block->button->set_above(parry->button);
+	block->button->set_below(parry->button);
+
+	parry->button->set_above(block->button);
+	parry->button->set_below(block->button);
+
+	iman::player_defends.push_back(block);
+	iman::player_defends.push_back(parry);
+
+	// Move off screen
+	block->button->set_all_sprites_pos({ 10000,10000 });
+	parry->button->set_all_sprites_pos({ 10000,10000 });
 }
 
 void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
@@ -170,7 +202,7 @@ i::Item(std::string name, sf::Vector2f pos)
 {
 	i::_name = name;
 	i::_pos = pos;
-	i::button = std::make_shared<Button_Consumable>(name, pos, 3);
+	i::button = std::make_shared<Button_Item>(name, pos, 3);
 
 	_txt_display_name->setFont(GameSystem::font_bold);
 	_txt_display_name->setCharacterSize(50);
@@ -369,6 +401,9 @@ void atk_Light::on_use()
 {
 	ia::on_use();
 	m::set_text("Light attack!");
+
+	//Code for light attack here
+
 }
 void atk_Light::set_display_texts()
 {
@@ -381,9 +416,47 @@ void atk_Heavy::on_use()
 {
 	ia::on_use();
 	m::set_text("Heavy attack!");
+
+	//Code for heavy attack here
+
 }
 void atk_Heavy::set_display_texts()
 {
 	_display_name = "Heavy Attack";
 	_display_description = "Slow swing, dealing lots of \ndamage, but easier to \nparry and block";
+}
+
+// ___________________DEFENDS________________
+
+void id::on_use()
+{
+	FightManager::set_player_defended(true);
+}
+
+// Light
+void dfn_Block::on_use()
+{
+	id::on_use();
+	m::set_text("Preparing to block!");
+
+	//Code for blocking here
+}
+void dfn_Block::set_display_texts()
+{
+	_display_name = "Block";
+	_display_description = "Prepare to block your opponents \nnext attack.\n\nSuccessful blocks greatly reduce damage \ntaken, and are effective against\nlight attacks.";
+}
+
+// Heavy
+void dfn_Parry::on_use()
+{
+	id::on_use();
+	m::set_text("Preparing to parry!");
+
+	//Code for parrying here
+}
+void dfn_Parry::set_display_texts()
+{
+	_display_name = "Parry";
+	_display_description = "Prepare to parry your opponents \nnext attack.\n\nA risky maneuvre resulting in no damage \ntaken if successful. Higher chance \nof success against heavy attacks.";
 }
