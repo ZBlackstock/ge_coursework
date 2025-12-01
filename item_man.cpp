@@ -7,18 +7,21 @@
 #include "message_box.hpp"
 #include "UI_fight_loop.hpp"
 
-using cns = Item;
-using cman = ItemManager;
+using i = Item;
+using iman = ItemManager;
 using m = MsgBox;
 using fli = FightLoopIndicator;
 
-std::vector<std::shared_ptr<Item>> cman::all_consumables;
-std::vector<std::shared_ptr<Item>> cman::player_consumables;
-int cman::num_player_consumables = 8;
+std::vector<std::shared_ptr<Item>> iman::all_consumables;
+std::vector<std::shared_ptr<Item>> iman::player_consumables;
+std::vector<std::shared_ptr<Item>> iman::player_attacks;
+int iman::num_player_consumables = 8;
 
-void cman::init()
+void iman::init()
 {
 	Console::print("ConsumableManager Init()");
+
+	// ________________ADD CONSUMABLES________________________________________
 
 	// ____________________Small healing potion_____________________
 	std::shared_ptr<cns_HealingPotion> healing_potion0 = std::make_shared<cns_HealingPotion>
@@ -86,59 +89,79 @@ void cman::init()
 	quick_eye->button->set_consumable(quick_eye);
 	oil->button->set_consumable(oil);
 
-	cman::all_consumables.push_back(healing_potion0);
-	cman::all_consumables.push_back(healing_potion1);
-	cman::all_consumables.push_back(healing_potion2);
-	cman::all_consumables.push_back(fire_resistance);
-	cman::all_consumables.push_back(sharp_resistance);
-	cman::all_consumables.push_back(firebomb);
-	cman::all_consumables.push_back(thorns);
-	cman::all_consumables.push_back(illusion);
-	cman::all_consumables.push_back(whetstone);
-	cman::all_consumables.push_back(fire_blessing);
-	cman::all_consumables.push_back(rage);
-	cman::all_consumables.push_back(quick_eye);
-	cman::all_consumables.push_back(oil);
+	iman::all_consumables.push_back(healing_potion0);
+	iman::all_consumables.push_back(healing_potion1);
+	iman::all_consumables.push_back(healing_potion2);
+	iman::all_consumables.push_back(fire_resistance);
+	iman::all_consumables.push_back(sharp_resistance);
+	iman::all_consumables.push_back(firebomb);
+	iman::all_consumables.push_back(thorns);
+	iman::all_consumables.push_back(illusion);
+	iman::all_consumables.push_back(whetstone);
+	iman::all_consumables.push_back(fire_blessing);
+	iman::all_consumables.push_back(rage);
+	iman::all_consumables.push_back(quick_eye);
+	iman::all_consumables.push_back(oil);
 
 	sf::Vector2f consumable_pos = { 100, 100 };
-	for (int i = 0; i < cman::num_player_consumables; ++i)
+	for (int i = 0; i < iman::num_player_consumables; ++i)
 	{
 		srand(time(0));
-		int random = rand() % cman::all_consumables.size();
-		cman::all_consumables[random]->button->set_pos(consumable_pos);
-		cman::player_consumables.push_back(cman::all_consumables[random]);
-		cman::all_consumables[random]->set_display_texts();
-		cman::all_consumables.erase(cman::all_consumables.begin() + random);
+		int random = rand() % iman::all_consumables.size();
+		iman::all_consumables[random]->button->set_pos(consumable_pos);
+		iman::player_consumables.push_back(iman::all_consumables[random]);
+		iman::all_consumables[random]->set_display_texts();
+		iman::all_consumables.erase(iman::all_consumables.begin() + random);
 		consumable_pos.y += 120;
 
-		if (cman::player_consumables.size() > 1)
+		if (iman::player_consumables.size() > 1)
 		{
-			cman::player_consumables[i]->button->set_above(cman::player_consumables[i - 1]->button);
-			cman::player_consumables[i - 1]->button->set_below(cman::player_consumables[i]->button);
+			iman::player_consumables[i]->button->set_above(iman::player_consumables[i - 1]->button);
+			iman::player_consumables[i - 1]->button->set_below(iman::player_consumables[i]->button);
 
-			if (i == cman::num_player_consumables - 1)
+			if (i == iman::num_player_consumables - 1)
 			{
-				cman::player_consumables[i]->button->set_below(cman::player_consumables[0]->button);
-				cman::player_consumables[0]->button->set_above(cman::player_consumables[i]->button);
+				iman::player_consumables[i]->button->set_below(iman::player_consumables[0]->button);
+				iman::player_consumables[0]->button->set_above(iman::player_consumables[i]->button);
 			}
 		}
 	}
+
+	// _________________________ADD ATTACKS ____________________________
+
+	// ____________________Light_____________________
+	std::shared_ptr<atk_Light> light = std::make_shared<atk_Light>
+		("atk_light", sf::Vector2f{ 100,100 });
+
+	// ____________________Heavy_____________________
+	std::shared_ptr<atk_Heavy> heavy = std::make_shared<atk_Heavy>
+		("atk_heavy", sf::Vector2f{ 100,220 });
+
+	light->button->set_consumable(light);
+	heavy->button->set_consumable(heavy);
+
+	iman::player_attacks.push_back(light);
+	iman::player_attacks.push_back(heavy);
+
+	// Move off screen
+	light->button->set_all_sprites_pos({ 10000,10000 });
+	heavy->button->set_all_sprites_pos({ 10000,10000 });
 }
 
-void cman::visible(bool visible)
+void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
 {
-	for (int i = 0; i < cman::num_player_consumables; ++i)
+	for (int i = 0; i < iman::num_player_consumables; ++i)
 	{
-		cman::player_consumables[i]->button->set_all_sprites_pos(visible ? cman::player_consumables[i]->get_pos() : sf::Vector2f{ 10000, 10000 });
+		iman::player_consumables[i]->button->set_all_sprites_pos(visible ? iman::player_consumables[i]->get_pos() : sf::Vector2f{ 10000, 10000 });
 	}
 }
 
 //____________________Consumables_________________________________________________________________________
-cns::Item(std::string name, sf::Vector2f pos)
+i::Item(std::string name, sf::Vector2f pos)
 {
-	cns::_name = name;
-	cns::_pos = pos;
-	cns::button = std::make_shared<Button_Consumable>(name, pos, 3);
+	i::_name = name;
+	i::_pos = pos;
+	i::button = std::make_shared<Button_Consumable>(name, pos, 3);
 
 	_txt_display_name->setFont(GameSystem::font_bold);
 	_txt_display_name->setCharacterSize(50);
@@ -153,25 +176,25 @@ cns::Item(std::string name, sf::Vector2f pos)
 	RenderMan::createDrawable(_txt_display_name, 3);
 	RenderMan::createDrawable(_txt_display_description, 3);
 }
-void cns::on_use()
+void i::on_use()
 {
 	FightManager::set_player_consumed_item(true);
-	cns::button->disable();
+	i::button->disable();
 	fli::set_fight_loop_state(1);
 	Console::print("on_use()");
 }
 
-sf::Vector2f cns::get_pos()
+sf::Vector2f i::get_pos()
 {
 	return _pos;
 }
 
-std::string cns::get_name()
+std::string i::get_name()
 {
-	return cns::_name;
+	return i::_name;
 }
 
-void cns::display_description(bool display)
+void i::display_description(bool display)
 {
 	Console::print("cns::display_description() " + std::to_string(display));
 	Console::print(_display_name);
@@ -182,14 +205,14 @@ void cns::display_description(bool display)
 	_txt_display_name->setOrigin(0, _txt_display_name->getLocalBounds().height / 2);
 	_txt_display_description->setOrigin(0, 0);
 }
-void cns::set_display_texts() {}
+void i::set_display_texts() {}
 
 //____________________________
 
 // Healing Potion
 void cns_HealingPotion::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Health Potion Used. Regained " + std::to_string(cns_HealingPotion::_heal_amount) + " health!");
 }
 void cns_HealingPotion::set_display_texts()
@@ -203,7 +226,7 @@ void cns_HealingPotion::set_display_texts()
 // Fire Resistance
 void cns_FireResistance::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Fire resistance gained! The next fire attack that lands will deal less damage");
 }
 void cns_FireResistance::set_display_texts()
@@ -215,7 +238,7 @@ void cns_FireResistance::set_display_texts()
 // Sharp Resistance
 void cns_SharpResistance::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Sharp resistance gained! The next fire attack that lands will deal less damage");
 }
 void cns_SharpResistance::set_display_texts()
@@ -227,7 +250,7 @@ void cns_SharpResistance::set_display_texts()
 // Blunt resistance
 void cns_FireBomb::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Fire Bomb thrown at enemy!");
 }
 void cns_FireBomb::set_display_texts()
@@ -239,7 +262,7 @@ void cns_FireBomb::set_display_texts()
 // Thorns
 void cns_Thorns::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Thorns used!");
 }
 void cns_Thorns::set_display_texts()
@@ -251,7 +274,7 @@ void cns_Thorns::set_display_texts()
 // Illusion
 void cns_Illusion::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Illusion cast!");
 }
 void cns_Illusion::set_display_texts()
@@ -264,7 +287,7 @@ void cns_Illusion::set_display_texts()
 // Fire buff
 void cns_FireBlessing::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Fire blessing recieved!");
 }
 void cns_FireBlessing::set_display_texts()
@@ -277,7 +300,7 @@ void cns_FireBlessing::set_display_texts()
 // Sharp buff
 void cns_Whetstone::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Blade sharpened by Whetstone!");
 }
 void cns_Whetstone::set_display_texts()
@@ -289,7 +312,7 @@ void cns_Whetstone::set_display_texts()
 // Rage
 void cns_Rage::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Enraged!");
 }
 void cns_Rage::set_display_texts()
@@ -302,7 +325,7 @@ void cns_Rage::set_display_texts()
 // Quickeye
 void cns_QuickEye::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Utilising Quick Eye!");
 }
 void cns_QuickEye::set_display_texts()
@@ -314,11 +337,37 @@ void cns_QuickEye::set_display_texts()
 // Oil
 void cns_Oil::on_use()
 {
-	cns::on_use();
+	i::on_use();
 	m::set_text("Oil thrown!");
 }
 void cns_Oil::set_display_texts()
 {
 	_display_name = "Oil";
 	_display_description = "Coats foe in oil.\n\nYour foes next fire \nattack will ignite them.";
+}
+
+// ___________________ATTACKS________________
+
+// Light
+void atk_Light::on_use()
+{
+	i::on_use();
+	m::set_text("Light attack!");
+}
+void atk_Light::set_display_texts()
+{
+	_display_name = "Light Attack";
+	_display_description = "Quick swing, dealing small \ndamage, but harder to parry \nand block.";
+}
+
+// Heavy
+void atk_Heavy::on_use()
+{
+	i::on_use();
+	m::set_text("Heavy attack!");
+}
+void atk_Heavy::set_display_texts()
+{
+	_display_name = "Heavy Attack";
+	_display_description = "Slow swing, dealing lots of \ndamage, but easier to \nparry and block";
 }

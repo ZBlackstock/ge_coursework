@@ -14,8 +14,9 @@ class ItemManager
 public:
 	static std::vector<std::shared_ptr<Item>> all_consumables;
 	static std::vector<std::shared_ptr<Item>> player_consumables;
+	static std::vector<std::shared_ptr<Item>> player_attacks;
 	static void init();
-	static void visible(bool visible);
+	static void visible(std::vector<std::shared_ptr<Item>> list, bool visible);
 	static int num_player_consumables;
 };
 
@@ -40,6 +41,8 @@ protected:
 	std::string _display_name;
 	std::string _display_description;
 };
+
+// ______________CUSTOM CONSUMABLES__________________
 
 // Heal player by amount
 class cns_HealingPotion : public Item
@@ -148,6 +151,26 @@ class cns_Oil : public Item
 {
 public:
 	cns_Oil(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	void on_use() override;
+	void set_display_texts() override;
+};
+
+// ______________CUSTOM ATTACKS__________________
+
+// Light Attack
+class atk_Light : public Item
+{
+public:
+	atk_Light(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	void on_use() override;
+	void set_display_texts() override;
+};
+
+// Heavy Attack
+class atk_Heavy : public Item
+{
+public:
+	atk_Heavy(std::string name, sf::Vector2f pos) : Item(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
