@@ -172,14 +172,8 @@ void im::reset_key_binds()
 	im::right = sf::Keyboard::Right;
 }
 
-static bool is_any_key_pressed()
-{
 
-}
-static sf::Keyboard::Key any_key_pressed()
-{
 
-}
 
 std::string im::key_to_string(sf::Keyboard::Key key)
 {

@@ -3,7 +3,7 @@
 #include "..\SceneMan.hpp"
 #include "..\input_man.hpp"
 #include "..\fight_manager.hpp"
-#include "renderer.hpp"
+#include "RenderMan.h"
 #include "AudioManager.h"
 
 using gs = GameSystem;

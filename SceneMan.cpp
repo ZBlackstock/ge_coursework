@@ -279,7 +279,7 @@ void Fight0::on_scene_active()
 	std::shared_ptr<sf::Texture> etex = std::make_shared<sf::Texture>();
 	etex->loadFromFile(gs::sprites_path + "enemy.png");
 	e->set_texure(etex);
-	e->get_sprite().setPosition(gs::screen_mid.x+100,gs::screen_mid.y-200);
+	e->get_sprite().setPosition(gs::screen_mid.x + 100, gs::screen_mid.y - 200);
 
 	etats->take_damage(stats->get_attack_power());
 	auto ebuff = etats->add_buff<dath>();
@@ -308,7 +308,6 @@ void Fight0::on_scene_inactive()
 	std::cout << "Fight0 (Left) on_scene_inactive()" << std::endl;
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
-	ItemManager::clean();
 }
 
 // _______________________Fight1 (Middle)_________________________________________
@@ -406,7 +405,7 @@ void Settings::on_scene_active()
 
 	std::shared_ptr<Button_SetResolution> btn_res_arrow_right = std::make_shared<Button_SetResolution>
 		("arrow_right", sf::Vector2f{ 1480,680 }, 1);
-	btn_res_arrow_left->set_change(1);
+	btn_res_arrow_right->set_change(1);
 
 	// Load Keybind buttons
 	std::shared_ptr<Button_KeyBind> btn_key_bind_select = std::make_shared<Button_KeyBind>
@@ -491,18 +490,18 @@ void Settings::update(const float& dt)
 }
 
 
-void Settings::set_resolution(int ic)
+void Settings::set_resolution(int i)
 {
-	if (ic > Settings::resolutions.size() - 1)
-	{
-		ic = 0;
-	}
-	else if (ic < 0)
-	{
-		ic = Settings::resolutions.size() - 1;
-	}
+	Settings::current_res_index += i;
 
-	Settings::current_res_index = ic;
+	if (Settings::current_res_index > Settings::resolutions.size() - 1)
+	{
+		Settings::current_res_index = 0;
+	}
+	else if (Settings::current_res_index < 0)
+	{
+		Settings::current_res_index = Settings::resolutions.size() - 1;
+	}
 
 	// Recreate window
 	sf::RenderWindow* window = RenderMan::GetWindow();
