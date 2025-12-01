@@ -21,7 +21,6 @@ int iman::num_player_consumables = 8;
 
 void iman::init()
 {
-	Console::print("ConsumableManager Init()");
 
 	// ________________ADD CONSUMABLES________________________________________
 
@@ -141,6 +140,8 @@ void iman::init()
 
 	light->button->set_consumable(light);
 	heavy->button->set_consumable(heavy);
+	light->set_display_texts();
+	heavy->set_display_texts();
 
 	//Button navigation
 	light->button->set_above(heavy->button);
@@ -170,7 +171,7 @@ i::Item(std::string name, sf::Vector2f pos)
 {
 	i::_name = name;
 	i::_pos = pos;
-	i::button = std::make_shared<Button_Consumable>(name, pos, 3);
+	i::button = std::make_shared<Button_Item>(name, pos, 3);
 
 	_txt_display_name->setFont(GameSystem::font_bold);
 	_txt_display_name->setCharacterSize(50);

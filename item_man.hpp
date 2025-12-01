@@ -7,7 +7,7 @@
 
 // Forward definition
 class Item;
-class Button_Consumable;
+class Button_Item;
 
 class ItemManager
 {
@@ -25,7 +25,7 @@ class Item
 public:
 	Item(std::string name, sf::Vector2f pos);
 
-	std::shared_ptr<Button_Consumable> button = nullptr;
+	std::shared_ptr<Button_Item> button = nullptr;
 	virtual void on_use();
 	sf::Vector2f get_pos();
 	void display_description(bool display);
