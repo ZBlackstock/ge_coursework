@@ -84,9 +84,9 @@ void sm::set_active_scene(std::shared_ptr<Scene> scene)
 void sm::set_active_scene(const std::string& name)
 {
 	// Loop through all scenes
-	for (int i = 0; i < sm::scenes.size(); ++i)
+	for (int ic = 0; ic < sm::scenes.size(); ++ic)
 	{
-		std::shared_ptr<Scene> scene = sm::scenes.at(i);
+		std::shared_ptr<Scene> scene = sm::scenes.at(ic);
 		std::cout << "Comparing string " << name << " to scne_name " << scene.get()->name << std::endl;
 
 		// Compare string name to each scene name
@@ -464,18 +464,18 @@ void Settings::update(const float& dt)
 }
 
 
-void Settings::set_resolution(int i)
+void Settings::set_resolution(int ic)
 {
-	if (i > Settings::resolutions.size() - 1)
+	if (ic > Settings::resolutions.size() - 1)
 	{
-		i = 0;
+		ic = 0;
 	}
-	else if (i < 0)
+	else if (ic < 0)
 	{
-		i = Settings::resolutions.size() - 1;
+		ic = Settings::resolutions.size() - 1;
 	}
 
-	Settings::current_res_index = i;
+	Settings::current_res_index = ic;
 
 	// Recreate window
 	sf::RenderWindow* window = RenderMan::GetWindow();

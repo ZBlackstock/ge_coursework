@@ -59,7 +59,7 @@ public:
 	Button_Consumable(std::string name_in_file, sf::Vector2f location, int sort_layer) :
 		Button(name_in_file, location, sort_layer) {
 	}
-	void set_consumable(std::shared_ptr<Item> i);
+	void set_consumable(std::shared_ptr<Item> ic);
 private:
 	std::shared_ptr<Item> _consumable = nullptr;
 };

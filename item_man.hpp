@@ -42,13 +42,27 @@ protected:
 	std::string _display_description;
 };
 
+class Item_Consumable : public Item
+{
+public:
+	Item_Consumable(std::string name, sf::Vector2f pos) : Item(name,pos) {};
+	void on_use() override;
+};
+
+class Item_Attack : public Item
+{
+public:
+	Item_Attack(std::string name, sf::Vector2f pos) : Item(name, pos) {};
+	void on_use() override;
+};
+
 // ______________CUSTOM CONSUMABLES__________________
 
 // Heal player by amount
-class cns_HealingPotion : public Item
+class cns_HealingPotion : public Item_Consumable
 {
 public:
-	cns_HealingPotion(std::string name, sf::Vector2f pos, int heal_amount) : Item(name, pos), _heal_amount(heal_amount) {}
+	cns_HealingPotion(std::string name, sf::Vector2f pos, int heal_amount) : Item_Consumable(name, pos), _heal_amount(heal_amount) {}
 	void on_use() override;
 	void set_display_texts() override;
 
@@ -57,10 +71,10 @@ private:
 };
 
 // Resistant to next fire damage dealt
-class cns_FireResistance : public Item
+class cns_FireResistance : public Item_Consumable
 {
 public:
-	cns_FireResistance(std::string name, sf::Vector2f pos, int resistance) : Item(name, pos) {}
+	cns_FireResistance(std::string name, sf::Vector2f pos, int resistance) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 
@@ -69,10 +83,10 @@ private:
 };
 
 // Resistant to next sharp damage dealt
-class cns_SharpResistance : public Item
+class cns_SharpResistance : public Item_Consumable
 {
 public:
-	cns_SharpResistance(std::string name, sf::Vector2f pos, int resistance) : Item(name, pos) {}
+	cns_SharpResistance(std::string name, sf::Vector2f pos, int resistance) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 
@@ -81,10 +95,10 @@ private:
 };
 
 // Resistant to next blunt damage dealt
-class cns_FireBomb : public Item
+class cns_FireBomb : public Item_Consumable
 {
 public:
-	cns_FireBomb(std::string name, sf::Vector2f pos, int damage) : Item(name, pos) {}
+	cns_FireBomb(std::string name, sf::Vector2f pos, int damage) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 
@@ -93,64 +107,64 @@ private:
 };
 
 // If enemy's next attack lands, it will deal half of recieved damage to the enemy
-class cns_Thorns : public Item
+class cns_Thorns : public Item_Consumable
 {
 public:
-	cns_Thorns(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	cns_Thorns(std::string name, sf::Vector2f pos) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
 
 // Enemy's next attack double likely to miss
-class cns_Illusion : public Item
+class cns_Illusion : public Item_Consumable
 {
 public:
-	cns_Illusion(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	cns_Illusion(std::string name, sf::Vector2f pos) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
 
 // Next player attack will deal additional fire damage
-class cns_FireBlessing : public Item
+class cns_FireBlessing : public Item_Consumable
 {
 public:
-	cns_FireBlessing(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	cns_FireBlessing(std::string name, sf::Vector2f pos) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
 
 // Next player attack will deal additional sharp damage
-class cns_Whetstone : public Item
+class cns_Whetstone : public Item_Consumable
 {
 public:
-	cns_Whetstone(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	cns_Whetstone(std::string name, sf::Vector2f pos) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
 
 // Next player attack will deal double damage, but is less likely to land
-class cns_Rage : public Item
+class cns_Rage : public Item_Consumable
 {
 public:
-	cns_Rage(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	cns_Rage(std::string name, sf::Vector2f pos) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
 
 // Next player parry is more likely to be successful
-class cns_QuickEye : public Item
+class cns_QuickEye : public Item_Consumable
 {
 public:
-	cns_QuickEye(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	cns_QuickEye(std::string name, sf::Vector2f pos) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
 
 // If enemy performs fire attack, they will take the fire damage
-class cns_Oil : public Item
+class cns_Oil : public Item_Consumable
 {
 public:
-	cns_Oil(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	cns_Oil(std::string name, sf::Vector2f pos) : Item_Consumable(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
@@ -158,19 +172,19 @@ public:
 // ______________CUSTOM ATTACKS__________________
 
 // Light Attack
-class atk_Light : public Item
+class atk_Light : public Item_Attack
 {
 public:
-	atk_Light(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	atk_Light(std::string name, sf::Vector2f pos) : Item_Attack(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
 
 // Heavy Attack
-class atk_Heavy : public Item
+class atk_Heavy : public Item_Attack
 {
 public:
-	atk_Heavy(std::string name, sf::Vector2f pos) : Item(name, pos) {}
+	atk_Heavy(std::string name, sf::Vector2f pos) : Item_Attack(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };
