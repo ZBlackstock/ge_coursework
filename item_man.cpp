@@ -140,6 +140,13 @@ void iman::init()
 	light->button->set_consumable(light);
 	heavy->button->set_consumable(heavy);
 
+	//Button navigation
+	light->button->set_above(heavy->button);
+	light->button->set_below(heavy->button);
+
+	heavy->button->set_above(light->button);
+	heavy->button->set_below(light->button);
+
 	iman::player_attacks.push_back(light);
 	iman::player_attacks.push_back(heavy);
 
