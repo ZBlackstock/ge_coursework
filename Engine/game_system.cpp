@@ -20,7 +20,7 @@ void GameSystem::start(unsigned int width, unsigned int height, const std::strin
 
 	am::playSound("shoot");
 
-	am::addMusic("background");
+	am::addMusic("main_menu_theme");
 
 	while (window.isOpen())
 	{
