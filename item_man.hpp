@@ -56,6 +56,13 @@ public:
 	void on_use() override;
 };
 
+class Item_Defend : public Item
+{
+public:
+	Item_Defend(std::string name, sf::Vector2f pos) : Item(name, pos) {};
+	void on_use() override;
+};
+
 // ______________CUSTOM CONSUMABLES__________________
 
 // Heal player by amount
@@ -185,6 +192,26 @@ class atk_Heavy : public Item_Attack
 {
 public:
 	atk_Heavy(std::string name, sf::Vector2f pos) : Item_Attack(name, pos) {}
+	void on_use() override;
+	void set_display_texts() override;
+};
+
+// ______________CUSTOM DEFENDS__________________
+
+// Light Attack
+class dfn_Block : public Item_Defend
+{
+public:
+	dfn_Block(std::string name, sf::Vector2f pos) : Item_Defend(name, pos) {}
+	void on_use() override;
+	void set_display_texts() override;
+};
+
+// Heavy Attack
+class dfn_Parry : public Item_Defend
+{
+public:
+	dfn_Parry(std::string name, sf::Vector2f pos) : Item_Defend(name, pos) {}
 	void on_use() override;
 	void set_display_texts() override;
 };

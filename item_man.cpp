@@ -10,6 +10,7 @@
 using i = Item;
 using ic = Item_Consumable;
 using ia = Item_Attack;
+using id = Item_Defend;
 using iman = ItemManager;
 using m = MsgBox;
 using fli = FightLoopIndicator;
@@ -370,6 +371,9 @@ void atk_Light::on_use()
 {
 	ia::on_use();
 	m::set_text("Light attack!");
+
+	//Code for light attack here
+
 }
 void atk_Light::set_display_texts()
 {
@@ -382,9 +386,48 @@ void atk_Heavy::on_use()
 {
 	ia::on_use();
 	m::set_text("Heavy attack!");
+
+	//Code for heavy attack here
+
 }
 void atk_Heavy::set_display_texts()
 {
 	_display_name = "Heavy Attack";
 	_display_description = "Slow swing, dealing lots of \ndamage, but easier to \nparry and block";
+}
+
+// ___________________DEFENDS________________
+
+void id::on_use()
+{
+	FightManager::set_player_attacked(true);
+}
+
+// Light
+void dfn_Block::on_use()
+{
+	id::on_use();
+	m::set_text("Preparing to block!");
+
+	//Code for blocking here
+}
+void dfn_Block::set_display_texts()
+{
+	_display_name = "Block";
+	_display_description = "Prepare to block your opponents \nnext attack.\n\nSuccessful blocks greatly reduce damage \ntaken, and are effective against\nlight attacks.";
+}
+
+// Heavy
+void dfn_Parry::on_use()
+{
+	id::on_use();
+	m::set_text("Preparing to parry!");
+
+	//Code for parrying here
+
+}
+void dfn_Parry::set_display_texts()
+{
+	_display_name = "Parry";
+	_display_description = "Prepare to block your opponents \nnext attack.\n\nA risky maneuvre resulting in no damage \ntaken if successful. Higher chance \nof success against heavy attacks.";
 }
