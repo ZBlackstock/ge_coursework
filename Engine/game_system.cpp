@@ -17,10 +17,6 @@ void GameSystem::start(unsigned int width, unsigned int height, const std::strin
 	RenderMan::SetWindow(&window);
 	sf::Event event;
 
-	am::addSounds("shoot");
-
-	am::playSound("shoot");
-
 	am::addMusic("main_menu_theme");
 
 	while (window.isOpen())
