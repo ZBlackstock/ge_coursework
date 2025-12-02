@@ -274,6 +274,8 @@ void Fight::update(const float& dt)
 // Standard clearing for all fight scenes
 void Fight::on_scene_inactive()
 {
+	ItemManager::clear();
+
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
 }
@@ -340,9 +342,11 @@ void Fight0::on_scene_inactive()
 // Load sprites for Map HERE
 void Fight1::on_scene_active()
 {
-	Fight::on_scene_active();
+	*enemy_sprite_name = "meatball_monster_sprite.png";
+	*enemy_max_hp = 100;
+	*enemy_atk_pwr = 20;
 
-	RenderMan::create_sprite("meatball_monster_sprite.png", { (gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200) }, 1);
+	Fight::on_scene_active();
 }
 void Fight1::update(const float& dt)
 {
@@ -358,9 +362,11 @@ void Fight1::on_scene_inactive()
 // Load sprites for Map HERE
 void Fight2::on_scene_active()
 {
-	Fight::on_scene_active();
+	*enemy_sprite_name = "skinny_zombie_sprite.png";
+	*enemy_max_hp = 100;
+	*enemy_atk_pwr = 20;
 
-	RenderMan::create_sprite("skinny_zombie_sprite.png", { (gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200) }, 1);
+	Fight::on_scene_active();
 }
 void Fight2::update(const float& dt)
 {
@@ -376,9 +382,11 @@ void Fight2::on_scene_inactive()
 // Load sprites for Map HERE
 void Fight3::on_scene_active()
 {
-	Fight::on_scene_active();
+	*enemy_sprite_name = "black_dragon_sprite.png";
+	*enemy_max_hp = 100;
+	*enemy_atk_pwr = 20;
 
-	RenderMan::create_sprite("black_dragon_sprite.png", { (gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200) }, 1);
+	Fight::on_scene_active();
 }
 void Fight3::update(const float& dt)
 {
