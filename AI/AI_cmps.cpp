@@ -87,8 +87,6 @@ void AIComponent::ExecuteAttack(const Action& action) {
     std::cout << "AI attacks with "
         << (action.attack == AttackType::Light ? "Light" : "Heavy")
         << "\n";
-
-    
 }
 
 void AIComponent::ExecuteBlock(const Action& action) {
@@ -121,6 +119,8 @@ std::vector<Action> AIComponent::PredictPlayerActions() const {
 
     float medianBlock = memory->GetMedianBlock();
     float medianAttack = memory->GetMedianAttack();
+    Console::print("B"+std::to_string(medianBlock));
+    Console::print("A"+std::to_string(medianAttack));
     predictions.push_back({
         medianAttack < 1.f ? AttackType::Light : AttackType::Heavy,
         medianBlock < 0.5f ? BlockType::Block : BlockType::Parry
