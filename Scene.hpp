@@ -44,6 +44,10 @@ public:
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
 	virtual void update(const float& dt);
+	void load_enemy();
+
+protected:
+	std::shared_ptr<std::string> enemy_sprite_name = std::make_shared<std::string>();
 };
 
 // Left

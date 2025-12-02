@@ -262,14 +262,10 @@ void Fight::on_scene_active()
 	stats->take_damage(stats->get_attack_power());
 	auto buff = stats->add_buff<dath>();
 	s->render();
+
+	load_enemy();
 }
 
-// Standard clearing for all fight scenes
-void Fight::on_scene_inactive()
-{
-	RenderMan::RemoveAllDrawObj();
-	EventManager::clear_current_button();
-}
 void Fight::update(const float& dt)
 {
 	if (InputManager::press_menu())
@@ -285,22 +281,34 @@ void Fight::update(const float& dt)
 	FightManager::update(dt);
 }
 
+// Standard clearing for all fight scenes
+void Fight::on_scene_inactive()
+{
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
+}
+
+void Fight::load_enemy()
+{
+	//Stats declared in each fight on_scene_active()
+	auto enemy = GameSystem::make_entity();
+	auto stats_comp = enemy->add_component<BasicEntityStats>(100, 20);
+	auto sprite_comp = enemy->add_component<SpriteComponent>();
+	std::shared_ptr<sf::Texture> etex = std::make_shared<sf::Texture>();
+	etex->loadFromFile(gs::sprites_path + *enemy_sprite_name);
+	sprite_comp->set_texure(etex);
+	sprite_comp->get_sprite().setPosition(sf::Vector2f{ gs::screen_mid.x + 250, gs::screen_mid.y - 450 });
+
+	stats_comp->take_damage(stats_comp->get_attack_power());
+	auto ebuff = stats_comp->add_buff<dath>();
+	sprite_comp->render();
+}
+
 // _______________________Fight0 (Left)_________________________________________
 void Fight0::on_scene_active()
 {
+	*enemy_sprite_name = "knight_sprite.png";
 	Fight::on_scene_active();
-
-	auto elayer = GameSystem::make_entity();
-	auto etats = elayer->add_component<BasicEntityStats>(100, 20);
-	auto e = elayer->add_component<SpriteComponent>();
-	std::shared_ptr<sf::Texture> etex = std::make_shared<sf::Texture>();
-	etex->loadFromFile(gs::sprites_path + "knight_sprite.png");
-	e->set_texure(etex);
-	e->get_sprite().setPosition(sf::Vector2f{ gs::screen_mid.x + 250, gs::screen_mid.y - 450 });
-
-	etats->take_damage(etats->get_attack_power());
-	auto ebuff = etats->add_buff<dath>();
-	e->render();
 }
 void Fight0::update(const float& dt)
 {
