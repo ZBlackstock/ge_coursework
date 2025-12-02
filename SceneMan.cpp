@@ -251,18 +251,7 @@ void Fight::on_scene_active()
 	MsgBox::init();
 	EventManager::set_current_button(ItemManager::player_consumables[0]->button);
 
-	auto player = GameSystem::make_entity();
-	auto stats = player->add_component<BasicEntityStats>(100, 20);
-	auto s = player->add_component<SpriteComponent>();
-	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
-	tex->loadFromFile(gs::sprites_path + "player.png");
-	s->set_texure(tex);
-	s->get_sprite().setPosition(gs::screen_mid);
-
-	stats->take_damage(stats->get_attack_power());
-	auto buff = stats->add_buff<death>();
-	s->render();
-
+	load_player();
 	load_enemy();
 }
 
@@ -286,6 +275,22 @@ void Fight::on_scene_inactive()
 {
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
+}
+
+void Fight::load_player()
+{
+	auto player = GameSystem::make_entity();
+
+	auto stats_comp = player->add_component<BasicEntityStats>(100, 20);
+	auto sprite_comp = player->add_component<SpriteComponent>();
+	stats_comp->take_damage(stats_comp->get_attack_power());
+	auto buff = stats_comp->add_buff<death>();
+
+	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
+	tex->loadFromFile(gs::sprites_path + "player.png");
+	sprite_comp->set_texure(tex);
+	sprite_comp->get_sprite().setPosition(gs::screen_mid);
+	sprite_comp->render();
 }
 
 void Fight::load_enemy()
