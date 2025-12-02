@@ -228,12 +228,8 @@ void Map::update(const float& dt)
 	if (InputManager::press_menu())
 	{
 		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
-
-		if (!ExitToMainMenu::get_active())
-		{
-			EventManager::set_current_button(sm::btn_fight_mid);
-		}
 	}
+	Console::print("Map::update(const float& dt)");
 }
 void Map::on_scene_inactive()
 {
@@ -261,11 +257,6 @@ void Fight::update(const float& dt)
 	if (InputManager::press_menu())
 	{
 		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
-
-		if (!ExitToMainMenu::get_active())
-		{
-			EventManager::set_current_button(ItemManager::player_consumables[0]->button);
-		}
 	}
 
 	FightManager::update(dt);

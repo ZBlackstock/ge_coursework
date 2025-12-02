@@ -169,7 +169,6 @@ void Button_LoadScene::set_scene_to_load(std::shared_ptr<Scene> scene)
 void Button_Popup_No::on_select()
 {
 	ExitToMainMenu::set_active(false);
-	EventManager::set_current_button(SceneManager::btn_fight_mid);
 }
 
 void Button_ToggleFullscreen::on_select()
