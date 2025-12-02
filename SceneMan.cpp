@@ -550,7 +550,6 @@ void Settings::update(const float& dt)
 
 }
 
-
 void Settings::set_resolution(int i)
 {
 	// Wrap around
@@ -579,6 +578,30 @@ void Settings::on_scene_inactive()
 {
 	std::cout << "Settings on_scene_inactive()" << std::endl;
 
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+float DeathScreen::_timer = 10;
+void DeathScreen::on_scene_active()
+{
+	_timer = 10;
+}
+
+void DeathScreen::update(const float& dt)
+{
+	_timer -= dt;
+
+	if (_timer < 0)
+	{
+		SceneManager::set_active_scene(SceneManager::scenes[1]);
+	}
+}
+
+void DeathScreen::on_scene_inactive()
+{
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
 }

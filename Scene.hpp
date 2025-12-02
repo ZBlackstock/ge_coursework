@@ -121,3 +121,17 @@ private:
 	static std::vector<sf::VideoMode> resolutions;
 	static std::shared_ptr<sf::Text> res_text;
 };
+
+// Death screen
+class DeathScreen : public Scene
+{
+public:
+	DeathScreen(std::string scene_name) : Scene(scene_name) {};
+	virtual void on_scene_active();
+	virtual void on_scene_inactive();
+	static void set_resolution(int i);
+	virtual void update(const float& dt);
+
+private:
+	static float _timer;
+};
