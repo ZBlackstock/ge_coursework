@@ -48,6 +48,9 @@ public:
 	void load_player();
 
 protected:
+	static std::shared_ptr<int> player_max_hp;
+	static std::shared_ptr<int> player_atk_power;
+
 	std::shared_ptr<std::string> enemy_sprite_name = std::make_shared<std::string>();
 	std::shared_ptr<int> enemy_max_hp = std::make_shared<int>();
 	std::shared_ptr<int> enemy_atk_pwr = std::make_shared<int>();

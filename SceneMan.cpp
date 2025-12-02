@@ -241,6 +241,7 @@ void Map::on_scene_inactive()
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
 }
+//_________________________________FIGHTS______________________________
 
 // Standard setup for all fight scenes
 void Fight::on_scene_active()
@@ -277,11 +278,15 @@ void Fight::on_scene_inactive()
 	EventManager::clear_current_button();
 }
 
+// Set player stats
+std::shared_ptr<int> Fight::player_max_hp = std::make_shared<int>(100);
+std::shared_ptr<int> Fight::player_atk_power = std::make_shared<int>(20);
+
 void Fight::load_player()
 {
 	auto player = GameSystem::make_entity();
 
-	auto stats_comp = player->add_component<BasicEntityStats>(100, 20);
+	auto stats_comp = player->add_component<BasicEntityStats>(*player_max_hp, *player_atk_power);
 	auto sprite_comp = player->add_component<SpriteComponent>();
 	stats_comp->take_damage(stats_comp->get_attack_power());
 	auto buff = stats_comp->add_buff<death>();
