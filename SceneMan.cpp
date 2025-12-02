@@ -40,6 +40,7 @@ void sm::init()
 	std::shared_ptr<Fight3> fight3 = std::make_shared<Fight3>("Fight3"); // Final
 
 	std::shared_ptr<Settings> settings = std::make_shared<Settings>("Settings"); // Settings
+	std::shared_ptr<DeathScreen> death_screen = std::make_shared<DeathScreen>("DeathScreen"); // Settings
 
 
 	sm::add_scene(main_menu);
@@ -49,6 +50,7 @@ void sm::init()
 	sm::add_scene(fight2);
 	sm::add_scene(fight3);
 	sm::add_scene(settings);
+	sm::add_scene(death_screen);
 
 	sm::set_active_scene("MainMenu");
 }
@@ -386,9 +388,11 @@ void Fight2::on_scene_active()
 
 	Fight::on_scene_active();
 }
-void Fight2::update(const float& dt)
-{
-	Fight::update(dt);
+
+void Fight2::update(const float& dt)              
+{                                                 
+	Fight::update(dt);                            
+	                                              
 }
 void Fight2::on_scene_inactive()
 {
@@ -584,10 +588,18 @@ void Settings::on_scene_inactive()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-float DeathScreen::_timer = 10;
+// When players health = 0, load this death screen with:
+
+//                                  SceneManager::set_active_scene(SceneManager::scenes[7]);                            
+float DeathScreen::_timer = 5;
 void DeathScreen::on_scene_active()
 {
-	_timer = 10;
+	_timer = 5;
+
+	Map::fight0_victory = false;
+	Map::fight1_victory = false;
+	Map::fight2_victory = false;
+	Map::fight3_victory = false;
 }
 
 void DeathScreen::update(const float& dt)
@@ -596,6 +608,7 @@ void DeathScreen::update(const float& dt)
 
 	if (_timer < 0)
 	{
+		//Load map
 		SceneManager::set_active_scene(SceneManager::scenes[1]);
 	}
 }
