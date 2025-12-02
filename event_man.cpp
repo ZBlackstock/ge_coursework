@@ -26,9 +26,11 @@ void em::set_current_button(std::shared_ptr<Button> button)
 		em::_currentButton.get()->idle();
 	}
 	em::_currentButton = button;
-	em::_currentButton.get()->highlight();
 
-	std::cout << "current button = " << button.get()->get_name() << std::endl;
+	if (em::_currentButton)
+	{
+		em::_currentButton.get()->highlight();
+	}
 }
 
 void em::clear_current_button()
