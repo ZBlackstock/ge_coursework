@@ -562,7 +562,7 @@ sf::VideoMode Settings::get_resolution()
 {
 	for each(sf::VideoMode v in resolutions)
 	{
-		if (v.width == RenderMan::GetWindow()->getSize().x 
+		if (v.width == RenderMan::GetWindow()->getSize().x
 			&& v.height == RenderMan::GetWindow()->getSize().y)
 		{
 			return v;
@@ -606,9 +606,6 @@ void Settings::set_resolution(int i)
 	// Resolution text
 	Settings::res_text->setString(std::to_string(RenderMan::GetWindow()->getSize().x)
 		+ " x " + std::to_string(RenderMan::GetWindow()->getSize().y));
-
-	std::cout << "Set res to " << Settings::resolutions[Settings::current_res_index].width <<
-		Settings::resolutions[Settings::current_res_index].height << std::endl;
 }
 void Settings::on_scene_inactive()
 {
