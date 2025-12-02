@@ -91,10 +91,13 @@ public:
 	sf::Vector2f txt_pos;
 	void text_init();
 	void set_text();
+	void add_active_key(std::shared_ptr<sf::Keyboard::Key> key);
+	void remove_active_key(std::shared_ptr<sf::Keyboard::Key> key);
 	void clear_text();
 	static bool assigning_key;
 
 private:
 	// Target key to change
 	sf::Keyboard::Key _target_input;
+	std::vector<std::shared_ptr<sf::Keyboard::Key>> active_keys; //avoids having same key binded to multiple uses
 };

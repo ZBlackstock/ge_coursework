@@ -271,6 +271,23 @@ void Button_KeyBind::on_select()
 	}
 }
 
+void Button_KeyBind::add_active_key(std::shared_ptr<sf::Keyboard::Key> key)
+{
+	active_keys.push_back(key);
+}
+
+void Button_KeyBind::remove_active_key(std::shared_ptr<sf::Keyboard::Key> key)
+{
+	for (int i = 0; i < active_keys.size() - 1; ++i)
+	{
+		if (active_keys[i] == key)
+		{
+			active_keys.erase(active_keys.begin() + i);
+			break;
+		}
+	}
+}
+
 void Button_KeyBind::text_init()
 {
 	Button_KeyBind::text->setPosition(Button_KeyBind::txt_pos);
