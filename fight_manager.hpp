@@ -21,6 +21,8 @@ public:
 	static void set_player_defended(bool defended);
 	static bool get_player_defended();
 
+
+
 private:
 	static bool _player_consumed_item;
 	static bool _player_attacked;

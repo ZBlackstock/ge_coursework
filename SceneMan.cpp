@@ -14,6 +14,8 @@
 #include "message_box.hpp"
 #include "fight_manager.hpp"
 #include "BasicEntityStats.h"
+#include "AI/Memory.h"
+#include "AI/AI_cmps.h"
 
 using sm = SceneManager;
 using gs = GameSystem;

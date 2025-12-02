@@ -25,6 +25,8 @@ add_library(engine STATIC engine/game_system.cpp
 target_include_directories(engine INTERFACE engine ${SFML_INCS})
 target_link_libraries(engine sfml-graphics sfml-audio sfml-system)
 
+
+
 ### executable ###
 add_executable(BlackDragon
 	main.cpp
@@ -40,11 +42,14 @@ add_executable(BlackDragon
 	message_box.cpp
 	UI_fight_loop.cpp
 	healthbar.cpp
+	AI/Memory.cpp
+	AI/AI_cmps.cpp
 )
 
 target_include_directories(BlackDragon PRIVATE ${SFML_INCS} engine)
 target_link_libraries(BlackDragon sfml-graphics sfml-audio sfml-system engine)
 set_property(TARGET BlackDragon PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
 
 add_custom_command(TARGET BlackDragon POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory

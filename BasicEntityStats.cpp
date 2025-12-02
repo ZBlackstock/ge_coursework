@@ -45,6 +45,10 @@ int BasicEntityStats::get_max_health() const {
     return static_cast<int>(base_max_health * mult);
 }
 
+int BasicEntityStats::get_current_health() const {
+    return current_health;
+}
+
 void BasicEntityStats::take_damage(int dmg) {
     float mult = 1.0f;
     for (auto& b : buffs)

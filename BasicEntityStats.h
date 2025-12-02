@@ -18,6 +18,7 @@ public:
 
     void update(const float& dt) override;
     int get_max_health() const;
+	int get_current_health() const;
     int get_attack_power() const;
     void take_fire_damage(int dmg);
     void take_sharp_damage(int dmg);
