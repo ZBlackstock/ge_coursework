@@ -394,6 +394,7 @@ void Fight3::on_scene_inactive()
 int Settings::current_res_index = 1;
 std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFullscreenModes();;
 std::shared_ptr<sf::Text> Settings::res_text = std::make_shared<sf::Text>();
+std::vector<std::shared_ptr<Button_KeyBind>> Settings::key_binds = std::vector<std::shared_ptr<Button_KeyBind>>();
 
 // Make Button_KeyBind
 
@@ -449,14 +450,18 @@ void Settings::on_scene_active()
 	btn_key_bind_right->txt_pos = sf::Vector2f{ 1450,460 };
 	btn_key_bind_right->text_init();
 
+	std::shared_ptr<Button_ResetKeyBinds> btn_reset_key_binds = std::make_shared<Button_ResetKeyBinds>
+		("settings_reset", sf::Vector2f{ 1700,130 }, 1);
+
 	// Assign back button scene and set it to highlighted
 	btn_back->set_scene_to_load(SceneManager::scenes[0]); // Main Menu
 
 	btn_togglefullscreen->set_above(btn_res_arrow_left);
 	btn_togglefullscreen->set_below(btn_back);
+	btn_togglefullscreen->set_right(btn_res_arrow_right);
 
 	btn_back->set_above(btn_togglefullscreen);
-	btn_back->set_below(btn_key_bind_select);
+	btn_back->set_below(btn_reset_key_binds);
 
 	btn_res_arrow_left->set_left(btn_res_arrow_right);
 	btn_res_arrow_left->set_right(btn_res_arrow_right);
@@ -468,8 +473,10 @@ void Settings::on_scene_active()
 	btn_res_arrow_right->set_below(btn_togglefullscreen);
 	btn_res_arrow_right->set_above(btn_key_bind_right);
 
-	btn_key_bind_select->set_above(btn_back);
+	btn_key_bind_select->set_above(btn_reset_key_binds);
 	btn_key_bind_select->set_below(btn_key_bind_up);
+	btn_key_bind_select->set_left(btn_reset_key_binds);
+	btn_key_bind_select->set_right(btn_reset_key_binds);
 
 	btn_key_bind_up->set_above(btn_key_bind_select);
 	btn_key_bind_up->set_below(btn_key_bind_down);
@@ -482,6 +489,11 @@ void Settings::on_scene_active()
 
 	btn_key_bind_right->set_above(btn_key_bind_left);
 	btn_key_bind_right->set_below(btn_res_arrow_left);
+
+	btn_reset_key_binds->set_above(btn_back);
+	btn_reset_key_binds->set_below(btn_key_bind_up);
+	btn_reset_key_binds->set_left(btn_key_bind_select);
+	btn_reset_key_binds->set_right(btn_key_bind_select);
 
 	EventManager::set_current_button(btn_key_bind_select);
 
@@ -497,6 +509,11 @@ void Settings::on_scene_active()
 	Settings::res_text->setCharacterSize(40);
 	RenderMan::createDrawable(Settings::res_text, 2);
 
+	key_binds.push_back(btn_key_bind_select);
+	key_binds.push_back(btn_key_bind_up);
+	key_binds.push_back(btn_key_bind_down);
+	key_binds.push_back(btn_key_bind_left);
+	key_binds.push_back(btn_key_bind_right);
 }
 
 void Settings::update(const float& dt)

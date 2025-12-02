@@ -4,6 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <memory> // For pointers
 #include "Engine\RenderMan.h"
+#include "UI_button.hpp"
+
+class Button_KeyBind;
 
 class Scene
 {
@@ -105,6 +108,7 @@ public:
 	virtual void on_scene_inactive();
 	static void set_resolution(int i);
 	virtual void update(const float& dt);
+	static std::vector<std::shared_ptr<Button_KeyBind>> key_binds;
 
 private:
 	static int current_res_index;

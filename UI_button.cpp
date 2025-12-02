@@ -307,3 +307,8 @@ void Button_KeyBind::clear_text()
 {
 	Button_KeyBind::text->setString("Assign Key");
 }
+
+void Button_ResetKeyBinds::on_select()
+{
+	InputManager::reset_key_binds();
+}
