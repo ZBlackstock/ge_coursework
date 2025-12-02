@@ -56,9 +56,7 @@ void FightManager::update(const float& dt)
 	{
 		//Make attacks invisible
 		ItemManager::visible(ItemManager::player_defends, false);
-
 		EventManager::clear_current_button();
-
 		//Move to attack stage
 		fli::set_fight_loop_state(3);
 		set_player_defended(false);
