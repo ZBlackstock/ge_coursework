@@ -37,6 +37,11 @@ public:
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
 	virtual void update(const float& dt);
+	void set_map_sprites();
+	static bool fight0_victory;
+	static bool fight1_victory;
+	static bool fight2_victory;
+	static bool fight3_victory;
 };
 
 // Left

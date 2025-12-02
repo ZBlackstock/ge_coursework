@@ -170,12 +170,8 @@ std::shared_ptr<Button_LoadScene> sm::btn_fight_final = nullptr;
 // Load sprites for Map HERE
 void Map::on_scene_active()
 {
-	std::cout << "Map on_scene_active()" << std::endl;
-
 	ExitToMainMenu::init();
-
-	// Load map sprite
-	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
+	set_map_sprites();
 
 	// Left fight
 	sm::btn_fight_left = std::make_shared<Button_LoadScene>
@@ -236,6 +232,28 @@ void Map::on_scene_inactive()
 	std::cout << "Map on_scene_inactive()" << std::endl;
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
+}
+
+bool Map::fight0_victory = false;
+bool Map::fight1_victory = false;
+bool Map::fight2_victory = false;
+bool Map::fight3_victory = false;
+void Map::set_map_sprites()
+{
+	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
+
+	if (!fight0_victory)
+	{
+		RenderMan::create_sprite("map_lock.png", { gs::screen_mid.x - 50, gs::screen_mid.y - 200 }, 2);
+	}
+	if (!fight1_victory)
+	{
+		RenderMan::create_sprite("map_lock.png", { gs::screen_mid.x, gs::screen_mid.y - 200 }, 2);
+	}
+	if (!fight2_victory)
+	{
+		RenderMan::create_sprite("map_lock.png", { gs::screen_mid.x + 50, gs::screen_mid.y - 200 }, 2);
+	}
 }
 //_________________________________FIGHTS______________________________
 
