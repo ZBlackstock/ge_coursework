@@ -541,6 +541,8 @@ void Settings::on_scene_active()
 	key_binds.push_back(btn_key_bind_down);
 	key_binds.push_back(btn_key_bind_left);
 	key_binds.push_back(btn_key_bind_right);
+
+	InputManager::init();
 }
 
 void Settings::update(const float& dt)

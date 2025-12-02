@@ -27,7 +27,12 @@ std::vector<sf::Keyboard::Key> im::active_keys;
 
 void im::init()
 {
-	reset_key_binds();
+	active_keys.clear();
+	active_keys.push_back(submit);
+	active_keys.push_back(up);
+	active_keys.push_back(down);
+	active_keys.push_back(left);
+	active_keys.push_back(right);
 }
 
 void im::Update(const float& dt)
