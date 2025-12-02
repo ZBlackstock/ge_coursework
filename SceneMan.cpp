@@ -189,9 +189,9 @@ void Map::on_scene_inactive()
 	EventManager::clear_current_button();
 }
 
-bool Map::fight0_victory = false;
-bool Map::fight1_victory = false;
-bool Map::fight2_victory = false;
+bool Map::fight0_victory = true;
+bool Map::fight1_victory = true;
+bool Map::fight2_victory = true;
 bool Map::fight3_victory = false;
 void Map::set_map_sprites()
 {
@@ -215,49 +215,55 @@ void Map::set_map_buttons()
 {
 	// Left fight
 	sm::btn_fight_left = std::make_shared<Button_LoadScene>
-		("mapButtonLeft", sf::Vector2f{ gs::screen_mid.x - 395, gs::screen_mid.y }, 1);
+		(!fight0_victory ? "mapButtonLeft" : "mapButtonLeftComplete", sf::Vector2f{ gs::screen_mid.x - 395, gs::screen_mid.y }, 1);
+	sm::btn_fight_left->set_scene_to_load(!fight0_victory ? SceneManager::scenes[2] : nullptr);
 
 	// Middle fight
 	sm::btn_fight_mid = std::make_shared<Button_LoadScene>
-		("mapButtonMid", gs::screen_mid, 1);
+		(!fight1_victory ? "mapButtonMid" : "mapButtonMidComplete", gs::screen_mid, 1);
+	sm::btn_fight_mid->set_scene_to_load(!fight1_victory ? SceneManager::scenes[3] : nullptr);
 
 	// Right fight
 	sm::btn_fight_right = std::make_shared<Button_LoadScene>
-		("mapButtonRight", sf::Vector2f{ gs::screen_mid.x + 395, gs::screen_mid.y }, 1);
+		(!fight2_victory ? "mapButtonRight" : "mapButtonRightComplete", sf::Vector2f{ gs::screen_mid.x + 395, gs::screen_mid.y }, 1);
+	sm::btn_fight_right->set_scene_to_load(!fight2_victory ? SceneManager::scenes[4] : nullptr);
+
 
 	// Final fight
 	sm::btn_fight_final = std::make_shared<Button_LoadScene>
 		("mapButtonBig", sf::Vector2f{ gs::screen_mid.x, gs::screen_mid.y - 350 }, 1);
+	sm::btn_fight_final->set_scene_to_load(SceneManager::scenes[5]);
 
-	EventManager::set_current_button(sm::btn_fight_mid);
+	if (fight0_victory && fight1_victory && fight2_victory)
+	{
+		// Enable navigation to final fight
+		sm::btn_fight_left->set_above(sm::btn_fight_final);
+		sm::btn_fight_left->set_below(sm::btn_fight_final);
+		sm::btn_fight_mid->set_above(sm::btn_fight_final);
+		sm::btn_fight_mid->set_below(sm::btn_fight_final);
+		sm::btn_fight_right->set_above(sm::btn_fight_final);
+		sm::btn_fight_right->set_below(sm::btn_fight_final);
+
+		sm::btn_fight_final->set_above(sm::btn_fight_mid);
+		sm::btn_fight_final->set_below(sm::btn_fight_mid);
+		sm::btn_fight_final->set_left(sm::btn_fight_left);
+		sm::btn_fight_final->set_right(sm::btn_fight_right);
+	}
 
 	//Set button neighbours
-	sm::btn_fight_left->set_above(sm::btn_fight_final);
-	sm::btn_fight_left->set_below(sm::btn_fight_final);
 	sm::btn_fight_left->set_left(sm::btn_fight_right);
 	sm::btn_fight_left->set_right(sm::btn_fight_mid);
 
-	sm::btn_fight_mid->set_above(sm::btn_fight_final);
-	sm::btn_fight_mid->set_below(sm::btn_fight_final);
 	sm::btn_fight_mid->set_left(sm::btn_fight_left);
 	sm::btn_fight_mid->set_right(sm::btn_fight_right);
 
-	sm::btn_fight_right->set_above(sm::btn_fight_final);
-	sm::btn_fight_right->set_below(sm::btn_fight_final);
 	sm::btn_fight_right->set_left(sm::btn_fight_mid);
 	sm::btn_fight_right->set_right(sm::btn_fight_left);
 
-	sm::btn_fight_final->set_above(sm::btn_fight_mid);
-	sm::btn_fight_final->set_below(sm::btn_fight_mid);
-	sm::btn_fight_final->set_left(sm::btn_fight_left);
-	sm::btn_fight_final->set_right(sm::btn_fight_right);
 
-	//Set button attached scenes
-	sm::btn_fight_left->set_scene_to_load(SceneManager::scenes[2]);
-	sm::btn_fight_mid->set_scene_to_load(SceneManager::scenes[3]);
-	sm::btn_fight_right->set_scene_to_load(SceneManager::scenes[4]);
-	sm::btn_fight_final->set_scene_to_load(SceneManager::scenes[5]);
+	EventManager::set_current_button(sm::btn_fight_mid);
 }
+
 //_________________________________FIGHTS______________________________
 
 // Standard setup for all fight scenes
