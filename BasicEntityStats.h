@@ -62,9 +62,9 @@ public:
     }
 };
 
-class dath : public Buff {
+class death : public Buff {
 public:
-    dath() : Buff(1000000000.0f) {} // initialize Buff's time_remaining
+    death() : Buff(1000000000.0f) {} // initialize Buff's time_remaining
     void update(float dt); // override if needed
 };
 
