@@ -54,7 +54,6 @@ void popup::set_active(bool active)
 
 		// Set current button
 		_button_before_open = EventManager::get_current_button();
-		Console::print(_button_before_open->get_name());
 		EventManager::set_current_button(popup::no);
 	}
 	else if (!active)
@@ -64,12 +63,12 @@ void popup::set_active(bool active)
 		//Set popup pos to off screen
 		RenderMan::set_sprite_pos("exit_to_main_menu.png", sf::Vector2f{ 10000,10000 });
 
+		// Clear current button
+		EventManager::set_current_button(_button_before_open);
+
 		// Set Yes/No to off screen	
 		popup::yes.get()->set_offscreen(true);
 		popup::no.get()->set_offscreen(true);
-
-		// Clear current button
-		EventManager::set_current_button(_button_before_open);
 	}
 
 }
