@@ -8,6 +8,7 @@
 class Scene
 {
 public:
+	Scene(std::string scene_name);
 	virtual ~Scene() = default;
 	std::string name;
 	RenderMan* render_manager;
@@ -20,7 +21,7 @@ public:
 class MainMenu : public Scene
 {
 public:
-	MainMenu(std::string scene_name);
+	MainMenu(std::string scene_name) : Scene(scene_name) {};
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
 	virtual void update(const float& dt);
@@ -29,57 +30,67 @@ public:
 class Map : public Scene
 {
 public:
-	Map(std::string scene_name);
+	Map(std::string scene_name) : Scene(scene_name) {};
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
 	virtual void update(const float& dt);
 };
 
 // Left
-class Fight0 : public Scene
+class Fight : public Scene
 {
 public:
-	Fight0(std::string scene_name);
+	Fight(std::string scene_name) : Scene(scene_name) {};
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
 	virtual void update(const float& dt);
+};
+
+// Left
+class Fight0 : public Fight
+{
+public:
+	Fight0(std::string scene_name) : Fight(scene_name) {};
+	void on_scene_active() override;
+	void on_scene_inactive() override;
+	void update(const float& dt);
 };
 
 // Middle
-class Fight1 : public Scene
+class Fight1 : public Fight
 {
 public:
-	Fight1(std::string scene_name);
-	virtual void on_scene_active();
-	virtual void on_scene_inactive();
-	virtual void update(const float& dt);
+	Fight1(std::string scene_name) : Fight(scene_name) {};
+	void on_scene_active() override;
+	void on_scene_inactive() override;
+	void update(const float& dt);
 };
 
 // Right
-class Fight2 : public Scene
+class Fight2 : public Fight
 {
 public:
-	Fight2(std::string scene_name);
-	virtual void on_scene_active();
-	virtual void on_scene_inactive();
-	virtual void update(const float& dt);
+	Fight2(std::string scene_name) : Fight(scene_name) {};
+	void on_scene_active() override;
+	void on_scene_inactive() override;
+	void update(const float& dt);
 };
 
 // Final
-class Fight3 : public Scene
+class Fight3 : public Fight
 {
 public:
-	Fight3(std::string scene_name);
-	virtual void on_scene_active();
-	virtual void on_scene_inactive();
-	virtual void update(const float& dt);
+	Fight3(std::string scene_name) : Fight(scene_name) {};
+	void on_scene_active() override;
+	void on_scene_inactive() override;
+	void update(const float& dt);
 };
 
 // Settings
 class Settings : public Scene
 {
 public:
-	Settings(std::string scene_name);
+	Settings(std::string scene_name) : Scene(scene_name) {};
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
 	static void set_resolution(int i);
