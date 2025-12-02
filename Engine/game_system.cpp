@@ -16,7 +16,7 @@ void GameSystem::start(unsigned int width, unsigned int height, const std::strin
 	sf::RenderWindow window(sf::VideoMode(width, height), "Black Dragon", sf::Style::Fullscreen);
 	RenderMan::SetWindow(&window);
 	sf::Event event;
-
+	InputManager::init();
 	am::addMusic("main_menu_theme");
 
 	while (window.isOpen())

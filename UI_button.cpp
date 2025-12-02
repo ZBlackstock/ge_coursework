@@ -9,6 +9,7 @@
 #include "Console.hpp"
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 using b = Button;
 using rm = RenderMan;
@@ -236,7 +237,7 @@ void Button_KeyBind::on_select()
 			{
 				if (event.type == sf::Event::KeyPressed)
 				{
-					if (event.key.code != sf::Keyboard::Escape)
+					if (event.key.code != sf::Keyboard::Escape && !InputManager::is_key_in_use(event.key.code)) // Check not already in use
 					{
 						if (Button_KeyBind::_target_input == InputManager::submit)
 						{
@@ -268,23 +269,6 @@ void Button_KeyBind::on_select()
 		Button_KeyBind::set_text();
 		Button_KeyBind::assigning_key = false;
 		sf::sleep(sf::seconds(0.5)); //Stops funky behaviour with already assigned keys
-	}
-}
-
-void Button_KeyBind::add_active_key(std::shared_ptr<sf::Keyboard::Key> key)
-{
-	active_keys.push_back(key);
-}
-
-void Button_KeyBind::remove_active_key(std::shared_ptr<sf::Keyboard::Key> key)
-{
-	for (int i = 0; i < active_keys.size() - 1; ++i)
-	{
-		if (active_keys[i] == key)
-		{
-			active_keys.erase(active_keys.begin() + i);
-			break;
-		}
 	}
 }
 
