@@ -189,9 +189,9 @@ void Map::on_scene_inactive()
 	EventManager::clear_current_button();
 }
 
-bool Map::fight0_victory = true;
-bool Map::fight1_victory = true;
-bool Map::fight2_victory = true;
+bool Map::fight0_victory = false;
+bool Map::fight1_victory = false;
+bool Map::fight2_victory = false;
 bool Map::fight3_victory = false;
 void Map::set_map_sprites()
 {
