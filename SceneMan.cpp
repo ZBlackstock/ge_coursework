@@ -182,7 +182,6 @@ void Map::update(const float& dt)
 	{
 		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
 	}
-	Console::print("Map::update(const float& dt)");
 }
 void Map::on_scene_inactive()
 {
@@ -629,6 +628,8 @@ void DeathScreen::on_scene_active()
 	Map::fight1_victory = false;
 	Map::fight2_victory = false;
 	Map::fight3_victory = false;
+
+	RenderMan::create_sprite("you_died.png", gs::screen_mid, 1);
 }
 
 void DeathScreen::update(const float& dt)
