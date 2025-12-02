@@ -263,6 +263,21 @@ void Button_KeyBind::on_select()
 						Button_KeyBind::_target_input = event.key.code;
 						key_assigned = true;
 					}
+					else
+					{
+						if (event.key.code == sf::Keyboard::Escape)
+						{
+							Button_KeyBind::text->setString("Cannot bind this key!");
+						}
+						else if (InputManager::is_key_in_use(event.key.code))
+						{
+							Button_KeyBind::text->setString("Already in use!");
+						}
+
+						//Otherwise text doesnt show
+						RenderMan::RenderWindowClear();
+						RenderMan::RenderWindow();
+					}
 				}
 			}
 		}
@@ -281,15 +296,11 @@ void Button_KeyBind::text_init()
 	Button_KeyBind::set_text();
 
 	RenderMan::createDrawable(Button_KeyBind::text, 2);
-	Console::print("Button_KeyBind::text_init()");
 }
 
 void Button_KeyBind::set_text()
 {
 	Button_KeyBind::text->setString(InputManager::key_to_string(Button_KeyBind::_target_input));
-	Console::print("set_text()");
-
-	Console::print("Button_KeyBind::set_text()");
 }
 
 void Button_KeyBind::clear_text()
