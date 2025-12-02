@@ -392,7 +392,7 @@ void Fight3::on_scene_inactive()
 // _______________________Settings_________________________________________
 
 int Settings::current_res_index = 1;
-const std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFullscreenModes();;
+std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFullscreenModes();;
 std::shared_ptr<sf::Text> Settings::res_text = std::make_shared<sf::Text>();
 
 // Make Button_KeyBind
@@ -450,7 +450,6 @@ void Settings::on_scene_active()
 	btn_key_bind_right->text_init();
 
 	// Assign back button scene and set it to highlighted
-	EventManager::set_current_button(btn_togglefullscreen);
 	btn_back->set_scene_to_load(SceneManager::scenes[0]); // Main Menu
 
 	btn_togglefullscreen->set_above(btn_res_arrow_left);
@@ -484,7 +483,11 @@ void Settings::on_scene_active()
 	btn_key_bind_right->set_above(btn_key_bind_left);
 	btn_key_bind_right->set_below(btn_res_arrow_left);
 
+	EventManager::set_current_button(btn_key_bind_select);
+
 	// Set current resolution text
+	std::reverse(resolutions.begin(), resolutions.end());
+	Settings::current_res_index = resolutions.size() - 1;
 	Settings::res_text->setString(std::to_string(Settings::resolutions[Settings::current_res_index].width)
 		+ " X " + std::to_string(Settings::resolutions[Settings::current_res_index].height));
 	Settings::res_text->setFont(gs::font_bold);
@@ -493,6 +496,7 @@ void Settings::on_scene_active()
 	Settings::res_text->setColor(sf::Color::White);
 	Settings::res_text->setCharacterSize(40);
 	RenderMan::createDrawable(Settings::res_text, 2);
+
 }
 
 void Settings::update(const float& dt)
@@ -503,20 +507,12 @@ void Settings::update(const float& dt)
 
 void Settings::set_resolution(int i)
 {
-	Settings::current_res_index += i;
-
-	if (Settings::current_res_index > Settings::resolutions.size() - 1)
-	{
-		Settings::current_res_index = 0;
-	}
-	else if (Settings::current_res_index < 0)
-	{
-		Settings::current_res_index = Settings::resolutions.size() - 1;
-	}
+	// Wrap around
+	current_res_index = (current_res_index + i + static_cast<int>(resolutions.size())) % static_cast<int>(resolutions.size());
 
 	// Recreate window
 	sf::RenderWindow* window = RenderMan::GetWindow();
-	window->create(Settings::resolutions[Settings::current_res_index], "Black Dragon", gs::fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
+	window->create(resolutions[current_res_index], "Black Dragon", gs::fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
 
 	//Maintain size on screen. Otherwise the window size would change
 	sf::View view(sf::FloatRect(0, 0, 1920, 1080));
@@ -532,7 +528,6 @@ void Settings::set_resolution(int i)
 
 	std::cout << "Set res to " << Settings::resolutions[Settings::current_res_index].width <<
 		Settings::resolutions[Settings::current_res_index].height << std::endl;
-	std::cout << "i = " << Settings::current_res_index << std::endl;
 }
 void Settings::on_scene_inactive()
 {
