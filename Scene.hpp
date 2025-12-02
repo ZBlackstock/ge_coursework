@@ -108,6 +108,6 @@ public:
 
 private:
 	static int current_res_index;
-	static const std::vector<sf::VideoMode> resolutions;
+	static std::vector<sf::VideoMode> resolutions;
 	static std::shared_ptr<sf::Text> res_text;
 };
