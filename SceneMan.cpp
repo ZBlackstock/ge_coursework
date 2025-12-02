@@ -450,7 +450,6 @@ void Settings::on_scene_active()
 	btn_key_bind_right->text_init();
 
 	// Assign back button scene and set it to highlighted
-	EventManager::set_current_button(btn_togglefullscreen);
 	btn_back->set_scene_to_load(SceneManager::scenes[0]); // Main Menu
 
 	btn_togglefullscreen->set_above(btn_res_arrow_left);
@@ -483,6 +482,8 @@ void Settings::on_scene_active()
 
 	btn_key_bind_right->set_above(btn_key_bind_left);
 	btn_key_bind_right->set_below(btn_res_arrow_left);
+
+	EventManager::set_current_button(btn_key_bind_select);
 
 	// Set current resolution text
 	std::reverse(resolutions.begin(), resolutions.end());
