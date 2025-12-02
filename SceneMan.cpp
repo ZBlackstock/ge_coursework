@@ -172,7 +172,47 @@ void Map::on_scene_active()
 {
 	ExitToMainMenu::init();
 	set_map_sprites();
+	set_map_buttons();
+}
+void Map::update(const float& dt)
+{
+	if (InputManager::press_menu())
+	{
+		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
+	}
+	Console::print("Map::update(const float& dt)");
+}
+void Map::on_scene_inactive()
+{
+	std::cout << "Map on_scene_inactive()" << std::endl;
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
+}
 
+bool Map::fight0_victory = false;
+bool Map::fight1_victory = false;
+bool Map::fight2_victory = false;
+bool Map::fight3_victory = false;
+void Map::set_map_sprites()
+{
+	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
+
+	if (!fight0_victory)
+	{
+		RenderMan::create_sprite("map_lock.png", { gs::screen_mid.x - 50, gs::screen_mid.y - 200 }, 2);
+	}
+	if (!fight1_victory)
+	{
+		RenderMan::create_sprite("map_lock.png", { gs::screen_mid.x, gs::screen_mid.y - 200 }, 2);
+	}
+	if (!fight2_victory)
+	{
+		RenderMan::create_sprite("map_lock.png", { gs::screen_mid.x + 50, gs::screen_mid.y - 200 }, 2);
+	}
+}
+
+void Map::set_map_buttons()
+{
 	// Left fight
 	sm::btn_fight_left = std::make_shared<Button_LoadScene>
 		("mapButtonLeft", sf::Vector2f{ gs::screen_mid.x - 395, gs::screen_mid.y }, 1);
@@ -217,43 +257,6 @@ void Map::on_scene_active()
 	sm::btn_fight_mid->set_scene_to_load(SceneManager::scenes[3]);
 	sm::btn_fight_right->set_scene_to_load(SceneManager::scenes[4]);
 	sm::btn_fight_final->set_scene_to_load(SceneManager::scenes[5]);
-
-}
-void Map::update(const float& dt)
-{
-	if (InputManager::press_menu())
-	{
-		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
-	}
-	Console::print("Map::update(const float& dt)");
-}
-void Map::on_scene_inactive()
-{
-	std::cout << "Map on_scene_inactive()" << std::endl;
-	RenderMan::RemoveAllDrawObj();
-	EventManager::clear_current_button();
-}
-
-bool Map::fight0_victory = false;
-bool Map::fight1_victory = false;
-bool Map::fight2_victory = false;
-bool Map::fight3_victory = false;
-void Map::set_map_sprites()
-{
-	RenderMan::create_sprite("map.png", gs::screen_mid, 0);
-
-	if (!fight0_victory)
-	{
-		RenderMan::create_sprite("map_lock.png", { gs::screen_mid.x - 50, gs::screen_mid.y - 200 }, 2);
-	}
-	if (!fight1_victory)
-	{
-		RenderMan::create_sprite("map_lock.png", { gs::screen_mid.x, gs::screen_mid.y - 200 }, 2);
-	}
-	if (!fight2_victory)
-	{
-		RenderMan::create_sprite("map_lock.png", { gs::screen_mid.x + 50, gs::screen_mid.y - 200 }, 2);
-	}
 }
 //_________________________________FIGHTS______________________________
 
