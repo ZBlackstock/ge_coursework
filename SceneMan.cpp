@@ -104,6 +104,11 @@ void sm::set_active_scene(const std::string& name)
 // _______________________________ Scene ______________________________________________
 
 // Need to declare these to avoid LNK error. These are only used by inherited classes
+Scene::Scene(std::string scene_name)
+{
+	name = scene_name;
+}
+
 void Scene::init() {}
 void Scene::update(const float& dt) {}
 void Scene::on_scene_active() {}
@@ -113,10 +118,6 @@ void Scene::on_scene_inactive() {}
 
 
 // _______________________MainMenu_________________________________________
-MainMenu::MainMenu(std::string scene_name)
-{
-	name = scene_name;
-}
 
 // Load sprites for MainMenu HERE
 void MainMenu::on_scene_active()
@@ -160,10 +161,6 @@ void MainMenu::on_scene_inactive()
 }
 
 // _______________________Map_________________________________________
-Map::Map(std::string scene_name)
-{
-	name = scene_name;
-}
 
 std::shared_ptr<Button_LoadScene> sm::btn_fight_left = nullptr;
 std::shared_ptr<Button_LoadScene> sm::btn_fight_mid = nullptr;
@@ -231,12 +228,8 @@ void Map::update(const float& dt)
 	if (InputManager::press_menu())
 	{
 		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
-
-		if (!ExitToMainMenu::get_active())
-		{
-			EventManager::set_current_button(sm::btn_fight_mid);
-		}
 	}
+	Console::print("Map::update(const float& dt)");
 }
 void Map::on_scene_inactive()
 {
@@ -244,143 +237,159 @@ void Map::on_scene_inactive()
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
 }
+//_________________________________FIGHTS______________________________
 
-
-// NEXT:
-// - UI Sprites. Douglas do enemy designs before make enemy sprites?
-// - Press esc for main menu. Put code for this in its own script probs. "UI_exit_to_menu" or something
-
-// _______________________Fight0 (Left)_________________________________________
-Fight0::Fight0(std::string scene_name)
-{
-	name = scene_name;
-}
-// Load sprites for Map HERE
-void Fight0::on_scene_active()
+// Standard setup for all fight scenes
+void Fight::on_scene_active()
 {
 	FightManager::init();
 	ItemManager::init();
 	ExitToMainMenu::init();
-	auto player = GameSystem::make_entity();
-	auto stats = player->add_component<BasicEntityStats>(100, 20);
-	auto s = player->add_component<SpriteComponent>();
-	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
-	tex->loadFromFile(gs::sprites_path + "player.png");
-	s->set_texure(tex);
-	s->get_sprite().setPosition(gs::screen_mid);
-
-	stats->take_damage(stats->get_attack_power());
-	auto buff = stats->add_buff<dath>();
-	s->render();
-
-	auto elayer = GameSystem::make_entity();
-	auto etats = elayer->add_component<BasicEntityStats>(100, 20);
-	auto e = elayer->add_component<SpriteComponent>();
-	std::shared_ptr<sf::Texture> etex = std::make_shared<sf::Texture>();
-	etex->loadFromFile(gs::sprites_path + "knight_sprite.png");
-	e->set_texure(etex);
-	e->get_sprite().setPosition(sf::Vector2f{gs::screen_mid.x + 250, gs::screen_mid.y - 450});
-
-	etats->take_damage(stats->get_attack_power());
-	auto ebuff = etats->add_buff<dath>();
-	e->render();
-
 	MsgBox::init();
 	EventManager::set_current_button(ItemManager::player_consumables[0]->button);
+
+	load_player();
+	load_enemy();
 }
-void Fight0::update(const float& dt)
+
+void Fight::update(const float& dt)
 {
 	if (InputManager::press_menu())
 	{
 		ExitToMainMenu::set_active(!ExitToMainMenu::get_active());
-
-		if (!ExitToMainMenu::get_active())
-		{
-			EventManager::set_current_button(ItemManager::player_consumables[0]->button);
-		}
 	}
 
 	FightManager::update(dt);
 }
-void Fight0::on_scene_inactive()
+
+// Standard clearing for all fight scenes
+void Fight::on_scene_inactive()
 {
-	std::cout << "Fight0 (Left) on_scene_inactive()" << std::endl;
+	ItemManager::clear();
+
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
 }
 
-// _______________________Fight1 (Middle)_________________________________________
-Fight1::Fight1(std::string scene_name)
+// Set player stats
+std::shared_ptr<int> Fight::player_max_hp = std::make_shared<int>(100);
+std::shared_ptr<int> Fight::player_atk_power = std::make_shared<int>(20);
+
+void Fight::load_player()
 {
-	name = scene_name;
+	auto player = GameSystem::make_entity();
+
+	auto stats_comp = player->add_component<BasicEntityStats>(*player_max_hp, *player_atk_power);
+	auto sprite_comp = player->add_component<SpriteComponent>();
+	stats_comp->take_damage(stats_comp->get_attack_power());
+	auto buff = stats_comp->add_buff<death>();
+
+	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
+	tex->loadFromFile(gs::sprites_path + "player.png");
+	sprite_comp->set_texure(tex);
+	sprite_comp->get_sprite().setPosition(gs::screen_mid);
+	sprite_comp->render();
 }
+
+void Fight::load_enemy()
+{
+	//Stats declared in each fight on_scene_active()
+	auto enemy = GameSystem::make_entity();
+
+	//Add components
+	auto stats_comp = enemy->add_component<BasicEntityStats>(*enemy_max_hp, *enemy_atk_pwr);
+	auto sprite_comp = enemy->add_component<SpriteComponent>();
+	stats_comp->take_damage(stats_comp->get_attack_power());
+	auto buff = stats_comp->add_buff<death>();
+
+	// Set texture & sprite
+	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
+	tex->loadFromFile(gs::sprites_path + *enemy_sprite_name);
+	sprite_comp->set_texure(tex);
+	sprite_comp->get_sprite().setPosition(sf::Vector2f{ gs::screen_mid.x + 250, gs::screen_mid.y - 450 });
+	sprite_comp->render();
+}
+
+// _______________________Fight0 (Left)_________________________________________
+void Fight0::on_scene_active()
+{
+	*enemy_sprite_name = "knight_sprite.png";
+	*enemy_max_hp = 100;
+	*enemy_atk_pwr = 20;
+
+	Fight::on_scene_active();
+}
+void Fight0::update(const float& dt)
+{
+	Fight::update(dt);
+}
+void Fight0::on_scene_inactive()
+{
+	std::cout << "Fight0 (Left) on_scene_inactive()" << std::endl;
+	Fight::on_scene_inactive();
+}
+
+// _______________________Fight1 (Middle)_________________________________________
 // Load sprites for Map HERE
 void Fight1::on_scene_active()
 {
-	MsgBox::init();
-	RenderMan::create_sprite("meatball_monster_sprite.png", { (gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200) }, 1);
+	*enemy_sprite_name = "meatball_monster_sprite.png";
+	*enemy_max_hp = 100;
+	*enemy_atk_pwr = 20;
+
+	Fight::on_scene_active();
 }
 void Fight1::update(const float& dt)
 {
-
+	Fight::update(dt);
 }
 void Fight1::on_scene_inactive()
 {
 	std::cout << "Fight1 (Middle) on_scene_inactive()" << std::endl;
-	RenderMan::RemoveAllDrawObj();
-	EventManager::clear_current_button();
+	Fight::on_scene_inactive();
 }
 
 // _______________________Fight2 (Right)_________________________________________
-Fight2::Fight2(std::string scene_name)
-{
-	name = scene_name;
-
-}
 // Load sprites for Map HERE
 void Fight2::on_scene_active()
 {
-	MsgBox::init();
-	RenderMan::create_sprite("skinny_zombie_sprite.png", { (gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200) }, 1);
+	*enemy_sprite_name = "skinny_zombie_sprite.png";
+	*enemy_max_hp = 100;
+	*enemy_atk_pwr = 20;
+
+	Fight::on_scene_active();
 }
 void Fight2::update(const float& dt)
 {
-
+	Fight::update(dt);
 }
 void Fight2::on_scene_inactive()
 {
 	std::cout << "Fight2 (Right) on_scene_inactive()" << std::endl;
-	RenderMan::RemoveAllDrawObj();
-	EventManager::clear_current_button();
+	Fight::on_scene_inactive();
 }
 
 // _______________________Fight3 (Final)_________________________________________
-Fight3::Fight3(std::string scene_name)
-{
-	name = scene_name;
-}
 // Load sprites for Map HERE
 void Fight3::on_scene_active()
 {
-	MsgBox::init();
-	RenderMan::create_sprite("black_dragon_sprite.png", { (gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200) }, 1);
+	*enemy_sprite_name = "black_dragon_sprite.png";
+	*enemy_max_hp = 100;
+	*enemy_atk_pwr = 20;
+
+	Fight::on_scene_active();
 }
 void Fight3::update(const float& dt)
 {
-
+	Fight::update(dt);
 }
 void Fight3::on_scene_inactive()
 {
 	std::cout << "Fight3 (Final) on_scene_inactive()" << std::endl;
-	RenderMan::RemoveAllDrawObj();
-	EventManager::clear_current_button();
+	Fight::on_scene_inactive();
 }
 
 // _______________________Settings_________________________________________
-Settings::Settings(std::string scene_name)
-{
-	name = scene_name;
-}
 
 int Settings::current_res_index = 1;
 const std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFullscreenModes();;

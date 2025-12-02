@@ -199,7 +199,15 @@ void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
 	}
 }
 
-//____________________Consumables_________________________________________________________________________
+void iman::clear()
+{
+	all_consumables.clear();
+	player_consumables.clear();
+	player_attacks.clear();
+	player_defends.clear();
+}
+
+//____________________Items_________________________________________________________________________
 i::Item(std::string name, sf::Vector2f pos)
 {
 	i::_name = name;

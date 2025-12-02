@@ -3,6 +3,7 @@
 #include <iostream>
 #include "event_man.hpp"
 #include "SceneMan.hpp"
+#include "console.hpp"
 
 using popup = ExitToMainMenu;
 using gs = GameSystem;
@@ -10,6 +11,7 @@ using gs = GameSystem;
 // Need add button navigation and Buton deconstructor
 std::shared_ptr<Button_LoadScene> popup::yes = nullptr;
 std::shared_ptr<Button> popup::no = nullptr;
+std::shared_ptr<Button> popup::_button_before_open;
 std::shared_ptr<bool> popup::_active = std::make_shared<bool>(false);
 
 void popup::init() // Need to link to main.cpp
@@ -51,6 +53,8 @@ void popup::set_active(bool active)
 		popup::no.get()->set_offscreen(false);
 
 		// Set current button
+		_button_before_open = EventManager::get_current_button();
+		Console::print(_button_before_open->get_name());
 		EventManager::set_current_button(popup::no);
 	}
 	else if (!active)
@@ -65,7 +69,7 @@ void popup::set_active(bool active)
 		popup::no.get()->set_offscreen(true);
 
 		// Clear current button
-		EventManager::clear_current_button();
+		EventManager::set_current_button(_button_before_open);
 	}
 
 }
@@ -74,3 +78,12 @@ bool popup::get_active()
 {
 	return *popup::_active;
 }
+
+std::shared_ptr<Button> popup::get_button_before_open()
+{
+	if (_button_before_open)
+	{
+		return _button_before_open;
+	}
+}
+

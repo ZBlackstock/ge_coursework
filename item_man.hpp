@@ -17,6 +17,7 @@ public:
 	static std::vector<std::shared_ptr<Item>> player_attacks;
 	static std::vector<std::shared_ptr<Item>> player_defends;
 	static void init();
+	static void clear();
 	static void visible(std::vector<std::shared_ptr<Item>> list, bool visible);
 	static int num_player_consumables;
 };

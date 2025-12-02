@@ -107,4 +107,4 @@ void SpriteComponent::update(const float& dt) {
 
 void SpriteComponent::render() { RenderMan::createDrawable(_sprite, 1); }
 
-void dath::update(float dt) {}
+void death::update(float dt) {}
