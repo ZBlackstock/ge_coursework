@@ -8,6 +8,7 @@ class InputManager
 {
 public:
 
+	static void init();
 	static void Update(const float& dt);
 	static const int gamepad_a; // Submit
 	static const int gamepad_b; // Back
@@ -45,6 +46,10 @@ public:
 	static void reset_key_binds();
 	static std::string key_to_string(sf::Keyboard::Key key);
 
+	static void add_active_key(sf::Keyboard::Key key);
+	static void remove_active_key(sf::Keyboard::Key key);
+	static bool is_key_in_use(sf::Keyboard::Key key);
+
 private:
 	static bool a_pressed;
 	static bool b_pressed;
@@ -52,4 +57,6 @@ private:
 	static bool gamepad_connected();
 	static float wait_between_input;
 	static float input_wait_timer;
+
+	static std::vector<sf::Keyboard::Key> active_keys; //avoids having same key binded to multiple uses
 };

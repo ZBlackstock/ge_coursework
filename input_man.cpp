@@ -1,6 +1,7 @@
 #include "input_man.hpp"
 #include "Engine/RenderMan.h"
 #include <iostream>
+#include <algorithm>
 #include "console.hpp"
 
 using im = InputManager;
@@ -20,6 +21,13 @@ sf::Keyboard::Key im::up = sf::Keyboard::Up;
 sf::Keyboard::Key im::down = sf::Keyboard::Down;
 sf::Keyboard::Key im::left = sf::Keyboard::Left;
 sf::Keyboard::Key im::right = sf::Keyboard::Right;
+
+std::vector<sf::Keyboard::Key> im::active_keys;
+
+void im::init()
+{
+	reset_key_binds();
+}
 
 void im::Update(const float& dt)
 {
@@ -139,28 +147,37 @@ void im::reset_input_timer()
 // Used for key bindings
 void im::assign_submit(sf::Keyboard::Key key)
 {
-	Console::print("im::assign_submit: " + key);
+	remove_active_key(submit);
 	im::submit = key;
+	add_active_key(submit);
 }
 
 void im::assign_up(sf::Keyboard::Key key)
 {
+	remove_active_key(up);
 	im::up = key;
+	add_active_key(up);
 }
 
 void im::assign_down(sf::Keyboard::Key key)
 {
+	remove_active_key(down);
 	im::down = key;
+	add_active_key(down);
 }
 
 void im::assign_left(sf::Keyboard::Key key)
 {
+	remove_active_key(left);
 	im::left = key;
+	add_active_key(left);
 }
 
 void im::assign_right(sf::Keyboard::Key key)
 {
+	remove_active_key(right);
 	im::right = key;
+	add_active_key(right);
 }
 
 void im::reset_key_binds()
@@ -170,10 +187,14 @@ void im::reset_key_binds()
 	im::down = sf::Keyboard::Down;
 	im::left = sf::Keyboard::Left;
 	im::right = sf::Keyboard::Right;
+
+	active_keys.clear();
+	active_keys.push_back(submit);
+	active_keys.push_back(up);
+	active_keys.push_back(down);
+	active_keys.push_back(left);
+	active_keys.push_back(right);
 }
-
-
-
 
 std::string im::key_to_string(sf::Keyboard::Key key)
 {
@@ -231,4 +252,26 @@ std::string im::key_to_string(sf::Keyboard::Key key)
 
 	default: return "Unknown";
 	}
+}
+
+void im::add_active_key(sf::Keyboard::Key key)
+{
+	active_keys.push_back(key);
+}
+
+void im::remove_active_key(sf::Keyboard::Key key)
+{
+	for (int i = 0; i < active_keys.size() - 1; ++i)
+	{
+		if (active_keys[i] == key)
+		{
+			active_keys.erase(active_keys.begin() + i);
+			break;
+		}
+	}
+}
+
+bool im::is_key_in_use(sf::Keyboard::Key key)
+{
+	return std::find(active_keys.begin(), active_keys.end(), key) != active_keys.end();
 }
