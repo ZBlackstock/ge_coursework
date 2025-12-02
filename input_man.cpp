@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include "console.hpp"
+#include "SceneMan.hpp"
 
 using im = InputManager;
 const int im::gamepad_a = 0; // Submit
@@ -188,12 +189,26 @@ void im::reset_key_binds()
 	im::left = sf::Keyboard::Left;
 	im::right = sf::Keyboard::Right;
 
-	active_keys.clear();
-	active_keys.push_back(submit);
-	active_keys.push_back(up);
-	active_keys.push_back(down);
-	active_keys.push_back(left);
-	active_keys.push_back(right);
+	if (SceneManager::get_active_scene() == SceneManager::scenes[6])
+	{
+		active_keys.clear();
+		active_keys.push_back(submit);
+		active_keys.push_back(up);
+		active_keys.push_back(down);
+		active_keys.push_back(left);
+		active_keys.push_back(right);
+
+		Settings::key_binds[0]->set_input(im::submit);
+		Settings::key_binds[1]->set_input(im::up);
+		Settings::key_binds[2]->set_input(im::down);
+		Settings::key_binds[3]->set_input(im::left);
+		Settings::key_binds[4]->set_input(im::right);
+
+		for each(std::shared_ptr<Button_KeyBind> b in Settings::key_binds)
+		{
+			b->set_text();
+		}
+	}
 }
 
 std::string im::key_to_string(sf::Keyboard::Key key)

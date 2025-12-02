@@ -8,6 +8,7 @@
 
 
 class Item;
+class Scene;
 // ____________ Custom Buttons ____________________________
 
 class Button_Quit : public Button
@@ -82,7 +83,6 @@ class Button_KeyBind : public Button
 {
 public:
 	virtual void on_select();
-
 	Button_KeyBind(std::string name_in_file, sf::Vector2f location, int sort_layer) :
 		Button(name_in_file, location, sort_layer) {
 	}
@@ -97,4 +97,13 @@ public:
 private:
 	// Target key to change
 	sf::Keyboard::Key _target_input;
+};
+
+class Button_ResetKeyBinds : public Button
+{
+public:
+	virtual void on_select();
+	Button_ResetKeyBinds(std::string name_in_file, sf::Vector2f location, int sort_layer) :
+		Button(name_in_file, location, sort_layer) {
+	}
 };
