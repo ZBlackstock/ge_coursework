@@ -389,10 +389,10 @@ void Fight2::on_scene_active()
 	Fight::on_scene_active();
 }
 
-void Fight2::update(const float& dt)              
-{                                                 
-	Fight::update(dt);                            
-	                                              
+void Fight2::update(const float& dt)
+{
+	Fight::update(dt);
+
 }
 void Fight2::on_scene_inactive()
 {
@@ -426,7 +426,7 @@ int Settings::current_res_index = 1;
 std::vector<sf::VideoMode> Settings::resolutions = sf::VideoMode::getFullscreenModes();;
 std::shared_ptr<sf::Text> Settings::res_text = std::make_shared<sf::Text>();
 std::vector<std::shared_ptr<Button_KeyBind>> Settings::key_binds = std::vector<std::shared_ptr<Button_KeyBind>>();
-
+bool Settings::_settings_setup = false;
 // Make Button_KeyBind
 
 // Initiate Settings
@@ -529,24 +529,60 @@ void Settings::on_scene_active()
 	EventManager::set_current_button(btn_key_bind_select);
 
 	// Set current resolution text
-	std::reverse(resolutions.begin(), resolutions.end());
-	Settings::current_res_index = resolutions.size() - 1;
-	Settings::res_text->setString(std::to_string(Settings::resolutions[Settings::current_res_index].width)
-		+ " X " + std::to_string(Settings::resolutions[Settings::current_res_index].height));
-	Settings::res_text->setFont(gs::font_bold);
-	Settings::res_text->setOrigin(Settings::res_text->getScale().x / 2, Settings::res_text->getScale().y / 2);
-	Settings::res_text->setPosition(1100, 650);
-	Settings::res_text->setColor(sf::Color::White);
-	Settings::res_text->setCharacterSize(40);
+	if (!_settings_setup)
+	{
+		std::reverse(resolutions.begin(), resolutions.end());
+		current_res_index = resolutions.size() - 1;
+
+		key_binds.push_back(btn_key_bind_select);
+		key_binds.push_back(btn_key_bind_up);
+		key_binds.push_back(btn_key_bind_down);
+		key_binds.push_back(btn_key_bind_left);
+		key_binds.push_back(btn_key_bind_right);
+
+		InputManager::init();
+		_settings_setup = true;
+	}
+
+	res_text->setString(std::to_string(get_resolution().width) + " x " +
+		std::to_string(get_resolution().height));
+	current_res_index = get_resolution_index();
+
+	res_text->setFont(gs::font_bold);
+	res_text->setOrigin(res_text->getGlobalBounds().width / 2,
+		res_text->getGlobalBounds().height / 2);
+	res_text->setPosition(1190, 665);
+	res_text->setColor(sf::Color::White);
+	res_text->setCharacterSize(40);
+
 	RenderMan::createDrawable(Settings::res_text, 2);
+}
 
-	key_binds.push_back(btn_key_bind_select);
-	key_binds.push_back(btn_key_bind_up);
-	key_binds.push_back(btn_key_bind_down);
-	key_binds.push_back(btn_key_bind_left);
-	key_binds.push_back(btn_key_bind_right);
+sf::VideoMode Settings::get_resolution()
+{
+	for each(sf::VideoMode v in resolutions)
+	{
+		if (v.width == RenderMan::GetWindow()->getSize().x 
+			&& v.height == RenderMan::GetWindow()->getSize().y)
+		{
+			return v;
+		}
+	}
+}
 
-	InputManager::init();
+int Settings::get_resolution_index()
+{
+	int i = 0;
+	for each(sf::VideoMode v in resolutions)
+	{
+		if (v.width == RenderMan::GetWindow()->getSize().x
+			&& v.height == RenderMan::GetWindow()->getSize().y)
+		{
+			return i;
+		}
+		i++;
+	}
+
 }
 
 void Settings::update(const float& dt)
@@ -569,11 +605,7 @@ void Settings::set_resolution(int i)
 
 	// Resolution text
 	Settings::res_text->setString(std::to_string(RenderMan::GetWindow()->getSize().x)
-		+ " X " + std::to_string(RenderMan::GetWindow()->getSize().y));
-
-	// Set text origin and pos
-	Settings::res_text->setOrigin(Settings::res_text->getScale().x / 2, Settings::res_text->getScale().y / 2);
-	Settings::res_text->setPosition(1100, 650);
+		+ " x " + std::to_string(RenderMan::GetWindow()->getSize().y));
 
 	std::cout << "Set res to " << Settings::resolutions[Settings::current_res_index].width <<
 		Settings::resolutions[Settings::current_res_index].height << std::endl;

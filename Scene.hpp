@@ -113,6 +113,8 @@ public:
 	virtual void on_scene_active();
 	virtual void on_scene_inactive();
 	static void set_resolution(int i);
+	static sf::VideoMode get_resolution();
+	static int get_resolution_index();
 	virtual void update(const float& dt);
 	static std::vector<std::shared_ptr<Button_KeyBind>> key_binds;
 
@@ -120,6 +122,7 @@ private:
 	static int current_res_index;
 	static std::vector<sf::VideoMode> resolutions;
 	static std::shared_ptr<sf::Text> res_text;
+	static bool _settings_setup;
 };
 
 // Death screen
