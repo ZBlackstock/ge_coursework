@@ -655,15 +655,7 @@ float VictoryScreen::_timer = 5;
 void VictoryScreen::on_scene_active()
 {
 	_timer = 5;
-	RenderMan::create_sprite("victory.png", gs::screen_mid, 1);
-}
-
-float VictoryScreen::_timer = 5;
-void VictoryScreen::on_scene_active()
-{
-	_timer = 5;
-
-	RenderMan::create_sprite("victory.png", gs::screen_mid, 1);
+	RenderMan::create_sprite(Map::fight3_victory ? "congratulations" : "victory.png", gs::screen_mid, 1);
 }
 
 void VictoryScreen::update(const float& dt)
