@@ -648,3 +648,37 @@ void DeathScreen::on_scene_inactive()
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
 }
+
+///////////////////////////////////////////////////////
+
+float VictoryScreen::_timer = 5;
+void VictoryScreen::on_scene_active()
+{
+	_timer = 5;
+	RenderMan::create_sprite("victory.png", gs::screen_mid, 1);
+}
+
+float VictoryScreen::_timer = 5;
+void VictoryScreen::on_scene_active()
+{
+	_timer = 5;
+
+	RenderMan::create_sprite("victory.png", gs::screen_mid, 1);
+}
+
+void VictoryScreen::update(const float& dt)
+{
+	_timer -= dt;
+
+	if (_timer < 0)
+	{
+		//Load map
+		SceneManager::set_active_scene(SceneManager::scenes[1]);
+	}
+}
+
+void VictoryScreen::on_scene_inactive()
+{
+	RenderMan::RemoveAllDrawObj();
+	EventManager::clear_current_button();
+}
