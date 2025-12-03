@@ -261,7 +261,10 @@ void Fight0::on_scene_active()
 	ExitToMainMenu::init();
 	MsgBox::init();
 	EventManager::set_current_button(ItemManager::player_consumables[0]->button);
+	//render the enemy
 	RenderMan::create_sprite("knight_sprite.png", {(gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200)}, 1);
+	//render the player
+	RenderMan::create_sprite("player_sprite.png", { (gs::screen_mid.x) - 100, (gs::screen_mid.y) + 100 }, 1);
 }
 void Fight0::update(const float& dt)
 {
@@ -293,7 +296,10 @@ Fight1::Fight1(std::string scene_name)
 void Fight1::on_scene_active()
 {
 	MsgBox::init();
+	//render the enemy
 	RenderMan::create_sprite("meatball_monster_sprite.png", { (gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200) }, 1);
+	//render the player
+	RenderMan::create_sprite("player_sprite.png", { (gs::screen_mid.x) - 100, (gs::screen_mid.y) + 100 }, 1);
 }
 void Fight1::update(const float& dt)
 {
@@ -316,7 +322,10 @@ Fight2::Fight2(std::string scene_name)
 void Fight2::on_scene_active()
 {
 	MsgBox::init();
+	//render the enemy
 	RenderMan::create_sprite("skinny_zombie_sprite.png", { (gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200) }, 1);
+	//render the player
+	RenderMan::create_sprite("player_sprite.png", { (gs::screen_mid.x) - 100, (gs::screen_mid.y) + 100 }, 1);
 }
 void Fight2::update(const float& dt)
 {
@@ -338,7 +347,10 @@ Fight3::Fight3(std::string scene_name)
 void Fight3::on_scene_active()
 {
 	MsgBox::init();
+	//render the enemy
 	RenderMan::create_sprite("black_dragon_sprite.png", { (gs::screen_mid.x + gs::screen_mid.x) - 500, (gs::screen_mid.y - 200) }, 1);
+	//render the player
+	RenderMan::create_sprite("player_sprite.png", { (gs::screen_mid.x) - 100, (gs::screen_mid.y) + 100 }, 1);
 }
 void Fight3::update(const float& dt)
 {
