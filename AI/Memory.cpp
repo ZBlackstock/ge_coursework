@@ -26,9 +26,9 @@ void MemoryComponent::RecordPlayerAttack(bool isHeavy)
 
 float MemoryComponent::GetMedianBlock() const
 {
-    if (playerBlocks.empty()) return RandomFloat(0.f, 1.f);
+     if (playerBlocks.empty()) return RandomFloat(0.f, 1.f);
     std::vector<float> copy = playerBlocks;
-    std::sort(copy.begin(), copy.end());
+     std::sort(copy.begin(), copy.end());
     size_t mid = copy.size() / 2;
     return copy.size() % 2 == 0 ? (copy[mid - 1] + copy[mid]) / 2.0f : copy[mid];
 }

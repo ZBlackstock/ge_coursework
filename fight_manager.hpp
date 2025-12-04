@@ -5,6 +5,7 @@
 #include "item_man.hpp"
 #include "event_man.hpp"
 #include "healthbar.hpp"
+#include "Engine/ecm.hpp"	
 
 class FightManager
 {
@@ -21,7 +22,11 @@ public:
 	static void set_player_defended(bool defended);
 	static bool get_player_defended();
 
+	static std::shared_ptr<Entity> player;
+	static std::shared_ptr<Entity> enemy;
 
+	//static const std::shared_ptr<Entity>* player;
+	//static const std::shared_ptr<Entity>* enemy;
 
 private:
 	static bool _player_consumed_item;
