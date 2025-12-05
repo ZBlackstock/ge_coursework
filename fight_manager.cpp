@@ -96,17 +96,20 @@ void FightManager::update(const float& dt)
 	if (get_enemy_consumed_item())
 	{
 
-		enemy->get_compatible_components<AIComponent>();
+		std::vector<std::shared_ptr<AIComponent>> entityComp = enemy->get_compatible_components<AIComponent>();
+		entityComp[0]->set_State("Item");
+		entityComp[0]->update(dt);
+		
 		EventManager::clear_current_button();
 		EventManager::set_current_button(ItemManager::player_attacks[0]->button);
 
 		//Move to attack stage
 		fli::set_fight_loop_state(1);
-		set_player_consumed_item(false);
+		set_enemy_consumed_item(false);
 	}
 
 	//  attacked, move to player defend
-	if (get_player_attacked())
+	if (get_enemy_attacked())
 	{
 		//Make attacks invisible
 		ItemManager::visible(ItemManager::player_attacks, false);
