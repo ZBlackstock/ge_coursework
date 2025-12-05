@@ -7,6 +7,9 @@ using fli = FightLoopIndicator;
 using fm = FightManager;
 using h = Healthbar;
 
+std::shared_ptr<Entity> fm::player = nullptr;
+std::shared_ptr<Entity> fm::enemy = nullptr;
+
 bool FightManager::_player_consumed_item = false;
 bool FightManager::_player_attacked = false;
 bool FightManager::_player_defended = false;
@@ -14,15 +17,10 @@ std::shared_ptr<Healthbar> fm::_player_healthbar =nullptr;
 std::shared_ptr<Healthbar> fm::_enemy_healthbar = nullptr;
 bool FightManager::player_Block = false;
 
-
-
 bool FightManager::_enemy_consumed_item = false;
 bool FightManager::_enemy_attacked = false;
 bool FightManager::_enemy_defended = false;
 bool FightManager::enemy_Block = false;
-
-std::shared_ptr<Healthbar> fm::_player_healthbar = std::shared_ptr<Healthbar>();
-std::shared_ptr<Healthbar> fm::_enemy_healthbar = std::shared_ptr<Healthbar>();
 
 void FightManager::init()
 {
