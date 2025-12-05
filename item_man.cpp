@@ -556,4 +556,5 @@ bool  ItemManager::attack_used(bool is_heavy, std::shared_ptr<Entity> aggresor)
 		//get player defende choice
 
 	}
+	return true;
 }

@@ -12,12 +12,25 @@ bool FightManager::_player_attacked = false;
 bool FightManager::_player_defended = false;
 std::shared_ptr<Healthbar> fm::_player_healthbar =nullptr;
 std::shared_ptr<Healthbar> fm::_enemy_healthbar = nullptr;
+bool FightManager::player_Block = false;
+
+
+
+bool FightManager::_enemy_consumed_item = false;
+bool FightManager::_enemy_attacked = false;
+bool FightManager::_enemy_defended = false;
+bool FightManager::enemy_Block = false;
+
+std::shared_ptr<Healthbar> fm::_player_healthbar = std::shared_ptr<Healthbar>();
+std::shared_ptr<Healthbar> fm::_enemy_healthbar = std::shared_ptr<Healthbar>();
 
 void FightManager::init()
 {
 
 	fli::init();
 	fli::set_fight_loop_state(0);
+	_player_healthbar = std::make_shared<Healthbar>(sf::Vector2f{ 500,20 }, sf::Vector2f{ 900,900 }, 100, sf::Color::Green);
+	_enemy_healthbar = std::make_shared <Healthbar>(sf::Vector2f{ 500,20 }, sf::Vector2f{ 1440,600 }, 100, sf::Color::Red);
 	// ^^ Just size, position, max health value, colour
 }
 
@@ -102,13 +115,9 @@ void FightManager::update(const float& dt)
 		set_enemy_attacked(false);
 	}
 
-	// Player defended, move to enemy turn
-	if (get_player_defended())
+	if (get_enemy_defended())
 	{
 		//Make attacks invisible
-		ItemManager::visible(ItemManager::player_defends, false);
-
-		EventManager::clear_current_button();
 
 		//Move to attack stage
 		fli::set_fight_loop_state(3);
@@ -168,14 +177,14 @@ bool FightManager::get_enemy_attacked()
 	return FightManager::_enemy_attacked;
 }
 
-void FightManager::set_player_defended(bool defended)
+void FightManager::set_enemy_defended(bool defended)
 {
-	FightManager::_player_defended = defended;
+	FightManager::_enemy_defended = defended;
 }
 
-bool FightManager::get_player_defended()
+bool FightManager::get_enemy_defended()
 {
-	return FightManager::_player_defended;
+	return FightManager::_enemy_defended;
 }
 
 
