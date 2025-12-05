@@ -273,14 +273,13 @@ void Map::set_map_buttons()
 // Standard setup for all fight scenes
 void Fight::on_scene_active()
 {
+	load_player();
+	load_enemy();
 	FightManager::init();
 	ItemManager::init();
 	ExitToMainMenu::init();
 	MsgBox::init();
 	EventManager::set_current_button(ItemManager::player_consumables[0]->button);
-
-	load_player();
-	load_enemy();
 }
 
 void Fight::update(const float& dt)

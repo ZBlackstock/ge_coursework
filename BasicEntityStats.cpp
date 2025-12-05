@@ -7,107 +7,113 @@
 
 
 BasicEntityStats::BasicEntityStats(Entity* p, int max_hp, int atk_power)
-    : Component(p),
-    base_max_health(max_hp),
-    current_health(max_hp),
-    base_attack_power(atk_power)
-{}
-
-void BasicEntityStats::update(const float& dt) 
+	: Component(p),
+	base_max_health(max_hp),
+	current_health(max_hp),
+	base_attack_power(atk_power)
 {
-    for (auto& b : buffs)
-        b->update(dt);
-
-    buffs.erase(
-        std::remove_if(buffs.begin(), buffs.end(),
-            [](auto& b) { return b->expired(); }),
-        buffs.end()
-    );
-
-    
-    current_health = std::min(current_health, get_max_health());
 }
 
-int BasicEntityStats::get_attack_power() const 
+void BasicEntityStats::update(const float& dt)
 {
-    float mult = 1.0f;
-    for (auto& b : buffs)
-        mult *= b->attack_power_mult;
+	for (auto& b : buffs)
+		b->update(dt);
 
-    return static_cast<int>(base_attack_power * mult);
+	buffs.erase(
+		std::remove_if(buffs.begin(), buffs.end(),
+			[](auto& b) { return b->expired(); }),
+		buffs.end()
+	);
+
+
+	current_health = std::min(current_health, get_max_health());
+}
+
+int BasicEntityStats::get_attack_power() const
+{
+	float mult = 1.0f;
+	for (auto& b : buffs)
+		mult *= b->attack_power_mult;
+
+	return static_cast<int>(base_attack_power * mult);
 }
 
 int BasicEntityStats::get_max_health() const {
-    float mult = 1.0f;
-    for (auto& b : buffs)
-        mult *= b->max_health_mult;
+	float mult = 1.0f;
+	for (auto& b : buffs)
+		mult *= b->max_health_mult;
 
-    return static_cast<int>(base_max_health * mult);
+	return static_cast<int>(base_max_health * mult);
 }
 
-bool BasicEntityStats::get_blocking() const {
-    
-    return blocking;
+void BasicEntityStats::set_blocking(bool block) {
+
+	blocking = block;
+}
+
+bool BasicEntityStats::get_blocking(){
+
+	return blocking;
 }
 
 int BasicEntityStats::get_current_health() const {
-    return current_health;
+	return current_health;
 }
 
 void BasicEntityStats::take_damage(int dmg) {
-    float mult = 1.0f;
-    for (auto& b : buffs)
-        mult *= b->take_damage_mult;
+	float mult = 1.0f;
+	for (auto& b : buffs)
+		mult *= b->take_damage_mult;
 
-    current_health -= static_cast<int>(dmg * mult);
+	current_health -= static_cast<int>(dmg * mult);
 }
 
 void BasicEntityStats::heal(int amount) {
-    float mult = 1.0f;
-    for (auto& b : buffs)
-        mult *= b->heal_amount_mult;
+	float mult = 1.0f;
+	for (auto& b : buffs)
+		mult *= b->heal_amount_mult;
 
-    int heal_amount = static_cast<int>(amount * mult);
+	int heal_amount = static_cast<int>(amount * mult);
 
-    if (current_health < get_max_health()) {
-        current_health += heal_amount; // full healing
-    }
-    else {
-        current_health += heal_amount / 2; // 50% effectiveness when overhealing
-    }
+	if (current_health < get_max_health()) {
+		current_health += heal_amount; // full healing
+	}
+	else {
+		current_health += heal_amount / 2; // 50% effectiveness when overhealing
+	}
 
-    // overheal cap
-    int max_overheal = static_cast<int>(get_max_health() * 1.5f);
-    if (current_health > max_overheal)
-        current_health = max_overheal;
+	// overheal cap
+	int max_overheal = static_cast<int>(get_max_health() * 1.5f);
+	if (current_health > max_overheal)
+		current_health = max_overheal;
 }
 
 void BasicEntityStats::take_fire_damage(int dmg)
 {
-    float mult = 1.0f;
-    for (auto& b : buffs)
-        mult *= b->fire_attack_power;
-    take_damage(static_cast<int>(dmg * mult));
+	float mult = 1.0f;
+	for (auto& b : buffs)
+		mult *= b->fire_attack_power;
+	take_damage(static_cast<int>(dmg * mult));
 }
 
-void BasicEntityStats::take_sharp_damage(int dmg) 
+void BasicEntityStats::take_sharp_damage(int dmg)
 {
-    float mult = 1.0f;
-    for (auto& b : buffs)
-        mult *= b->sharp_attack_power;
-    take_damage(static_cast<int>(dmg * mult));
+	float mult = 1.0f;
+	for (auto& b : buffs)
+		mult *= b->sharp_attack_power;
+	take_damage(static_cast<int>(dmg * mult));
 }
 
 void SpriteComponent::set_texure(std::shared_ptr<sf::Texture> tex)
 {
-    _texture = tex;
-    _sprite->setTexture(*_texture);
+	_texture = tex;
+	_sprite->setTexture(*_texture);
 }
 sf::Sprite& SpriteComponent::get_sprite() const { return *_sprite; }
 
 
 SpriteComponent::SpriteComponent(Entity* p)
-    : Component(p), _sprite(std::make_shared<sf::Sprite>()) {
+	: Component(p), _sprite(std::make_shared<sf::Sprite>()) {
 }
 
 void SpriteComponent::update(const float& dt) {

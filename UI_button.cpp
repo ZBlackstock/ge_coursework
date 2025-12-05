@@ -207,6 +207,12 @@ void Button_Item::set_consumable(std::shared_ptr<Item> i)
 	Button_Item::_item = i;
 }
 
+void Button_Item::set_user(std::shared_ptr<Entity> user, std::shared_ptr<Entity> opponent)
+{
+	Button_Item::user = user;
+	Button_Item::opponent = opponent;
+}
+
 void Button_SetResolution::set_change(int change)
 {
 	Button_SetResolution::_change = change;

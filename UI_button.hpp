@@ -9,6 +9,7 @@
 
 class Item;
 class Scene;
+class Entity;
 // ____________ Custom Buttons ____________________________
 
 class Button_Quit : public Button
@@ -61,6 +62,10 @@ public:
 		Button(name_in_file, location, sort_layer) {
 	}
 	void set_consumable(std::shared_ptr<Item> i);
+	void set_user(std::shared_ptr<Entity> user, std::shared_ptr<Entity> opponent);
+	std::shared_ptr<Entity> user = nullptr;
+	std::shared_ptr<Entity> opponent = nullptr;
+
 private:
 	std::shared_ptr<Item> _item = nullptr;
 };

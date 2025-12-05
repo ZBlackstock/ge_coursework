@@ -20,7 +20,8 @@ public:
     int get_max_health() const;
 	int get_current_health() const;
     int get_attack_power() const;
-    bool get_blocking() const;
+    bool get_blocking();
+    void set_blocking(bool block);
     void take_fire_damage(int dmg);
     void take_sharp_damage(int dmg);
     void take_damage(int dmg);

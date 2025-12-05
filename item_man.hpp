@@ -76,7 +76,7 @@ class Item_Defend : public Item
 {
 public:
 	Item_Defend(std::string name, sf::Vector2f pos) : Item(name, pos) {};
-	void on_use() override;
+	virtual void on_use() override;
 };
 
 // ______________CUSTOM CONSUMABLES__________________
@@ -219,7 +219,7 @@ class dfn_Block : public Item_Defend
 {
 public:
 	dfn_Block(std::string name, sf::Vector2f pos) : Item_Defend(name, pos) {}
-	void on_defend_use(std::shared_ptr<Entity> user, bool block);
+	void on_use() override;
 	void set_display_texts() override;
 };
 

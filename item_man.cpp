@@ -179,6 +179,8 @@ void iman::init()
 	parry->button->set_consumable(parry);
 	block->set_display_texts();
 	parry->set_display_texts();
+	block->button->set_user(player, enemy);
+	parry->button->set_user(player, enemy);
 
 	//Button navigation
 	block->button->set_above(parry->button);
@@ -504,16 +506,16 @@ void id::on_use()
 	FightManager::set_player_defended(true);
 }
 
+
 // Light
-void dfn_Block::on_defend_use(std::shared_ptr<Entity> user, bool block)
+void dfn_Block::on_use()
 {
 	id::on_use();
 	m::set_text("Preparing to block!");
+	Console::print("Block Selected!");
 
-	//Code for blocking here
-	// change to take in entity
-	// set is_blocking here
-
+	//Set entity blocking
+	button->user->get_compatible_components<BasicEntityStats>()[0]->set_blocking(true);
 }
 void dfn_Block::set_display_texts()
 {
@@ -526,8 +528,10 @@ void dfn_Parry::on_use()
 {
 	id::on_use();
 	m::set_text("Preparing to parry!");
+	Console::print("Parry Selected!");
 
-	//Code for parrying here
+	//Set entity parrying
+	button->user->get_compatible_components<BasicEntityStats>()[0]->set_blocking(false);
 }
 void dfn_Parry::set_display_texts()
 {
