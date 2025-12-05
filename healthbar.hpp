@@ -8,7 +8,7 @@ class Healthbar
 {
 public:
 	Healthbar(sf::Vector2f size, sf::Vector2f pos, float max, sf::Color colour);
-	void set_healthbar_value(float& value);
+	void set_healthbar_value(int value);
 	float& get_healthbar_value();
 
 private:

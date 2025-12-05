@@ -460,24 +460,20 @@ void cns_Oil::set_display_texts()
 
 void ia::on_use()
 {
+	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->take_damage(damage);
 	FightManager::set_player_attacked(true);
 }
-
-
-// FOR MAKING PLAYER HURT ENEMY
-// Damage enemy
 
 // Light
 void atk_Light::on_use()
 {
+	ia::damage = 10;
+
 	ia::on_use();
 	m::set_text("Light attack!");
 
 	am::addSounds("lightAtk");
 	am::playSound("lightAtk");
-
-	//Code for light attack here
-	damage = 10;
 }
 void atk_Light::set_display_texts()
 {
@@ -488,14 +484,12 @@ void atk_Light::set_display_texts()
 // Heavy
 void atk_Heavy::on_use()
 {
+	ia::damage = 20;
 	ia::on_use();
 	m::set_text("Heavy attack!");
 
 	am::addSounds("heavyAtk");
 	am::playSound("heavyAtk");
-
-	//Code for heavy attack here
-	damage = 20;
 }
 void atk_Heavy::set_display_texts()
 {
