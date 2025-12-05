@@ -504,7 +504,7 @@ void id::on_use()
 	FightManager::set_player_defended(true);
 }
 
-// Light
+// Block
 void dfn_Block::on_use()
 {
 	id::on_use();
@@ -518,7 +518,7 @@ void dfn_Block::set_display_texts()
 	_display_description = "Prepare to block your opponents \nnext attack.\n\nSuccessful blocks greatly reduce damage \ntaken, and are effective against\nlight attacks.";
 }
 
-// Heavy
+// Parry
 void dfn_Parry::on_use()
 {
 	id::on_use();
