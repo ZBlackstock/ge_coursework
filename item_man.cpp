@@ -439,6 +439,12 @@ void ia::on_use()
 	FightManager::set_player_attacked(true);
 }
 
+
+// FOR MAKING PLAYER HURT ENEMY
+// Go to item man hpp, add set enemy and store ref to enemy.
+// Have damage values for light an heavy
+// Damage enemy
+
 // Light
 void atk_Light::on_use()
 {
