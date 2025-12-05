@@ -310,7 +310,6 @@ void Fight::load_player()
 
 	auto stats_comp = player->add_component<BasicEntityStats>(*player_max_hp, *player_atk_power);
 	auto sprite_comp = player->add_component<SpriteComponent>();
-	stats_comp->take_damage(stats_comp->get_attack_power());
 	auto buff = stats_comp->add_buff<death>();
 
 	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
@@ -329,7 +328,6 @@ void Fight::load_enemy()
 	//Add components
 	auto stats_comp = enemy->add_component<BasicEntityStats>(*enemy_max_hp, *enemy_atk_pwr);
 	auto sprite_comp = enemy->add_component<SpriteComponent>();
-	stats_comp->take_damage(stats_comp->get_attack_power());
 	auto buff = stats_comp->add_buff<death>();
 
 	// Set texture & sprite

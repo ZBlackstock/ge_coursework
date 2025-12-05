@@ -10,7 +10,6 @@ protected:
     int base_max_health;
     int base_attack_power;
 
-
     std::vector<std::unique_ptr<Buff>> buffs;
 
 public:
