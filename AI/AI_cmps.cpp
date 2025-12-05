@@ -87,7 +87,8 @@ void AIComponent::ExecuteAttack(const Action& action) {
     std::cout << "AI attacks with "
         << (action.attack == AttackType::Light ? "Light" : "Heavy")
         << "\n";
-    // TODO: actually apply damage to player here
+
+    
 }
 
 void AIComponent::ExecuteBlock(const Action& action) {

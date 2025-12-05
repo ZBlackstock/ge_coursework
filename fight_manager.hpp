@@ -13,6 +13,7 @@ public:
 	static void init();
 	static void update(const float& dt);
 
+
 	static void set_player_consumed_item(bool consumed);
 	static bool get_player_consumed_item();
 
@@ -35,6 +36,9 @@ public:
 
 	static std::shared_ptr<Entity> player;
 	static std::shared_ptr<Entity> enemy;
+
+	static bool player_Block;
+	static bool enemy_Block; 
 
 	//static const std::shared_ptr<Entity>* player;
 	//static const std::shared_ptr<Entity>* enemy;

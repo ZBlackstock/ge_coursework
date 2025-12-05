@@ -510,7 +510,7 @@ void dfn_Block::on_use()
 	id::on_use();
 	m::set_text("Preparing to block!");
 
-	//Code for blocking here
+	FightManager::player_Block = true;
 }
 void dfn_Block::set_display_texts()
 {
@@ -523,11 +523,37 @@ void dfn_Parry::on_use()
 {
 	id::on_use();
 	m::set_text("Preparing to parry!");
-
+	FightManager::player_Block = false;
 	//Code for parrying here
 }
 void dfn_Parry::set_display_texts()
 {
 	_display_name = "Parry";
 	_display_description = "Prepare to parry your opponents \nnext attack.\n\nA risky maneuvre resulting in no damage \ntaken if successful. Higher chance \nof success against heavy attacks.";
+}
+
+bool  ItemManager::attack_used(bool is_heavy, std::shared_ptr<Entity> aggresor)
+{
+	std::shared_ptr<Entity> defendor;
+
+	if (aggresor == iman::player)
+	{
+		defendor = iman::enemy;
+	}
+	else
+	{
+		defendor = iman::player;
+	}
+
+	if (is_heavy)
+	{
+
+		//if player blocking - fail
+		//else (parrying) - succeed
+	}
+	else
+	{
+		//get player defende choice
+
+	}
 }
