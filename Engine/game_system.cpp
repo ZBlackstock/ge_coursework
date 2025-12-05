@@ -12,6 +12,11 @@ EntityManager GameSystem::_entities;
 using am = AudioManager;
 using ps = ParticleSystem;
 
+b2Vec2 gravity(0.f, 9.8f);
+b2World physicsWorld(gravity);
+ParticleSystem particleSystem(physicsWorld);
+
+
 void GameSystem::start(unsigned int width, unsigned int height, const std::string& name, const float& time_step, bool physics_enabled)
 {
 	GameSystem::assign_paths();
@@ -50,6 +55,21 @@ void GameSystem::_update(const float& dt)
 	SceneManager::update(dt);
 	EventManager::update(dt);
 	InputManager::Update(dt);
+
+	// Update physics
+	ParticleSystem::update(dt);
+
+	// Add new particles to RenderMan on the top layer
+	static std::map<sf::Drawable*, bool> addedToRenderMan;
+
+	for (auto& p : ParticleSystem::getParticles())
+	{
+		if (!addedToRenderMan[p.drawable.get()])
+		{
+			RenderMan::createDrawable(p.drawable, 10); // top layer
+			addedToRenderMan[p.drawable.get()] = true;
+		}
+	}
 
 }
 

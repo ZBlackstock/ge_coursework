@@ -1,11 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <Box2D/Box2D.h>
-#include <memory>
+#include "ParticleSystem.hpp"
+#include <box2d/box2d.h>
 
-struct Particle
-{
+struct Particle {
     std::shared_ptr<sf::CircleShape> drawable; // what RenderMan draws
-    b2Body* body;  // physics body
-    float lifetime; // seconds
+    b2BodyId body;                             // Box2D body
+    float lifetime;                             // seconds
 };

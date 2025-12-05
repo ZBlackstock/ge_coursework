@@ -16,18 +16,19 @@ set(SFML_INCS "lib/SFML/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/SFML/lib")
 
 # Box2D
-add_subdirectory("lib/box2D-main")
-set(BOX2D_INCS "lib/box2D-main/include")
+add_subdirectory("lib/box2d")
+set(B2D_INCS "lib/box2d/include")
+link_directories("${CMAKE_BINARY_DIR}/lib/box2d/bin")
 
 #### Engine ####
 add_library(engine STATIC engine/game_system.cpp 
                         engine/ecm.cpp
                         engine/RenderMan.cpp
                         engine/AudioManager.cpp
-)
+                        ParticleManager.cpp)
 
 target_include_directories(engine INTERFACE engine ${SFML_INCS} ${BOX2D_INCS})
-target_link_libraries(engine sfml-graphics sfml-audio sfml-system Box2D)
+target_link_libraries(engine sfml-graphics sfml-audio sfml-system box2d)
 
 ### Executable ###
 add_executable(BlackDragon
@@ -45,7 +46,7 @@ add_executable(BlackDragon
     UI_fight_loop.cpp
     healthbar.cpp
     ParticleSystem.cpp
-)
+ ParticleManager.cpp)
 
 target_include_directories(BlackDragon PRIVATE ${SFML_INCS} ${BOX2D_INCS} engine)
 target_link_libraries(BlackDragon sfml-graphics sfml-audio sfml-system engine Box2D)

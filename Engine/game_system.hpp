@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "ecm.hpp"
 
+
 class Scene;//forward definition
 
 class GameSystem{
