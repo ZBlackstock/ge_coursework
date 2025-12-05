@@ -219,7 +219,7 @@ class dfn_Block : public Item_Defend
 {
 public:
 	dfn_Block(std::string name, sf::Vector2f pos) : Item_Defend(name, pos) {}
-	void on_use() override;
+	void on_defend_use(std::shared_ptr<Entity> user, bool block);
 	void set_display_texts() override;
 };
 

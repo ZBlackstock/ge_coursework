@@ -505,14 +505,15 @@ void id::on_use()
 }
 
 // Light
-void dfn_Block::on_use()
+void dfn_Block::on_defend_use(std::shared_ptr<Entity> user, bool block)
 {
 	id::on_use();
 	m::set_text("Preparing to block!");
 
 	//Code for blocking here
-	// change to take in attacker and defender
-	// add is_blocking and is_heavy_attack to entity
+	// change to take in entity
+	// set is_blocking here
+
 }
 void dfn_Block::set_display_texts()
 {
