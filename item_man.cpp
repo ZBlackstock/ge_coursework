@@ -21,6 +21,10 @@ std::vector<std::shared_ptr<Item>> iman::all_consumables;
 std::vector<std::shared_ptr<Item>> iman::player_consumables;
 std::vector<std::shared_ptr<Item>> iman::player_attacks;
 std::vector<std::shared_ptr<Item>> iman::player_defends;
+
+std::shared_ptr<Entity> iman::player = nullptr;
+std::shared_ptr<Entity> iman::enemy = nullptr;
+
 int iman::num_player_consumables = 8;
 
 void iman::init()
@@ -253,6 +257,26 @@ void i::display_description(bool display)
 }
 void i::set_display_texts() {}
 
+void iman::set_player(std::shared_ptr<Entity> entity)
+{
+	player = entity;
+}
+
+void iman::set_enemy(std::shared_ptr<Entity> entity)
+{
+	enemy = entity;
+}
+
+std::shared_ptr<Entity> iman::get_player()
+{
+	return player;
+}
+
+std::shared_ptr<Entity> iman::get_enemy()
+{
+	return enemy;
+}
+
 // ___________________CONSUMABLES________________
 
 void ic::on_use()
@@ -267,7 +291,7 @@ void cns_HealingPotion::on_use()
 {
 	ic::on_use();
 	m::set_text("Health Potion Used. Regained " + std::to_string(cns_HealingPotion::_heal_amount) + " health!");
-	
+
 	am::addSounds("drink");
 	am::playSound("drink");
 }

@@ -4,6 +4,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "UI_button.hpp"
+#include "BasicEntityStats.h"
 
 // Forward definition
 class Item;
@@ -20,7 +21,17 @@ public:
 	static void clear();
 	static void visible(std::vector<std::shared_ptr<Item>> list, bool visible);
 	static int num_player_consumables;
-};
+
+	static void set_player(std::shared_ptr<Entity> entity);
+	static void set_enemy(std::shared_ptr<Entity> entity);
+
+	static std::shared_ptr<Entity> get_player();
+	static std::shared_ptr<Entity> get_enemy();
+
+protected:
+	static std::shared_ptr<Entity> player;
+	static std::shared_ptr<Entity> enemy;
+}; 
 
 class Item
 {
