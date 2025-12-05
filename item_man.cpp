@@ -465,7 +465,6 @@ void ia::on_use()
 
 
 // FOR MAKING PLAYER HURT ENEMY
-// Go to item man hpp, add set enemy and store ref to enemy.
 // Have damage values for light an heavy
 // Damage enemy
 

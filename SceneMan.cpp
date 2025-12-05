@@ -318,6 +318,7 @@ void Fight::load_player()
 	sprite_comp->set_texure(tex);
 	sprite_comp->get_sprite().setPosition((gs::screen_mid.x) - 250, (gs::screen_mid.y) - 150);
 	sprite_comp->render();
+	ItemManager::set_player(player);
 }
 
 void Fight::load_enemy()
@@ -337,6 +338,7 @@ void Fight::load_enemy()
 	sprite_comp->set_texure(tex);
 	sprite_comp->get_sprite().setPosition(sf::Vector2f{ gs::screen_mid.x + 250, gs::screen_mid.y - 450 });
 	sprite_comp->render();
+	ItemManager::set_enemy(enemy);
 }
 
 // _______________________Fight0 (Left)_________________________________________
