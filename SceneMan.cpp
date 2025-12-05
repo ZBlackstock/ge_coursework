@@ -316,7 +316,7 @@ void Fight::load_player()
 	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
 	tex->loadFromFile(gs::sprites_path + "player.png");
 	sprite_comp->set_texure(tex);
-	sprite_comp->get_sprite().setPosition(gs::screen_mid);
+	sprite_comp->get_sprite().setPosition((gs::screen_mid.x) - 250, (gs::screen_mid.y) - 150);
 	sprite_comp->render();
 }
 
