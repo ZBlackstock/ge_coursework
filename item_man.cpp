@@ -511,6 +511,8 @@ void dfn_Block::on_use()
 	m::set_text("Preparing to block!");
 
 	//Code for blocking here
+	// change to take in attacker and defender
+	// add is_blocking and is_heavy_attack to entity
 }
 void dfn_Block::set_display_texts()
 {
