@@ -50,7 +50,7 @@ public:
     int sharp_attack_power = 1.0f;
 
 
-    Buff(float duration) : time_remaining(duration) {}
+    Buff() = default;
     virtual ~Buff() = default;
 
     virtual void update(float dt) {
@@ -60,12 +60,6 @@ public:
     bool expired() const {
         return time_remaining <= 0.0f;
     }
-};
-
-class death : public Buff {
-public:
-    death() : Buff(1000000000.0f) {} // initialize Buff's time_remaining
-    void update(float dt); // override if needed
 };
 
 

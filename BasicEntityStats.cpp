@@ -110,5 +110,3 @@ void SpriteComponent::update(const float& dt) {
 }
 
 void SpriteComponent::render() { RenderMan::createDrawable(_sprite, 1); }
-
-void death::update(float dt) {}
