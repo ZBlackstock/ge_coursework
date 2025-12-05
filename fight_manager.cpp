@@ -82,6 +82,49 @@ void FightManager::update(const float& dt)
 	{
 		//Make attacks invisible
 		ItemManager::visible(ItemManager::player_defends, false);
+
+		EventManager::clear_current_button();
+
+		//Move to attack stage
+		fli::set_fight_loop_state(3);
+		set_player_defended(false);
+	}
+
+
+	//enemy
+
+	if (get_enemy_consumed_item())
+	{
+
+		enemy->get_compatible_components<AIComponent>();
+		EventManager::clear_current_button();
+		EventManager::set_current_button(ItemManager::player_attacks[0]->button);
+
+		//Move to attack stage
+		fli::set_fight_loop_state(1);
+		set_player_consumed_item(false);
+	}
+
+	//  attacked, move to player defend
+	if (get_player_attacked())
+	{
+		//Make attacks invisible
+		ItemManager::visible(ItemManager::player_attacks, false);
+		ItemManager::visible(ItemManager::player_defends, true);
+
+		EventManager::clear_current_button();
+		EventManager::set_current_button(ItemManager::player_defends[0]->button);
+
+		//Move to attack stage
+		fli::set_fight_loop_state(2);
+		set_player_attacked(false);
+	}
+
+	// Player defended, move to enemy turn
+	if (get_player_defended())
+	{
+		//Make attacks invisible
+		ItemManager::visible(ItemManager::player_defends, false);
 		EventManager::clear_current_button();
 		//Move to attack stage
 		fli::set_fight_loop_state(3);
