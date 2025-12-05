@@ -28,7 +28,7 @@ h::Healthbar(sf::Vector2f size, sf::Vector2f pos, float max, sf::Color colour)
 	*_value = *_max_value;
 }
 
-void h::set_healthbar_value(float& value)
+void h::set_healthbar_value(int value)
 {
 	// Check entity still has health left
 	if (*_value > 0)

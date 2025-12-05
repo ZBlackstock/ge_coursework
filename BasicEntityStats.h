@@ -8,15 +8,14 @@ class BasicEntityStats : public Component
 {
 protected:
     int base_max_health;
-    int current_health;
     int base_attack_power;
-
 
     std::vector<std::unique_ptr<Buff>> buffs;
 
 public:
     BasicEntityStats(Entity* p, int max_hp, int atk_power);
-    
+    int current_health;
+
     void update(const float& dt) override;
     int get_max_health() const;
     int get_attack_power() const;

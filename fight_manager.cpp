@@ -1,4 +1,5 @@
 #include "fight_manager.hpp"
+#include "console.hpp"
 
 using fli = FightLoopIndicator;
 using fm = FightManager;
@@ -7,20 +8,29 @@ using h = Healthbar;
 bool FightManager::_player_consumed_item = false;
 bool FightManager::_player_attacked = false;
 bool FightManager::_player_defended = false;
-std::shared_ptr<Healthbar> fm::_player_healthbar = std::shared_ptr<Healthbar>();
-std::shared_ptr<Healthbar> fm::_enemy_healthbar = std::shared_ptr<Healthbar>();
+std::shared_ptr<Healthbar> fm::_player_healthbar =nullptr;
+std::shared_ptr<Healthbar> fm::_enemy_healthbar = nullptr;
 
 void FightManager::init()
 {
 	fli::init();
 	fli::set_fight_loop_state(0);
-	_player_healthbar = std::make_shared<Healthbar>(sf::Vector2f{ 500,20 }, sf::Vector2f{ 900,900 }, 100, sf::Color::Green);
-	_enemy_healthbar = std::make_shared <Healthbar>(sf::Vector2f{ 500,20 }, sf::Vector2f{ 1440,600 }, 100, sf::Color::Red);
 	// ^^ Just size, position, max health value, colour
 }
 
 void FightManager::update(const float& dt)
 {
+	if (_player_healthbar == nullptr)
+	{
+		_player_healthbar = std::make_shared<Healthbar>(sf::Vector2f{ 500,20 }, sf::Vector2f{ 900,900 },
+			ItemManager::get_player()->get_compatible_components<BasicEntityStats>()[0]->get_max_health(), sf::Color::Green);
+		_enemy_healthbar = std::make_shared <Healthbar>(sf::Vector2f{ 500,20 }, sf::Vector2f{ 1440,600 },
+			ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->get_max_health(), sf::Color::Red);
+	}
+
+	_player_healthbar->set_healthbar_value(ItemManager::get_player()->get_compatible_components<BasicEntityStats>()[0]->current_health);
+	_enemy_healthbar->set_healthbar_value(ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->current_health);
+
 	// Player consumed item, move to player attack
 	if (get_player_consumed_item())
 	{
