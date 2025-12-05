@@ -45,6 +45,11 @@ int BasicEntityStats::get_max_health() const {
     return static_cast<int>(base_max_health * mult);
 }
 
+bool BasicEntityStats::get_blocking() const {
+    
+    return blocking;
+}
+
 int BasicEntityStats::get_current_health() const {
     return current_health;
 }

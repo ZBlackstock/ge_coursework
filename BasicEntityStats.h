@@ -9,7 +9,7 @@ class BasicEntityStats : public Component
 protected:
     int base_max_health;
     int base_attack_power;
-
+    bool blocking;
     std::vector<std::unique_ptr<Buff>> buffs;
 
 public:
@@ -20,6 +20,7 @@ public:
     int get_max_health() const;
 	int get_current_health() const;
     int get_attack_power() const;
+    bool get_blocking() const;
     void take_fire_damage(int dmg);
     void take_sharp_damage(int dmg);
     void take_damage(int dmg);
@@ -34,6 +35,8 @@ public:
         buffs.push_back(std::move(buff));
         return ptr;
     }
+
+
 };
 
 class Buff
