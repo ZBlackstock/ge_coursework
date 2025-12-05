@@ -34,10 +34,11 @@ public:
 	std::shared_ptr<Button> below = nullptr;
 	std::shared_ptr<Button> left = nullptr;
 	std::shared_ptr<Button> right = nullptr;
+	sf::Vector2f _pos;
+
 private:
 
 	bool _selected;
-	sf::Vector2f _pos;
 	std::string _name;
 };
 

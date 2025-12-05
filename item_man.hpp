@@ -42,6 +42,7 @@ public:
 
 	std::shared_ptr<Button_Item> button = nullptr;
 	virtual void on_use();
+	virtual void on_use(std::shared_ptr<Entity> target, int damage);
 	sf::Vector2f get_pos();
 	void display_description(bool display);
 	virtual void set_display_texts();
@@ -68,7 +69,8 @@ class Item_Attack : public Item
 {
 public:
 	Item_Attack(std::string name, sf::Vector2f pos) : Item(name, pos) {};
-	void on_use() override;
+	virtual void on_use(std::shared_ptr<Entity> target, int damage) override;
+	virtual void on_use() override;
 	int damage = 0;
 };
 
@@ -208,7 +210,7 @@ class atk_Heavy : public Item_Attack
 {
 public:
 	atk_Heavy(std::string name, sf::Vector2f pos) : Item_Attack(name, pos) {}
-	void on_use() override;
+	void on_use(std::shared_ptr<Entity> target, int damage) override;
 	void set_display_texts() override;
 };
 

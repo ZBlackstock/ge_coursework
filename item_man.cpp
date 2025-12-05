@@ -197,9 +197,9 @@ void iman::init()
 
 void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
 {
-	for (int ic = 0; ic < list.size(); ++ic)
+	for (int i = 0; i < list.size(); ++i)
 	{
-		list[ic]->button->set_all_sprites_pos(visible ? list[ic]->get_pos() : sf::Vector2f{ 10000, 10000 });
+		list[i]->button->set_all_sprites_pos(visible ? list[i]->get_pos() : sf::Vector2f{ 10000, 10000 });
 	}
 }
 
@@ -246,9 +246,6 @@ std::string i::get_name()
 
 void i::display_description(bool display)
 {
-	Console::print("cns::display_description() " + std::to_string(display));
-	Console::print(_display_name);
-	Console::print(_display_description);
 	_txt_display_name->setString(display ? _display_name : "");
 	_txt_display_description->setString(display ? _display_description : "");
 
@@ -463,6 +460,8 @@ void ia::on_use()
 	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->take_damage(damage);
 	FightManager::set_player_attacked(true);
 }
+void i::on_use(std::shared_ptr<Entity> target, int damage) {}
+void ia::on_use(std::shared_ptr<Entity> target, int damage) {}
 
 // Light
 void atk_Light::on_use()
@@ -482,9 +481,9 @@ void atk_Light::set_display_texts()
 }
 
 // Heavy
-void atk_Heavy::on_use()
+void atk_Heavy::on_use(std::shared_ptr<Entity> target, int damage)
 {
-	ia::damage = 20;
+	target->get_compatible_components<BasicEntityStats>()[0]->take_damage(damage);
 	ia::on_use();
 	m::set_text("Heavy attack!");
 

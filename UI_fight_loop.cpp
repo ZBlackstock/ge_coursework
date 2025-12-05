@@ -9,7 +9,7 @@ void fli::init()
 	*_pos = sf::Vector2f{ GameSystem::screen_mid.x, 20 };
 
 	int ic = 0;
-	while (ic < 5)
+	while (ic < 6)
 	{
 		RenderMan::create_sprite("fightstate_" + std::to_string(ic) + ".png", { 10000,10000 }, 4);
 		ic++;
@@ -18,11 +18,11 @@ void fli::init()
 
 void fli::set_fight_loop_state(int state)
 {
-	int ic = 0;
-	while (ic < 5)
+	int i = 0;
+	while (i < 6)
 	{
-		RenderMan::set_sprite_pos("fightstate_" + std::to_string(ic) + ".png", { 10000,10000 });
-		ic++;
+		RenderMan::set_sprite_pos("fightstate_" + std::to_string(i) + ".png", { 10000,10000 });
+		i++;
 	}
 	RenderMan::set_sprite_pos("fightstate_" + std::to_string(state) + ".png", *fli::_pos);
 }
