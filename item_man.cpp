@@ -465,7 +465,6 @@ void ia::on_use()
 
 
 // FOR MAKING PLAYER HURT ENEMY
-// Have damage values for light an heavy
 // Damage enemy
 
 // Light
@@ -478,7 +477,7 @@ void atk_Light::on_use()
 	am::playSound("lightAtk");
 
 	//Code for light attack here
-
+	damage = 10;
 }
 void atk_Light::set_display_texts()
 {
@@ -496,7 +495,7 @@ void atk_Heavy::on_use()
 	am::playSound("heavyAtk");
 
 	//Code for heavy attack here
-
+	damage = 20;
 }
 void atk_Heavy::set_display_texts()
 {

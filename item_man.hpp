@@ -67,6 +67,7 @@ class Item_Attack : public Item
 public:
 	Item_Attack(std::string name, sf::Vector2f pos) : Item(name, pos) {};
 	void on_use() override;
+	int damage = 0;
 };
 
 class Item_Defend : public Item
