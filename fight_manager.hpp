@@ -34,9 +34,6 @@ public:
 	static bool get_enemy_defended();
 
 
-	static std::shared_ptr<Entity> player;
-	static std::shared_ptr<Entity> enemy;
-
 	static bool player_Block;
 	static bool enemy_Block; 
 

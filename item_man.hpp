@@ -35,7 +35,7 @@ protected:
 	static std::shared_ptr<Entity> enemy;
 };
 
-class Item
+class Item : public Buff
 {
 public:
 	Item(std::string name, sf::Vector2f pos);

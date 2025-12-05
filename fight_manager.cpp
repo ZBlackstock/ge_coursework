@@ -7,6 +7,8 @@ using fli = FightLoopIndicator;
 using fm = FightManager;
 using h = Healthbar;
 
+
+
 bool FightManager::_player_consumed_item = false;
 bool FightManager::_player_attacked = false;
 bool FightManager::_player_defended = false;
@@ -21,8 +23,6 @@ bool FightManager::_enemy_attacked = false;
 bool FightManager::_enemy_defended = false;
 bool FightManager::enemy_Block = false;
 
-std::shared_ptr<Healthbar> fm::_player_healthbar = std::shared_ptr<Healthbar>();
-std::shared_ptr<Healthbar> fm::_enemy_healthbar = std::shared_ptr<Healthbar>();
 
 void FightManager::init()
 {
@@ -97,10 +97,11 @@ void FightManager::update(const float& dt)
 	if (get_enemy_consumed_item())
 	{
 
-		std::vector<std::shared_ptr<AIComponent>> entityComp = enemy->get_compatible_components<AIComponent>();
+		std::vector<std::shared_ptr<AIComponent>> entityComp = ItemManager::get_enemy()->get_compatible_components<AIComponent>();
 		entityComp[0]->set_State("Item");
 		entityComp[0]->update(dt);
 		
+
 
 		//Move to attack stage
 		fli::set_fight_loop_state(1);
@@ -135,7 +136,7 @@ void FightManager::update(const float& dt)
 	if (get_enemy_consumed_item())
 	{
 
-		std::vector<std::shared_ptr<AIComponent>> entityComp = enemy->get_compatible_components<AIComponent>();
+		std::vector<std::shared_ptr<AIComponent>> entityComp = ItemManager::get_enemy()->get_compatible_components<AIComponent>();
 		entityComp[0]->set_State("Item");
 		entityComp[0]->update(dt);
 		

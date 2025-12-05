@@ -312,7 +312,6 @@ void Fight::load_player()
 
 	auto stats_comp = player->add_component<BasicEntityStats>(*player_max_hp, *player_atk_power);
 	auto sprite_comp = player->add_component<SpriteComponent>();
-	auto buff = stats_comp->add_buff<death>();
 
 	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
 	tex->loadFromFile(gs::sprites_path + "player.png");
@@ -330,7 +329,8 @@ void Fight::load_enemy()
 	//Add components
 	auto stats_comp = enemy->add_component<BasicEntityStats>(*enemy_max_hp, *enemy_atk_pwr);
 	auto sprite_comp = enemy->add_component<SpriteComponent>();
-	auto buff = stats_comp->add_buff<death>();
+	auto memeory = enemy->add_component<MemoryComponent>();
+	auto AI = enemy->add_component<AIComponent>(memeory, ItemManager::get_player().get());
 
 	// Set texture & sprite
 	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
