@@ -14,6 +14,9 @@ struct DrawObj
 class RenderMan {
 public:
 
+
+	static std::vector<std::unique_ptr<DrawObj>> drawObjects;
+
 	// @brief gets a pointer of the window to render to.
 	// @param win points towards the window currently in use
 	static void SetWindow(sf::RenderWindow* win);
@@ -51,7 +54,6 @@ public:
 
 private:
 	static sf::RenderWindow* window;
-	static std::vector<std::unique_ptr<DrawObj>> drawObjects;
 	static std::vector<std::shared_ptr<sf::Texture>> textures;
 	static std::map<std::string, std::shared_ptr<sf::Sprite>> sprites;
 

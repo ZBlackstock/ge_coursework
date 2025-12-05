@@ -22,7 +22,6 @@ public:
 	static void visible(std::vector<std::shared_ptr<Item>> list, bool visible);
 	static int num_player_consumables;
 
-	static bool attack_used(bool is_heavy, std::shared_ptr<Entity> aggresor);
 
 	static void set_player(std::shared_ptr<Entity> entity);
 	static void set_enemy(std::shared_ptr<Entity> entity);

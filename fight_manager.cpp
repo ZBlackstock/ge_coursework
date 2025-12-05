@@ -49,12 +49,12 @@ void FightManager::update(const float& dt)
 	// PLAYER CONSUME
 	if (get_enemy_defended())
 	{
-		RenderMan::RenderWindow(); // Otherwise sf::sleep would pause before rendering
+		// Otherwise sf::sleep would pause before rendering
 		sf::sleep(sf::seconds(1.f));
 
 		ItemManager::visible(ItemManager::player_consumables, true);
 		EventManager::set_current_button(ItemManager::player_consumables[0]->button);
-
+		RenderMan::RenderWindow();
 		//Move to attack stage
 		fli::set_fight_loop_state(0);
 		set_enemy_defended(false);
