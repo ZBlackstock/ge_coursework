@@ -67,7 +67,6 @@ class Item_Attack : public Item
 public:
 	Item_Attack(std::string name, sf::Vector2f pos) : Item(name, pos) {};
 	void on_use() override;
-	int damage = 0;
 };
 
 class Item_Defend : public Item
@@ -198,6 +197,7 @@ class atk_Light : public Item_Attack
 public:
 	atk_Light(std::string name, sf::Vector2f pos) : Item_Attack(name, pos) {}
 	void on_use() override;
+	int damage = 10;
 	void set_display_texts() override;
 };
 
@@ -207,6 +207,7 @@ class atk_Heavy : public Item_Attack
 public:
 	atk_Heavy(std::string name, sf::Vector2f pos) : Item_Attack(name, pos) {}
 	void on_use() override;
+	int damage = 20;
 	void set_display_texts() override;
 };
 
