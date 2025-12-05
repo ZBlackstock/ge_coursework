@@ -37,6 +37,8 @@ public:
 
     void update(const float& dt) override;
     void render() override {}
+    void set_State(std::string state);
+
 
 private:
     AIState currentState = AIState::DecideAttack;

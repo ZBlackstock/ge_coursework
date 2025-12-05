@@ -22,6 +22,17 @@ public:
 	static void set_player_defended(bool defended);
 	static bool get_player_defended();
 
+
+	static void set_enemy_consumed_item(bool consumed);
+	static bool get_enemy_consumed_item();
+
+	static void set_enemy_attacked(bool attacked);
+	static bool get_enemy_attacked();
+
+	static void set_enemy_defended(bool defended);
+	static bool get_enemy_defended();
+
+
 	static std::shared_ptr<Entity> player;
 	static std::shared_ptr<Entity> enemy;
 
@@ -32,6 +43,10 @@ private:
 	static bool _player_consumed_item;
 	static bool _player_attacked;
 	static bool _player_defended;
+	static bool _enemy_consumed_item;
+	static bool _enemy_attacked;
+	static bool _enemy_defended;
+
 	static std::shared_ptr<Healthbar> _player_healthbar;
 	static std::shared_ptr<Healthbar> _enemy_healthbar;
 };

@@ -1,4 +1,6 @@
 #include "fight_manager.hpp"
+#include "BasicEntityStats.h"
+#include "AI/AI_cmps.h"
 #include "console.hpp"
 
 using fli = FightLoopIndicator;
@@ -71,6 +73,49 @@ void FightManager::update(const float& dt)
 		fli::set_fight_loop_state(3);
 		set_player_defended(false);
 	}
+
+
+	//enemy
+
+	if (get_enemy_consumed_item())
+	{
+
+		enemy->get_compatible_components<AIComponent>();
+		EventManager::clear_current_button();
+		EventManager::set_current_button(ItemManager::player_attacks[0]->button);
+
+		//Move to attack stage
+		fli::set_fight_loop_state(1);
+		set_player_consumed_item(false);
+	}
+
+	//  attacked, move to player defend
+	if (get_player_attacked())
+	{
+		//Make attacks invisible
+		ItemManager::visible(ItemManager::player_attacks, false);
+		ItemManager::visible(ItemManager::player_defends, true);
+
+		EventManager::clear_current_button();
+		EventManager::set_current_button(ItemManager::player_defends[0]->button);
+
+		//Move to attack stage
+		fli::set_fight_loop_state(2);
+		set_player_attacked(false);
+	}
+
+	// Player defended, move to enemy turn
+	if (get_player_defended())
+	{
+		//Make attacks invisible
+		ItemManager::visible(ItemManager::player_defends, false);
+
+		EventManager::clear_current_button();
+
+		//Move to attack stage
+		fli::set_fight_loop_state(3);
+		set_player_defended(false);
+	}
 }
 
 void FightManager::set_player_consumed_item(bool consumed)
@@ -91,6 +136,38 @@ void FightManager::set_player_attacked(bool attacked)
 bool FightManager::get_player_attacked()
 {
 	return FightManager::_player_attacked;
+}
+
+void FightManager::set_player_defended(bool defended)
+{
+	FightManager::_player_defended = defended;
+}
+
+bool FightManager::get_player_defended()
+{
+	return FightManager::_player_defended;
+}
+
+
+//enemy fight stuff
+void FightManager::set_enemy_consumed_item(bool consumed)
+{
+	FightManager::_enemy_consumed_item = consumed;
+}
+
+bool FightManager::get_enemy_consumed_item()
+{
+	return FightManager::_enemy_consumed_item;
+}
+
+void FightManager::set_enemy_attacked(bool attacked)
+{
+	FightManager::_enemy_attacked = attacked;
+}
+
+bool FightManager::get_enemy_attacked()
+{
+	return FightManager::_enemy_attacked;
 }
 
 void FightManager::set_player_defended(bool defended)

@@ -60,6 +60,26 @@ void AIComponent::update(const float& dt) {
     }
 }
 
+void AIComponent::set_State(std::string state)
+{
+    if (state == "Item")
+    {
+        currentState = AIState::DecideItem;
+    }
+    else if (state == "Attack")
+    {
+        currentState = AIState::DecideAttack;
+    }
+    else if (state == "Block")
+    {
+        currentState = AIState::DecideBlock;
+    }
+    else
+    {
+        Console::print("error invalid state");
+    }
+}
+
 // -----------------
 // Execution
 // -----------------
