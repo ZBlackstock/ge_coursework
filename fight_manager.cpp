@@ -88,6 +88,7 @@ void FightManager::update(const float& dt)
 		//Move to attack stage
 		fli::set_fight_loop_state(3);
 		set_player_defended(false);
+
 	}
 
 
@@ -100,8 +101,6 @@ void FightManager::update(const float& dt)
 		entityComp[0]->set_State("Item");
 		entityComp[0]->update(dt);
 		
-		EventManager::clear_current_button();
-		EventManager::set_current_button(ItemManager::player_attacks[0]->button);
 
 		//Move to attack stage
 		fli::set_fight_loop_state(1);
@@ -111,16 +110,11 @@ void FightManager::update(const float& dt)
 	//  attacked, move to player defend
 	if (get_enemy_attacked())
 	{
-		//Make attacks invisible
-		ItemManager::visible(ItemManager::player_attacks, false);
-		ItemManager::visible(ItemManager::player_defends, true);
 
-		EventManager::clear_current_button();
-		EventManager::set_current_button(ItemManager::player_defends[0]->button);
 
 		//Move to attack stage
 		fli::set_fight_loop_state(2);
-		set_player_attacked(false);
+		set_enemy_attacked(false);
 	}
 
 	// Player defended, move to enemy turn

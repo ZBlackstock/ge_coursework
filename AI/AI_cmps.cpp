@@ -87,6 +87,8 @@ void AIComponent::ExecuteAttack(const Action& action) {
     std::cout << "AI attacks with "
         << (action.attack == AttackType::Light ? "Light" : "Heavy")
         << "\n";
+
+    
 }
 
 void AIComponent::ExecuteBlock(const Action& action) {
