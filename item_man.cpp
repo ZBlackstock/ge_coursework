@@ -7,6 +7,8 @@
 #include "message_box.hpp"
 #include "UI_fight_loop.hpp"
 #include "AudioManager.h"
+#include "ParticleSystem.hpp"
+#include "ParticleDrawable.hpp"
 
 using i = Item;
 using ic = Item_Consumable;
@@ -16,6 +18,9 @@ using iman = ItemManager;
 using m = MsgBox;
 using fli = FightLoopIndicator;
 using am = AudioManager;
+using ps = ParticleSystem;
+
+ParticleSystem ps2;
 
 std::vector<std::shared_ptr<Item>> iman::all_consumables;
 std::vector<std::shared_ptr<Item>> iman::player_consumables;
@@ -267,10 +272,21 @@ void cns_HealingPotion::on_use()
 {
 	ic::on_use();
 	m::set_text("Health Potion Used. Regained " + std::to_string(cns_HealingPotion::_heal_amount) + " health!");
-	
+
+	// Center of the screen
+	sf::Vector2f centerPos = GameSystem::screen_mid;
+
+	// Create particle drawable on the top layer
+	auto particles = std::make_shared<ParticleDrawable>(centerPos, 80, sf::Color::Green, -200.f, 200.f);
+
+	// Top layer, e.g., layer 10
+	RenderMan::createDrawable(particles, 10);
+
+	// Play sound
 	am::addSounds("drink");
 	am::playSound("drink");
 }
+
 void cns_HealingPotion::set_display_texts()
 {
 	Console::print("hello");

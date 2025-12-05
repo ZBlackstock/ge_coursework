@@ -49,6 +49,11 @@ public:
 	*/
 	static void RemoveAllDrawObj();
 
+	static std::vector<std::unique_ptr<DrawObj>>& GetDrawObjects() 
+	{
+		return drawObjects;
+	}
+
 private:
 	static sf::RenderWindow* window;
 	static std::vector<std::unique_ptr<DrawObj>> drawObjects;

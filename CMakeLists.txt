@@ -15,35 +15,41 @@ add_subdirectory("lib/SFML")
 set(SFML_INCS "lib/SFML/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/SFML/lib")
 
+# Box2D
+add_subdirectory("lib/box2D-main")
+set(BOX2D_INCS "lib/box2D-main/include")
+
 #### Engine ####
 add_library(engine STATIC engine/game_system.cpp 
                         engine/ecm.cpp
-						engine/RenderMan.cpp
-						engine/AudioManager.cpp
+                        engine/RenderMan.cpp
+                        engine/AudioManager.cpp
 )
 
-target_include_directories(engine INTERFACE engine ${SFML_INCS})
-target_link_libraries(engine sfml-graphics sfml-audio sfml-system)
+target_include_directories(engine INTERFACE engine ${SFML_INCS} ${BOX2D_INCS})
+target_link_libraries(engine sfml-graphics sfml-audio sfml-system Box2D)
 
-### executable ###
+### Executable ###
 add_executable(BlackDragon
-	main.cpp
-	SceneMan.cpp
-	item_man.cpp
-	UI_button.cpp
-	UI_exit_to_mainmenu.cpp
-	input_man.cpp
-	event_man.cpp
-	console.cpp
-	fight_manager.cpp
-	BasicEntityStats.cpp
-	message_box.cpp
-	UI_fight_loop.cpp
-	healthbar.cpp
+    main.cpp
+    SceneMan.cpp
+    item_man.cpp
+    UI_button.cpp
+    UI_exit_to_mainmenu.cpp
+    input_man.cpp
+    event_man.cpp
+    console.cpp
+    fight_manager.cpp
+    BasicEntityStats.cpp
+    message_box.cpp
+    UI_fight_loop.cpp
+    healthbar.cpp
+    ParticleSystem.cpp
 )
 
-target_include_directories(BlackDragon PRIVATE ${SFML_INCS} engine)
-target_link_libraries(BlackDragon sfml-graphics sfml-audio sfml-system engine)
+target_include_directories(BlackDragon PRIVATE ${SFML_INCS} ${BOX2D_INCS} engine)
+target_link_libraries(BlackDragon sfml-graphics sfml-audio sfml-system engine Box2D)
+
 set_property(TARGET BlackDragon PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
 add_custom_command(TARGET BlackDragon POST_BUILD

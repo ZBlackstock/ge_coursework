@@ -5,10 +5,12 @@
 #include "..\fight_manager.hpp"
 #include "RenderMan.h"
 #include "AudioManager.h"
+#include "..\ParticleSystem.hpp"
 
 using gs = GameSystem;
 EntityManager GameSystem::_entities;
 using am = AudioManager;
+using ps = ParticleSystem;
 
 void GameSystem::start(unsigned int width, unsigned int height, const std::string& name, const float& time_step, bool physics_enabled)
 {
@@ -35,6 +37,8 @@ void GameSystem::start(unsigned int width, unsigned int height, const std::strin
 
 		RenderMan::RenderWindowClear();
 		_update(dt);
+
+		//ps::update(dt);
 		sf::sleep(sf::seconds(time_step));
 		_render();
 	}
@@ -46,6 +50,7 @@ void GameSystem::_update(const float& dt)
 	SceneManager::update(dt);
 	EventManager::update(dt);
 	InputManager::Update(dt);
+
 }
 
 void GameSystem::_render()
