@@ -332,7 +332,7 @@ void Fight::load_enemy()
 	auto enemy = GameSystem::make_entity();
 
 	//Add components
-	auto stats_comp = enemy->add_component<BasicEntityStats>(3, *enemy_atk_pwr);
+	auto stats_comp = enemy->add_component<BasicEntityStats>(*enemy_max_hp, *enemy_atk_pwr);
 	auto sprite_comp = enemy->add_component<SpriteComponent>();
 	auto memeory = enemy->add_component<MemoryComponent>();
 	auto AI = enemy->add_component<AIComponent>(memeory, ItemManager::get_player().get());
@@ -607,6 +607,7 @@ void Settings::set_resolution(int i)
 	window->create(resolutions[current_res_index], "Black Dragon", gs::fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
 
 	//Maintain size on screen. Otherwise the window size would change
+
 	sf::View view(sf::FloatRect(0, 0, 1920, 1080));
 	window->setView(view);
 

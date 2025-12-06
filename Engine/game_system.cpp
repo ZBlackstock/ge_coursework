@@ -14,10 +14,14 @@ void GameSystem::start(unsigned int width, unsigned int height, const std::strin
 {
 	GameSystem::assign_paths();
 	sf::RenderWindow window(sf::VideoMode(width, height), "Black Dragon", sf::Style::Fullscreen);
+
 	RenderMan::SetWindow(&window);
 	sf::Event event;
 	InputManager::init();
 	am::addMusic("main_menu_theme");
+
+	sf::View view(sf::FloatRect(0, 0, 1920, 1080));
+	window.setView(view);
 
 	while (window.isOpen())
 	{
