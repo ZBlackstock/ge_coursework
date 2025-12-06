@@ -10,7 +10,7 @@ using h = Healthbar;
 bool FightManager::_player_consumed_item = false;
 bool FightManager::_player_attacked = false;
 bool FightManager::_player_defended = false;
-std::shared_ptr<Healthbar> fm::_player_healthbar =nullptr;
+std::shared_ptr<Healthbar> fm::_player_healthbar = nullptr;
 std::shared_ptr<Healthbar> fm::_enemy_healthbar = nullptr;
 bool FightManager::player_Block = false;
 
@@ -56,27 +56,39 @@ void FightManager::update(const float& dt)
 			ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->get_max_health(), sf::Color::Red);
 	}
 
-	
+
 
 	std::vector<std::shared_ptr<AIComponent>> entityComp = ItemManager::get_enemy()->get_compatible_components<AIComponent>();
 
 	// PLAYER CONSUME
 	if (get_enemy_defended())
 	{
-		// Otherwise sf::sleep would pause before rendering
-		sf::sleep(sf::seconds(1.f));
-
 		ItemManager::visible(ItemManager::player_consumables, true);
 		ItemManager::visible(ItemManager::player_defends, false);
 		ItemManager::visible(ItemManager::player_attacks, false);
 
-		EventManager::set_current_button(ItemManager::player_consumables[0]->button);
+		for (int i = 0; i < ItemManager::player_consumables.size(); ++i)
+		{
+			// Find consumable that has not been used
+			if (!ItemManager::player_consumables[i]->button->disabled)
+			{
+				EventManager::set_current_button(ItemManager::player_consumables[i]->button);
+				break;
+			}
+
+			// Check if all consumables have been used
+			if (i == ItemManager::player_consumables.size() - 1)
+			{
+				// All items consumed, skip to attack
+				set_player_consumed_item(true);
+			}
+		}
+
 		RenderMan::RenderWindow();
 		//Move to attack stage
 		fli::set_fight_loop_state(0);
 		set_enemy_defended(false);
 		Console::print("PLAYER CONSUME");
-
 	}
 
 	// PLAYER ATTACK
@@ -87,15 +99,12 @@ void FightManager::update(const float& dt)
 		ItemManager::visible(ItemManager::player_attacks, true);
 		ItemManager::visible(ItemManager::player_defends, false);
 
-
-
 		EventManager::set_current_button(ItemManager::player_attacks[0]->button);
 
 		//Move to attack stage
 		fli::set_fight_loop_state(1);
 		set_player_consumed_item(false);
 		Console::print("PLAYER ATTACK");
-
 	}
 
 	_enemy_healthbar->set_healthbar_value(ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->current_health);
@@ -183,12 +192,12 @@ void FightManager::update(const float& dt)
 		RenderMan::RenderWindow();
 		sf::sleep(sf::seconds(1.f));
 		sf::sleep(sf::seconds(1.f));
-		
+
 		set_enemy_consumed_item(false);
 		Console::print("ENEMY ATTACK");
 
 	}
-	
+
 	_player_healthbar->set_healthbar_value(ItemManager::get_player()->get_compatible_components<BasicEntityStats>()[0]->current_health);
 
 	// ENEMY DEFEND
@@ -196,7 +205,7 @@ void FightManager::update(const float& dt)
 	{
 		RenderMan::RenderWindowClear();
 		fli::set_fight_loop_state(5);
-		
+
 		RenderMan::RenderWindow(); // Otherwise sf::sleep would pause before rendering
 		sf::sleep(sf::seconds(2.f));
 
