@@ -11,6 +11,7 @@ class FightManager
 {
 public:
 	static void init();
+	static void clear();
 	static void update(const float& dt);
 
 

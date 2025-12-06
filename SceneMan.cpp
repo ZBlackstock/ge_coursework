@@ -151,6 +151,11 @@ void MainMenu::on_scene_active()
 	btn_quit->set_below(btn_play);
 
 	EventManager::set_current_button(btn_play);
+
+	Map::fight0_victory = false;
+	Map::fight1_victory = false;
+	Map::fight2_victory = false;
+	Map::fight3_victory = false;
 }
 
 bool spacePressed = false;
@@ -297,7 +302,7 @@ void Fight::update(const float& dt)
 void Fight::on_scene_inactive()
 {
 	ItemManager::clear();
-
+	FightManager::clear();
 	RenderMan::RemoveAllDrawObj();
 	EventManager::clear_current_button();
 }
@@ -327,7 +332,7 @@ void Fight::load_enemy()
 	auto enemy = GameSystem::make_entity();
 
 	//Add components
-	auto stats_comp = enemy->add_component<BasicEntityStats>(*enemy_max_hp, *enemy_atk_pwr);
+	auto stats_comp = enemy->add_component<BasicEntityStats>(3, *enemy_atk_pwr);
 	auto sprite_comp = enemy->add_component<SpriteComponent>();
 	auto memeory = enemy->add_component<MemoryComponent>();
 	auto AI = enemy->add_component<AIComponent>(memeory, ItemManager::get_player().get());
@@ -660,7 +665,7 @@ float VictoryScreen::_timer = 5;
 void VictoryScreen::on_scene_active()
 {
 	_timer = 5;
-	RenderMan::create_sprite(Map::fight3_victory ? "congratulations" : "victory.png", gs::screen_mid, 1);
+	RenderMan::create_sprite(Map::fight3_victory ? "congratulations.png" : "victory.png", gs::screen_mid, 1);
 }
 
 void VictoryScreen::update(const float& dt)

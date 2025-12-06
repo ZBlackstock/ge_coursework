@@ -32,6 +32,20 @@ void FightManager::init()
 	// ^^ Just size, position, max health value, colour
 }
 
+void FightManager::clear()
+{
+	_player_consumed_item = false;
+	_player_attacked = false;
+	_player_defended = false;
+	_player_healthbar = nullptr;
+	_enemy_healthbar = nullptr;
+	player_Block = false;
+	_enemy_consumed_item = false;
+	_enemy_attacked = false;
+	_enemy_defended = true;
+	enemy_Block = false;
+}
+
 void FightManager::update(const float& dt)
 {
 	if (_player_healthbar == nullptr)
@@ -85,7 +99,28 @@ void FightManager::update(const float& dt)
 	}
 
 	_enemy_healthbar->set_healthbar_value(ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->current_health);
-
+	if (_enemy_healthbar->get_healthbar_value() <= 0)
+	{
+		if (SceneManager::get_active_scene()->name == "Fight0")
+		{
+			Map::fight0_victory = true;
+		}
+		else if (SceneManager::get_active_scene()->name == "Fight1")
+		{
+			Map::fight1_victory = true;
+		}
+		else if (SceneManager::get_active_scene()->name == "Fight2")
+		{
+			Map::fight2_victory = true;
+		}
+		else if (SceneManager::get_active_scene()->name == "Fight3")
+		{
+			Map::fight3_victory = true;
+		}
+		clear();
+		SceneManager::set_active_scene("VictoryScreen");
+		return;
+	}
 	// PLAYER DEFEND
 	if (get_player_attacked())
 	{
@@ -144,8 +179,10 @@ void FightManager::update(const float& dt)
 
 		//Move to defend stage
 		fli::set_fight_loop_state(4);
+		RenderMan::RenderWindowClear();
 		RenderMan::RenderWindow();
-		sf::sleep(sf::seconds(2.f));
+		sf::sleep(sf::seconds(1.f));
+		sf::sleep(sf::seconds(1.f));
 		
 		set_enemy_consumed_item(false);
 		Console::print("ENEMY ATTACK");

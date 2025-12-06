@@ -171,11 +171,14 @@ void iman::init()
 
 	// ____________________Block_____________________
 	std::shared_ptr<dfn_Block> block = std::make_shared<dfn_Block>
-		("dfn_block", sf::Vector2f{ 100,100 });
+		("dfn_block", sf::Vector2f{ 10000,10000 });
 
 	// ____________________Parry_____________________
 	std::shared_ptr<dfn_Parry> parry = std::make_shared<dfn_Parry>
-		("dfn_parry", sf::Vector2f{ 100,220 });
+		("dfn_parry", sf::Vector2f{ 10000,10000 });
+
+	block->set_pos({100, 100});
+	parry->set_pos({100, 220});
 
 	block->button->set_consumable(block);
 	parry->button->set_consumable(parry);
