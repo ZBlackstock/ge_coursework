@@ -53,6 +53,9 @@ void FightManager::update(const float& dt)
 		sf::sleep(sf::seconds(1.f));
 
 		ItemManager::visible(ItemManager::player_consumables, true);
+		ItemManager::visible(ItemManager::player_defends, false);
+		ItemManager::visible(ItemManager::player_attacks, false);
+
 		EventManager::set_current_button(ItemManager::player_consumables[0]->button);
 		RenderMan::RenderWindow();
 		//Move to attack stage
@@ -68,6 +71,9 @@ void FightManager::update(const float& dt)
 		//Make consumable invisible
 		ItemManager::visible(ItemManager::player_consumables, false);
 		ItemManager::visible(ItemManager::player_attacks, true);
+		ItemManager::visible(ItemManager::player_defends, false);
+
+
 
 		EventManager::set_current_button(ItemManager::player_attacks[0]->button);
 
@@ -86,6 +92,8 @@ void FightManager::update(const float& dt)
 		//Make attacks invisible
 		ItemManager::visible(ItemManager::player_attacks, false);
 		ItemManager::visible(ItemManager::player_defends, true);
+		ItemManager::visible(ItemManager::player_consumables, false);
+
 
 		EventManager::set_current_button(ItemManager::player_defends[0]->button);
 
@@ -101,6 +109,9 @@ void FightManager::update(const float& dt)
 	{
 		//Make attacks invisible
 		ItemManager::visible(ItemManager::player_defends, false);
+		ItemManager::visible(ItemManager::player_consumables, false);
+		ItemManager::visible(ItemManager::player_attacks, false);
+
 
 		EventManager::clear_current_button();
 
@@ -124,18 +135,20 @@ void FightManager::update(const float& dt)
 	if (get_enemy_consumed_item())
 	{
 		ItemManager::visible(ItemManager::player_defends, false);
+		ItemManager::visible(ItemManager::player_consumables, false);
+		ItemManager::visible(ItemManager::player_attacks, false);
+
 
 		entityComp[0]->set_State("Attack");
 		entityComp[0]->update(dt);
 
 		//Move to defend stage
-	//	fli::set_fight_loop_state(4);
+		fli::set_fight_loop_state(4);
 		RenderMan::RenderWindow();
 		sf::sleep(sf::seconds(2.f));
 		
 		set_enemy_consumed_item(false);
 		Console::print("ENEMY ATTACK");
-		ItemManager::visible(ItemManager::player_defends, false);
 
 	}
 	
@@ -152,6 +165,9 @@ void FightManager::update(const float& dt)
 
 		entityComp[0]->set_State("Block");
 		entityComp[0]->update(dt);
+		ItemManager::visible(ItemManager::player_defends, false);
+		ItemManager::visible(ItemManager::player_attacks, false);
+		ItemManager::visible(ItemManager::player_consumables, true);
 
 		set_enemy_attacked(false);
 		Console::print("ENEMY DEFEND");

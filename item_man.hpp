@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "UI_button.hpp"
 #include "BasicEntityStats.h"
+#include "Console.hpp"
 
 // Forward definition
 class Item;
@@ -43,6 +44,7 @@ public:
 	virtual void on_use();
 	virtual void on_use(std::shared_ptr<Entity> target, int damage);
 	sf::Vector2f get_pos();
+	void set_pos(sf::Vector2f pos);
 	void display_description(bool display);
 	virtual void set_display_texts();
 	std::string get_name();

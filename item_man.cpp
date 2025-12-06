@@ -120,8 +120,10 @@ void iman::init()
 		iman::all_consumables[random]->button->set_pos(consumable_pos);
 		iman::player_consumables.push_back(iman::all_consumables[random]);
 		iman::all_consumables[random]->set_display_texts();
+		iman::all_consumables[random]->set_pos(consumable_pos);
 		iman::all_consumables.erase(iman::all_consumables.begin() + random);
 		consumable_pos.y += 120;
+
 
 		if (iman::player_consumables.size() > 1)
 		{
@@ -203,6 +205,7 @@ void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
  		Console::print(list[i]->get_name() + " " + std::to_string(visible));
 		if (visible)
 		{
+			Console::print(list[i]->get_name() + "moving in frame");
 			list[i]->button->set_all_sprites_pos(list[i]->get_pos());
 
 		}
@@ -227,7 +230,7 @@ i::Item(std::string name, sf::Vector2f pos)
 	i::_name = name;
 	i::_pos = pos;
 	i::button = std::make_shared<Button_Item>(name, pos, 3);
-
+	Console::print("Creating item: " + name + "| pos = (" + std::to_string(pos.x) + "," + std::to_string(pos.y));
 	_txt_display_name->setFont(GameSystem::font_bold);
 	_txt_display_name->setCharacterSize(50);
 	_txt_display_name->setColor(sf::Color::White);
@@ -246,7 +249,14 @@ void i::on_use() {}
 
 sf::Vector2f i::get_pos()
 {
+	Console::print("Getting pos of " + i::_name);
+	Console::print("Pos: " + std::to_string(_pos.x) + ", " + std::to_string(_pos.y));
 	return _pos;
+}
+
+void i::set_pos(sf::Vector2f pos)
+{
+	_pos = pos;
 }
 
 std::string i::get_name()
