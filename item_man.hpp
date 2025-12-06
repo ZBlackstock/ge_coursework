@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "UI_button.hpp"
 #include "BasicEntityStats.h"
+#include "Console.hpp"
 
 // Forward definition
 class Item;
@@ -22,7 +23,6 @@ public:
 	static void visible(std::vector<std::shared_ptr<Item>> list, bool visible);
 	static int num_player_consumables;
 
-	static bool attack_used(bool is_heavy, std::shared_ptr<Entity> aggresor);
 
 	static void set_player(std::shared_ptr<Entity> entity);
 	static void set_enemy(std::shared_ptr<Entity> entity);
@@ -35,14 +35,16 @@ protected:
 	static std::shared_ptr<Entity> enemy;
 };
 
-class Item
+class Item : public Buff
 {
 public:
 	Item(std::string name, sf::Vector2f pos);
 
 	std::shared_ptr<Button_Item> button = nullptr;
 	virtual void on_use();
+	virtual void on_use(std::shared_ptr<Entity> target, int damage);
 	sf::Vector2f get_pos();
+	void set_pos(sf::Vector2f pos);
 	void display_description(bool display);
 	virtual void set_display_texts();
 	std::string get_name();
@@ -68,7 +70,8 @@ class Item_Attack : public Item
 {
 public:
 	Item_Attack(std::string name, sf::Vector2f pos) : Item(name, pos) {};
-	void on_use() override;
+	virtual void on_use(std::shared_ptr<Entity> target, int damage) override;
+	virtual void on_use() override;
 	int damage = 0;
 };
 
@@ -208,7 +211,7 @@ class atk_Heavy : public Item_Attack
 {
 public:
 	atk_Heavy(std::string name, sf::Vector2f pos) : Item_Attack(name, pos) {}
-	void on_use() override;
+	void on_use(std::shared_ptr<Entity> target, int damage) override;
 	void set_display_texts() override;
 };
 

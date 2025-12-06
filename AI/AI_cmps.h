@@ -22,7 +22,7 @@ enum class AIState {
     ExecuteAction
 };
 
-// Lightweight struct for AI simulation
+//struct for AI simulation
 struct SimulationStats {
     int currentHealth;
     int maxHealth;

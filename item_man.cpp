@@ -120,8 +120,10 @@ void iman::init()
 		iman::all_consumables[random]->button->set_pos(consumable_pos);
 		iman::player_consumables.push_back(iman::all_consumables[random]);
 		iman::all_consumables[random]->set_display_texts();
+		iman::all_consumables[random]->set_pos(consumable_pos);
 		iman::all_consumables.erase(iman::all_consumables.begin() + random);
 		consumable_pos.y += 120;
+
 
 		if (iman::player_consumables.size() > 1)
 		{
@@ -169,11 +171,14 @@ void iman::init()
 
 	// ____________________Block_____________________
 	std::shared_ptr<dfn_Block> block = std::make_shared<dfn_Block>
-		("dfn_block", sf::Vector2f{ 100,100 });
+		("dfn_block", sf::Vector2f{ 10000,10000 });
 
 	// ____________________Parry_____________________
 	std::shared_ptr<dfn_Parry> parry = std::make_shared<dfn_Parry>
-		("dfn_parry", sf::Vector2f{ 100,220 });
+		("dfn_parry", sf::Vector2f{ 10000,10000 });
+
+	block->set_pos({100, 100});
+	parry->set_pos({100, 220});
 
 	block->button->set_consumable(block);
 	parry->button->set_consumable(parry);
@@ -197,9 +202,20 @@ void iman::init()
 
 void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
 {
-	for (int ic = 0; ic < list.size(); ++ic)
+	
+	for (int i = 0; i < list.size(); ++i)
 	{
-		list[ic]->button->set_all_sprites_pos(visible ? list[ic]->get_pos() : sf::Vector2f{ 10000, 10000 });
+ 		Console::print(list[i]->get_name() + " " + std::to_string(visible));
+		if (visible)
+		{
+			Console::print(list[i]->get_name() + "moving in frame");
+			list[i]->button->set_pos(list[i]->get_pos());
+
+		}
+		else
+		{
+			list[i]->button->set_all_sprites_pos(sf::Vector2f{ 10000, 10000 });
+		}
 	}
 }
 
@@ -217,7 +233,7 @@ i::Item(std::string name, sf::Vector2f pos)
 	i::_name = name;
 	i::_pos = pos;
 	i::button = std::make_shared<Button_Item>(name, pos, 3);
-
+	Console::print("Creating item: " + name + "| pos = (" + std::to_string(pos.x) + "," + std::to_string(pos.y));
 	_txt_display_name->setFont(GameSystem::font_bold);
 	_txt_display_name->setCharacterSize(50);
 	_txt_display_name->setColor(sf::Color::White);
@@ -236,7 +252,14 @@ void i::on_use() {}
 
 sf::Vector2f i::get_pos()
 {
+	Console::print("Getting pos of " + i::_name);
+	Console::print("Pos: " + std::to_string(_pos.x) + ", " + std::to_string(_pos.y));
 	return _pos;
+}
+
+void i::set_pos(sf::Vector2f pos)
+{
+	_pos = pos;
 }
 
 std::string i::get_name()
@@ -246,9 +269,6 @@ std::string i::get_name()
 
 void i::display_description(bool display)
 {
-	Console::print("cns::display_description() " + std::to_string(display));
-	Console::print(_display_name);
-	Console::print(_display_description);
 	_txt_display_name->setString(display ? _display_name : "");
 	_txt_display_description->setString(display ? _display_description : "");
 
@@ -463,6 +483,8 @@ void ia::on_use()
 	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->take_damage(damage);
 	FightManager::set_player_attacked(true);
 }
+void i::on_use(std::shared_ptr<Entity> target, int damage) {}
+void ia::on_use(std::shared_ptr<Entity> target, int damage) {}
 
 // Light
 void atk_Light::on_use()
@@ -482,9 +504,9 @@ void atk_Light::set_display_texts()
 }
 
 // Heavy
-void atk_Heavy::on_use()
+void atk_Heavy::on_use(std::shared_ptr<Entity> target, int damage)
 {
-	ia::damage = 20;
+	target->get_compatible_components<BasicEntityStats>()[0]->take_damage(damage);
 	ia::on_use();
 	m::set_text("Heavy attack!");
 

@@ -71,7 +71,7 @@ void b::update()
 void b::set_pos(sf::Vector2f pos)
 {
 	b::_pos = pos;
-	rm::set_sprite_pos(_name + "_idle.png", b::_pos);
+	rm::set_sprite_pos(!disabled ? _name + "_idle.png" : _name + "_selected.png", b::_pos);
 }
 
 // For Disabling entire HUD elements
@@ -103,6 +103,7 @@ void b::submit()
 	rm::set_sprite_pos(_name + "_selected.png", b::_pos);
 	rm::set_sprite_pos(_name + "_idle.png", { 10000,10000 });
 	rm::set_sprite_pos(_name + "_highlighted.png", { 10000,10000 });
+
 }
 
 void b::disable()
@@ -110,7 +111,7 @@ void b::disable()
 	rm::set_sprite_pos(_name + "_selected.png", b::_pos);
 	rm::set_sprite_pos(_name + "_idle.png", { 10000,10000 });
 	rm::set_sprite_pos(_name + "_highlighted.png", { 10000,10000 });
-
+	disabled = true;
 	if (b::above)
 	{
 		b::below->set_above(b::above);
