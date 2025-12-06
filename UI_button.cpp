@@ -6,7 +6,7 @@
 #include "UI_exit_to_mainmenu.hpp"
 #include "SceneMan.hpp"
 #include "input_man.hpp"
-#include "Console.hpp"
+#include "AudioManager.h"
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -95,6 +95,7 @@ void b::highlight()
 	rm::set_sprite_pos(_name + "_highlighted.png", b::_pos);
 	rm::set_sprite_pos(_name + "_idle.png", { 10000,10000 });
 	rm::set_sprite_pos(_name + "_selected.png", { 10000,10000 });
+	AudioManager::playSound("button_highlight");
 	on_highlight();
 }
 

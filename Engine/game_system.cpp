@@ -19,6 +19,7 @@ void GameSystem::start(unsigned int width, unsigned int height, const std::strin
 	sf::Event event;
 	InputManager::init();
 	am::addMusic("main_menu_theme");
+	AudioManager::addSounds("button_highlight");
 
 	sf::View view(sf::FloatRect(0, 0, 1920, 1080));
 	window.setView(view);
@@ -59,12 +60,12 @@ void GameSystem::_render()
 
 void GameSystem::assign_paths()
 {
-	if (!gs::font.loadFromFile("../../../../res/fonts/COPRGTL.ttf"))
+	if (!gs::font.loadFromFile("res/fonts/COPRGTL.ttf"))
 	{
 		std::cout << "Couldnt load font" << std::endl;
 	}
 
-	if (!gs::font_bold.loadFromFile("../../../../res/fonts/COPRGTB.ttf"))
+	if (!gs::font_bold.loadFromFile("res/fonts/COPRGTB.ttf"))
 	{
 		std::cout << "Couldnt load font_bold" << std::endl;
 	}

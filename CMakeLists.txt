@@ -46,14 +46,25 @@ add_executable(BlackDragon
 	AI/AI_cmps.cpp
 )
 
-target_include_directories(BlackDragon PRIVATE ${SFML_INCS} engine)
+target_include_directories(BlackDragon
+    PRIVATE
+        ${SFML_INCS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/engine
+        ${CMAKE_CURRENT_SOURCE_DIR}/res
+)
 target_link_libraries(BlackDragon sfml-graphics sfml-audio sfml-system engine)
-set_property(TARGET BlackDragon PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+set_property(TARGET BlackDragon PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 
 
 add_custom_command(TARGET BlackDragon POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${PROJECT_SOURCE_DIR}/lib/SFMLBIN/bin"
     "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+)
+
+add_custom_command(TARGET BlackDragon POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_SOURCE_DIR}/res"
+    "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/res"
 )
 
