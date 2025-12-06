@@ -35,7 +35,7 @@ public:
 	std::shared_ptr<Button> left = nullptr;
 	std::shared_ptr<Button> right = nullptr;
 	sf::Vector2f _pos;
-
+	bool disabled = false;	
 private:
 
 	bool _selected;

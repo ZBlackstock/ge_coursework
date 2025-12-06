@@ -206,7 +206,7 @@ void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
 		if (visible)
 		{
 			Console::print(list[i]->get_name() + "moving in frame");
-			list[i]->button->set_all_sprites_pos(list[i]->get_pos());
+			list[i]->button->set_pos(list[i]->get_pos());
 
 		}
 		else
