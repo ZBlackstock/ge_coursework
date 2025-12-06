@@ -9,6 +9,7 @@
 
 // Forward definition
 class Item;
+class Item_Attack;
 class Button_Item;
 
 class ItemManager
@@ -42,12 +43,13 @@ public:
 
 	std::shared_ptr<Button_Item> button = nullptr;
 	virtual void on_use();
-	virtual void on_use(std::shared_ptr<Entity> target, int damage);
 	sf::Vector2f get_pos();
 	void set_pos(sf::Vector2f pos);
+	virtual void set_target(std::shared_ptr<Entity> target);
 	void display_description(bool display);
 	virtual void set_display_texts();
 	std::string get_name();
+	std::shared_ptr<Entity> target;
 
 protected:
 	std::string _name;
@@ -70,7 +72,7 @@ class Item_Attack : public Item
 {
 public:
 	Item_Attack(std::string name, sf::Vector2f pos) : Item(name, pos) {};
-	virtual void on_use(std::shared_ptr<Entity> target, int damage) override;
+	void set_damage(int dmg);
 	virtual void on_use() override;
 	int damage = 0;
 };
@@ -211,7 +213,7 @@ class atk_Heavy : public Item_Attack
 {
 public:
 	atk_Heavy(std::string name, sf::Vector2f pos) : Item_Attack(name, pos) {}
-	void on_use(std::shared_ptr<Entity> target, int damage) override;
+	void on_use() override;
 	void set_display_texts() override;
 };
 

@@ -150,6 +150,8 @@ void iman::init()
 
 	light->button->set_consumable(light);
 	heavy->button->set_consumable(heavy);
+	light->set_damage(10);
+	heavy->set_damage(20);
 	light->set_display_texts();
 	heavy->set_display_texts();
 
@@ -249,6 +251,10 @@ i::Item(std::string name, sf::Vector2f pos)
 }
 
 void i::on_use() {}
+void i::set_target(std::shared_ptr<Entity> target) 
+{
+	i::target = target;
+}
 
 sf::Vector2f i::get_pos()
 {
@@ -478,24 +484,34 @@ void cns_Oil::set_display_texts()
 
 // ___________________ATTACKS________________
 
-void ia::on_use()
+void ia::on_use() 
 {
-	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->take_damage(damage);
+	target->get_compatible_components<BasicEntityStats>()[0]->take_damage(damage);
 	FightManager::set_player_attacked(true);
+
+	//Visual tint
+	sf::Color colour = target->get_compatible_components<SpriteComponent>()[0]->get_sprite().getColor();
+	target->get_compatible_components<SpriteComponent>()[0]->get_sprite().setColor(sf::Color(255, 100, 100, 255));
+	RenderMan::RenderWindowClear();
+	RenderMan::RenderWindow();
+	sf::sleep(sf::seconds(0.2f));
+	target->get_compatible_components<SpriteComponent>()[0]->get_sprite().setColor(colour);
 }
-void i::on_use(std::shared_ptr<Entity> target, int damage) {}
-void ia::on_use(std::shared_ptr<Entity> target, int damage) {}
+
+void ia::set_damage(int dmg) 
+{
+	damage = dmg;
+}
 
 // Light
 void atk_Light::on_use()
 {
-	ia::damage = 10;
-
-	ia::on_use();
 	m::set_text("Light attack!");
 
 	am::addSounds("lightAtk");
 	am::playSound("lightAtk");
+
+	ia::on_use();
 }
 void atk_Light::set_display_texts()
 {
@@ -504,14 +520,14 @@ void atk_Light::set_display_texts()
 }
 
 // Heavy
-void atk_Heavy::on_use(std::shared_ptr<Entity> target, int damage)
+void atk_Heavy::on_use()
 {
-	target->get_compatible_components<BasicEntityStats>()[0]->take_damage(damage);
-	ia::on_use();
 	m::set_text("Heavy attack!");
 
 	am::addSounds("heavyAtk");
 	am::playSound("heavyAtk");
+
+	ia::on_use();
 }
 void atk_Heavy::set_display_texts()
 {
