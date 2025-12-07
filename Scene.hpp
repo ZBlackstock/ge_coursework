@@ -7,6 +7,7 @@
 #include "UI_button.hpp"
 
 class Button_KeyBind;
+class Button_LoadScene;
 
 class Scene
 {
@@ -43,6 +44,10 @@ public:
 	static bool fight1_victory;
 	static bool fight2_victory;
 	static bool fight3_victory;
+	static std::shared_ptr<Button_LoadScene> btn_fight_left;
+	static std::shared_ptr<Button_LoadScene> btn_fight_mid;
+	static std::shared_ptr<Button_LoadScene> btn_fight_right;
+	static std::shared_ptr<Button_LoadScene> btn_fight_final;
 };
 
 // Left
