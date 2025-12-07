@@ -27,11 +27,6 @@ public:
 	// @brief Returns active_scene
 	static std::shared_ptr<Scene> get_active_scene();
 
-	static std::shared_ptr<Button_LoadScene> btn_fight_left;
-	static std::shared_ptr<Button_LoadScene> btn_fight_mid;
-	static std::shared_ptr<Button_LoadScene> btn_fight_right;
-	static std::shared_ptr<Button_LoadScene> btn_fight_final;
-
 private:
 	// @brief The currently active scene
 	static std::shared_ptr<Scene> active_scene;
