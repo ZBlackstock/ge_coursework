@@ -105,16 +105,6 @@ void AIComponent::ExecuteAttack(const Action& action) {
 	}
 	ItemManager::get_player()->get_compatible_components<BasicEntityStats>()[0]->attack_check(ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->get_attack_power(),type );
 	FightManager::set_enemy_attacked(true);
-
-	//notify player of AI attack
-	if ((action.attack == AttackType::Light))
-	{
-		MsgBox::set_text("enemy attacks with Light");
-	}
-	else 
-	{
-		MsgBox::set_text("enemy attacks with Heavy");
-	}
 }
 
 void AIComponent::ExecuteBlock(const Action& action) {
@@ -123,9 +113,7 @@ void AIComponent::ExecuteBlock(const Action& action) {
 		<< "\n";
 	FightManager::set_enemy_defended(true);
 	bool isParry = (action.block == BlockType::Parry);
-	ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->blocktype_parry = isParry;
-	MsgBox::set_text("enemy has used a Block");
-	
+	ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->blocktype_parry = isParry;	
 }
 
 // -----------------

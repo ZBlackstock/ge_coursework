@@ -7,6 +7,7 @@
 #include <vector>
 #include <random>
 #include "message_box.hpp"
+#include "console.hpp"
 
 
 BasicEntityStats::BasicEntityStats(Entity* p, int max_hp, int atk_power)
@@ -42,11 +43,8 @@ int BasicEntityStats::get_attack_power() const
 }
 
 int BasicEntityStats::get_max_health() const {
-	float mult = 1.0f;
-	for (auto& b : buffs)
-		mult *= b->max_health_mult;
 
-	return static_cast<int>(base_max_health * mult);
+	return static_cast<int>(base_max_health);
 }
 
 int BasicEntityStats::get_current_health() const {
@@ -59,6 +57,7 @@ void BasicEntityStats::take_damage(int dmg) {
 		mult *= b->take_damage_mult;
 
 	current_health -= static_cast<int>(dmg * mult);
+	Console::print("Took " + std::to_string(static_cast<int>(dmg * mult)) + " damage.");
 }
 
 void BasicEntityStats::heal(int amount) {
@@ -79,22 +78,6 @@ void BasicEntityStats::heal(int amount) {
 	int max_overheal = static_cast<int>(get_max_health() * 1.5f);
 	if (current_health > max_overheal)
 		current_health = max_overheal;
-}
-
-void BasicEntityStats::take_fire_damage(int dmg)
-{
-	float mult = 1.0f;
-	for (auto& b : buffs)
-		mult *= b->fire_attack_power;
-	take_damage(static_cast<int>(dmg * mult));
-}
-
-void BasicEntityStats::take_sharp_damage(int dmg)
-{
-	float mult = 1.0f;
-	for (auto& b : buffs)
-		mult *= b->sharp_attack_power;
-	take_damage(static_cast<int>(dmg * mult));
 }
 
 void SpriteComponent::set_texure(std::shared_ptr<sf::Texture> tex)
@@ -118,7 +101,13 @@ void SpriteComponent::render() { RenderMan::createDrawable(_sprite, 1); }
 
 void BasicEntityStats::attack_check(int damage, std::string type)
 {
-	// Current entity is parrying
+	float damage_thing = 1;
+	if (!buffs.empty())
+	{
+		damage_thing = buffs[0]->take_damage_mult;
+	}
+
+	// Cu  rrent entity is parrying
 	if (blocktype_parry)
 	{
 		// Parrying, and incoming is heavy -> good chance of deflect
@@ -127,42 +116,26 @@ void BasicEntityStats::attack_check(int damage, std::string type)
 			// 50% chance to reflect damage
 			if (rand() % 2 == 0)
 			{
-				// Reflect damage back to attacker
-				auto attackerComps = _parent->get_components<BasicEntityStats>();
-				if (!attackerComps.empty())
-				{
-					BasicEntityStats& attackerStats = *attackerComps[0];
-					attackerStats.take_damage(damage);
-				}
-
 				MsgBox::set_text("Heavy attack parried! No damage taken!");
 			}
 			else
 			{
-				MsgBox::set_text("Heavy attack landed for " + std::to_string(damage) + " damage!");
+				MsgBox::set_text("Heavy attack landed for " + std::to_string(static_cast<int>(damage * damage_thing)) + " damage!");
 
 				// Take full damage if parry fails
 				take_damage(damage);
 			}
 		}   // Parrying, and incoming is light -> bad chance of deflect
-		else 
+		else
 		{
 			// 33% chance to reflect damage
 			if (rand() % 3 == 0)
 			{
-				// Reflect damage back to attacker
-				auto attackerComps = _parent->get_components<BasicEntityStats>();
-				if (!attackerComps.empty())
-				{
-					BasicEntityStats& attackerStats = *attackerComps[0];
-					attackerStats.take_damage(damage);
-				}
 				MsgBox::set_text("Light attack parried! No damage taken!");
-
 			}
 			else
 			{
-				MsgBox::set_text("Light attack landed for " + std::to_string(damage) + " damage!");
+				MsgBox::set_text("Light attack landed for " + std::to_string(static_cast<int>(damage * damage_thing)) + " damage!");
 
 				// Take full damage if parry fails
 				take_damage(damage);
@@ -183,14 +156,15 @@ void BasicEntityStats::attack_check(int damage, std::string type)
 				if (!attackerComps.empty())
 				{
 					BasicEntityStats& attackerStats = *attackerComps[0];
-					attackerStats.take_damage(damage/2);
+					attackerStats.take_damage(damage / 2);
 				}
-				MsgBox::set_text("Heavy attack blocked! " + std::to_string(damage/2) + " damage taken!");
+				MsgBox::set_text("Heavy attack blocked! Damage taken reduced from " + std::to_string(static_cast<int>((damage)*damage_thing)) 
+					+ " to " + std::to_string(static_cast<int>((damage / 2) * damage_thing)) + " damage taken!");
 
 			}
 			else
 			{
-				MsgBox::set_text("Heavy attack landed for " + std::to_string(damage) + " damage!");
+				MsgBox::set_text("Heavy attack landed for " + std::to_string(static_cast<int>(damage * damage_thing)) + " damage!");
 
 				// Take full damage if parry fails
 				take_damage(damage);
@@ -206,13 +180,14 @@ void BasicEntityStats::attack_check(int damage, std::string type)
 				if (!attackerComps.empty())
 				{
 					BasicEntityStats& attackerStats = *attackerComps[0];
-					attackerStats.take_damage(damage/2);
+					attackerStats.take_damage(damage / 2);
 				}
-				MsgBox::set_text("Light attack blocked! " + std::to_string(damage / 2) + " damage taken!");
+				MsgBox::set_text("Light attack blocked! Damage taken reduced from " + std::to_string(static_cast<int>((damage)*damage_thing))
+					+ " to " + std::to_string(static_cast<int>((damage / 2) * damage_thing)) + " damage taken!");
 			}
 			else
 			{
-				MsgBox::set_text("Light attack landed for " + std::to_string(damage) + " damage!");
+				MsgBox::set_text("Light attack landed for " + std::to_string(static_cast<int>(damage * damage_thing)) + " damage!");
 
 				// Take full damage if parry fails
 				take_damage(damage);

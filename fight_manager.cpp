@@ -63,6 +63,8 @@ void FightManager::update(const float& dt)
 	// PLAYER CONSUME
 	if (get_enemy_defended())
 	{
+	
+
 		ItemManager::visible(ItemManager::player_consumables, true);
 		ItemManager::visible(ItemManager::player_defends, false);
 		ItemManager::visible(ItemManager::player_attacks, false);
@@ -102,7 +104,7 @@ void FightManager::update(const float& dt)
 		EventManager::set_current_button(ItemManager::player_attacks[0]->button);
 
 		//Move to attack stage
- 		fli::set_fight_loop_state(1);
+		fli::set_fight_loop_state(1);
 		set_player_consumed_item(false);
 		Console::print("PLAYER ATTACK");
 	}
@@ -144,7 +146,9 @@ void FightManager::update(const float& dt)
 		//Move to defend stage
 		fli::set_fight_loop_state(2);
 		set_player_attacked(false);
-		Console::print("PLAYER DEFEND");
+		Console::print("PLAYER DEFEND also enemybuffs clears");
+
+		ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->buffs.clear();
 
 	}
 
@@ -194,7 +198,7 @@ void FightManager::update(const float& dt)
 		sf::sleep(sf::seconds(1.f));
 
 		set_enemy_consumed_item(false);
-		Console::print("ENEMY ATTACK");
+		Console::print("ENEMY ATTACK clear buffs ");
 
 	}
 
@@ -217,6 +221,7 @@ void FightManager::update(const float& dt)
 
 		set_enemy_attacked(false);
 		Console::print("ENEMY DEFEND");
+		ItemManager::get_player()->get_compatible_components<BasicEntityStats>()[0]->buffs.clear();
 	}
 }
 
