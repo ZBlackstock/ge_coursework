@@ -335,7 +335,7 @@ void Fight::load_enemy()
 	auto stats_comp = enemy->add_component<BasicEntityStats>(*enemy_max_hp, *enemy_atk_pwr);
 	auto sprite_comp = enemy->add_component<SpriteComponent>();
 	auto memeory = enemy->add_component<MemoryComponent>();
-	auto AI = enemy->add_component<AIComponent>(memeory, ItemManager::get_player().get());
+	auto AI = enemy->add_component<AIComponent>(memeory, ItemManager::get_player().get(),*enemy_foresight);
 
 	// Set texture & sprite
 	std::shared_ptr<sf::Texture> tex = std::make_shared<sf::Texture>();
@@ -354,6 +354,7 @@ void Fight0::on_scene_active()
 	*enemy_sprite_name = "knight_sprite.png";
 	*enemy_max_hp = 100;
 	*enemy_atk_pwr = 20;
+	*enemy_foresight = 3;
 
 	Fight::on_scene_active();
 }
@@ -374,6 +375,7 @@ void Fight1::on_scene_active()
 	*enemy_sprite_name = "meatball_monster_sprite.png";
 	*enemy_max_hp = 100;
 	*enemy_atk_pwr = 20;
+	*enemy_foresight = 2;
 
 	Fight::on_scene_active();
 }
@@ -394,6 +396,7 @@ void Fight2::on_scene_active()
 	*enemy_sprite_name = "skinny_zombie_sprite.png";
 	*enemy_max_hp = 100;
 	*enemy_atk_pwr = 20;
+	*enemy_foresight = 1;
 
 	Fight::on_scene_active();
 }
@@ -416,6 +419,7 @@ void Fight3::on_scene_active()
 	*enemy_sprite_name = "black_dragon_sprite.png";
 	*enemy_max_hp = 100;
 	*enemy_atk_pwr = 20;
+	*enemy_foresight = 5;
 
 	Fight::on_scene_active();
 }

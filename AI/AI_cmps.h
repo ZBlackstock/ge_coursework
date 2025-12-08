@@ -33,7 +33,7 @@ struct SimulationStats {
 
 class AIComponent : public Component {
 public:
-    explicit AIComponent(Entity* parent, std::shared_ptr<MemoryComponent> memory, Entity* playerEntity);
+    explicit AIComponent(Entity* parent, std::shared_ptr<MemoryComponent> memory, Entity* playerEntity, int mem_depth);
 
     void update(const float& dt) override;
     void render() override {}
@@ -46,6 +46,7 @@ private:
 
     std::shared_ptr<MemoryComponent> memory;
 
+    int mem_depth = 1;
     // ---- Decision Tree methods ----
     void SimulateTurn(SimulationStats& ai, SimulationStats& player,
         const Action& aiAction, const Action& playerAction);
@@ -53,7 +54,7 @@ private:
     float EvaluateNode(const SimulationStats& ai, const SimulationStats& player) const;
     Action DecideAction(const SimulationStats& aiStats,
         const SimulationStats& playerStats,
-        int depth = 2);
+        int depth);
 
     // ---- Execution methods ----
     void ExecuteAttack(const Action& action);

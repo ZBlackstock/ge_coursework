@@ -102,7 +102,7 @@ void FightManager::update(const float& dt)
 		EventManager::set_current_button(ItemManager::player_attacks[0]->button);
 
 		//Move to attack stage
-		fli::set_fight_loop_state(1);
+ 		fli::set_fight_loop_state(1);
 		set_player_consumed_item(false);
 		Console::print("PLAYER ATTACK");
 	}

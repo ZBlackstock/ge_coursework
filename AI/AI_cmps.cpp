@@ -2,11 +2,14 @@
 #include "../console.hpp"
 #include "../item_man.hpp"
 #include "../fight_manager.hpp"
+#include "../message_box.hpp"
+
+
 // -----------------
 // Constructor
 // -----------------
-AIComponent::AIComponent(Entity* parent, std::shared_ptr<MemoryComponent> memory, Entity* playerEntity)
-	: Component(parent), memory(memory), playerEntity(playerEntity)
+AIComponent::AIComponent(Entity* parent, std::shared_ptr<MemoryComponent> memory, Entity* playerEntity,int depth)
+	: Component(parent), memory(memory), playerEntity(playerEntity), mem_depth(depth)
 {
 }
 
@@ -32,12 +35,12 @@ void AIComponent::update(const float& dt) {
 		break;
 
 	case AIState::DecideAttack: {
-		// Create lightweight simulation copies
+		// Create simulation copies
 		SimulationStats aiSim(aiStats.get_current_health(), aiStats.get_attack_power());
 		SimulationStats playerSim(playerStats.get_current_health(), playerStats.get_attack_power());
 
 		// Decide best action using simulation
-		Action attackAction = DecideAction(aiSim, playerSim, 2); // depth = 2
+		Action attackAction = DecideAction(aiSim, playerSim, mem_depth);
 
 		ExecuteAttack(attackAction);
 		currentState = AIState::DecideBlock;
@@ -48,7 +51,7 @@ void AIComponent::update(const float& dt) {
 		SimulationStats aiSim(aiStats.get_max_health(), aiStats.get_attack_power());
 		SimulationStats playerSim(playerStats.get_max_health(), playerStats.get_attack_power());
 
-		Action blockAction = DecideAction(aiSim, playerSim, 2); // depth = 2
+		Action blockAction = DecideAction(aiSim, playerSim, mem_depth); 
 
 		ExecuteBlock(blockAction);
 		currentState = AIState::ExecuteAction;
@@ -56,12 +59,12 @@ void AIComponent::update(const float& dt) {
 	}
 
 	case AIState::ExecuteAction:
-		// Apply any other turn effects
 		currentState = AIState::DecideItem;
 		break;
 	}
 }
 
+//state changer
 void AIComponent::set_State(std::string state)
 {
 	if (state == "Item")
@@ -90,8 +93,28 @@ void AIComponent::ExecuteAttack(const Action& action) {
 		<< (action.attack == AttackType::Light ? "Light" : "Heavy")
 		<< "\n";
 
-	ItemManager::get_player()->get_compatible_components<BasicEntityStats>()[0]->take_damage(10);
+	bool isHeavy = (action.attack == AttackType::Heavy);
+	std::string type;
+	if (isHeavy = true) 
+	{
+		type = "Heavy";
+	}
+	else
+	{
+		type = "Light";
+	}
+	ItemManager::get_player()->get_compatible_components<BasicEntityStats>()[0]->attack_check(ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->get_attack_power(),type );
 	FightManager::set_enemy_attacked(true);
+
+	//notify player of AI attack
+	if ((action.attack == AttackType::Light))
+	{
+		MsgBox::set_text("enemy attacks with Light");
+	}
+	else 
+	{
+		MsgBox::set_text("enemy attacks with Heavy");
+	}
 }
 
 void AIComponent::ExecuteBlock(const Action& action) {
@@ -99,8 +122,10 @@ void AIComponent::ExecuteBlock(const Action& action) {
 		<< (action.block == BlockType::Block ? "Light" : "Heavy")
 		<< "\n";
 	FightManager::set_enemy_defended(true);
-
-	// TODO: actually apply block effects to AI here
+	bool isParry = (action.block == BlockType::Parry);
+	ItemManager::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->blocktype_parry = isParry;
+	MsgBox::set_text("enemy has used a Block");
+	
 }
 
 // -----------------
@@ -134,6 +159,8 @@ std::vector<Action> AIComponent::PredictPlayerActions() const {
 	return predictions;
 }
 
+
+//node for the Attach/block decision tree
 float AIComponent::EvaluateNode(const SimulationStats& ai, const SimulationStats& player) const {
 	return (player.maxHealth - player.currentHealth) - (ai.maxHealth - ai.currentHealth);
 }
