@@ -68,6 +68,7 @@ protected:
 	std::shared_ptr<std::string> enemy_sprite_name = std::make_shared<std::string>();
 	std::shared_ptr<int> enemy_max_hp = std::make_shared<int>();
 	std::shared_ptr<int> enemy_atk_pwr = std::make_shared<int>();
+	std::shared_ptr<int> enemy_foresight = std::make_shared<int>(2);
 };
 
 // Left

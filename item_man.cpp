@@ -7,6 +7,7 @@
 #include "message_box.hpp"
 #include "UI_fight_loop.hpp"
 #include "AudioManager.h"
+#include "AI/Memory.h"
 
 using i = Item;
 using ic = Item_Consumable;
@@ -29,7 +30,6 @@ int iman::num_player_consumables = 8;
 
 void iman::init()
 {
-
 	// ________________ADD CONSUMABLES________________________________________
 
 	// ____________________Small healing potion_____________________
@@ -307,6 +307,7 @@ std::shared_ptr<Entity> iman::get_enemy()
 
 void ic::on_use()
 {
+	iman::get_player()->get_compatible_components<BasicEntityStats>()[0]->add_buff<cns_Whetstone>(attack_power_mult = 2);
 	FightManager::set_player_consumed_item(true);
 	ic::button->disable();
 	Console::print("on_use()");
@@ -317,7 +318,7 @@ void cns_HealingPotion::on_use()
 {
 	ic::on_use();
 	m::set_text("Health Potion Used. Regained " + std::to_string(cns_HealingPotion::_heal_amount) + " health!");
-
+	iman::get_player()->get_compatible_components<BasicEntityStats>()[0]->heal(_heal_amount);
 	am::addSounds("drink");
 	am::playSound("drink");
 }
@@ -486,7 +487,6 @@ void cns_Oil::set_display_texts()
 
 void ia::on_use() 
 {
-	target->get_compatible_components<BasicEntityStats>()[0]->take_damage(damage);
 	FightManager::set_player_attacked(true);
 
 	//Visual tint
@@ -507,6 +507,9 @@ void ia::set_damage(int dmg)
 void atk_Light::on_use()
 {
 	m::set_text("Light attack!");
+	target->get_compatible_components<BasicEntityStats>()[0]->attack_check(damage, "Light");
+	target->get_compatible_components<MemoryComponent>()[0]->RecordPlayerAttack(false);
+
 
 	am::addSounds("lightAtk");
 	am::playSound("lightAtk");
@@ -523,6 +526,8 @@ void atk_Light::set_display_texts()
 void atk_Heavy::on_use()
 {
 	m::set_text("Heavy attack!");
+	target->get_compatible_components<BasicEntityStats>()[0]->attack_check(damage, "Heavy");
+	target->get_compatible_components<MemoryComponent>()[0]->RecordPlayerAttack(true);
 
 	am::addSounds("heavyAtk");
 	am::playSound("heavyAtk");
@@ -545,9 +550,10 @@ void id::on_use()
 // Light
 void dfn_Block::on_use()
 {
+	ItemManager::get_player()->get_compatible_components<BasicEntityStats>()[0]->blocktype_parry = false;
 	id::on_use();
 	m::set_text("Preparing to block!");
-
+	ItemManager::get_enemy()->get_compatible_components<MemoryComponent>()[0]->RecordPlayerBlock(false);
 	//Code for blocking here
 }
 void dfn_Block::set_display_texts()
@@ -559,8 +565,10 @@ void dfn_Block::set_display_texts()
 // Heavy
 void dfn_Parry::on_use()
 {
+	ItemManager::get_player()->get_compatible_components<BasicEntityStats>()[0]->blocktype_parry = true;
 	id::on_use();
 	m::set_text("Preparing to parry!");
+	ItemManager::get_enemy()->get_compatible_components<MemoryComponent>()[0]->RecordPlayerAttack(true);
 
 	//Code for parrying here
 }

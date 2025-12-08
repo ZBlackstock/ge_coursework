@@ -1,4 +1,5 @@
 #include "Memory.h"
+#include "../console.hpp"
 
 MemoryComponent::MemoryComponent(Entity* parent) : Component(parent) {}
 
@@ -12,6 +13,7 @@ float MemoryComponent::RandomFloat(float a, float b) const
 
 void MemoryComponent::RecordPlayerBlock(bool isHeavy)
 {
+	Console::print("Recording player block: " + std::to_string(isHeavy));
     float value = isHeavy ? RandomFloat(0.5f, 1.0f) : RandomFloat(0.0f, 0.5f);
     playerBlocks.push_back(value);
     if (playerBlocks.size() > maxMemory) playerBlocks.erase(playerBlocks.begin());
@@ -19,6 +21,7 @@ void MemoryComponent::RecordPlayerBlock(bool isHeavy)
 
 void MemoryComponent::RecordPlayerAttack(bool isHeavy)
 {
+    Console::print("Recording player attack: " + std::to_string(isHeavy));
     float value = isHeavy ? RandomFloat(0.5f, 1.0f) : RandomFloat(0.0f, 0.5f);
     playerAttacks.push_back(value);
     if (playerAttacks.size() > maxMemory) playerAttacks.erase(playerAttacks.begin());

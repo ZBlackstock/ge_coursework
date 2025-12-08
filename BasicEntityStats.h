@@ -14,7 +14,9 @@ protected:
 
 public:
     BasicEntityStats(Entity* p, int max_hp, int atk_power);
+
     int current_health;
+	bool blocktype_parry = false;
 
     void update(const float& dt) override;
     int get_max_health() const;
@@ -25,6 +27,9 @@ public:
     void take_damage(int dmg);
     void heal(int amount);
     void render() override {}
+    float RandomFloat(float a, float b) const;
+
+	void attack_check(int damage, std::string type);
 
     template <typename Type, typename... Args>
     Type* add_buff(Args&&... args) {
