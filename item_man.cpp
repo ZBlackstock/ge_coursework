@@ -9,6 +9,7 @@
 #include "AudioManager.h"
 #include "AI/Memory.h"
 
+
 using i = Item;
 using ic = Item_Consumable;
 using ia = Item_Attack;
@@ -179,8 +180,8 @@ void iman::init()
 	std::shared_ptr<dfn_Parry> parry = std::make_shared<dfn_Parry>
 		("dfn_parry", sf::Vector2f{ 10000,10000 });
 
-	block->set_pos({100, 100});
-	parry->set_pos({100, 220});
+	block->set_pos({ 100, 100 });
+	parry->set_pos({ 100, 220 });
 
 	block->button->set_consumable(block);
 	parry->button->set_consumable(parry);
@@ -204,10 +205,10 @@ void iman::init()
 
 void iman::visible(std::vector<std::shared_ptr<Item>> list, bool visible)
 {
-	
+
 	for (int i = 0; i < list.size(); ++i)
 	{
- 		Console::print(list[i]->get_name() + " " + std::to_string(visible));
+		Console::print(list[i]->get_name() + " " + std::to_string(visible));
 		if (visible)
 		{
 			Console::print(list[i]->get_name() + "moving in frame");
@@ -251,7 +252,7 @@ i::Item(std::string name, sf::Vector2f pos)
 }
 
 void i::on_use() {}
-void i::set_target(std::shared_ptr<Entity> target) 
+void i::set_target(std::shared_ptr<Entity> target)
 {
 	i::target = target;
 }
@@ -307,7 +308,7 @@ std::shared_ptr<Entity> iman::get_enemy()
 
 void ic::on_use()
 {
-	iman::get_player()->get_compatible_components<BasicEntityStats>()[0]->add_buff<cns_Whetstone>(attack_power_mult = 2);
+
 	FightManager::set_player_consumed_item(true);
 	ic::button->disable();
 	Console::print("on_use()");
@@ -333,6 +334,7 @@ void cns_HealingPotion::set_display_texts()
 // Fire Resistance
 void cns_FireResistance::on_use()
 {
+	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->add_buff<Buff>(1, 0.7f);
 	ic::on_use();
 	m::set_text("Fire resistance gained! The next fire attack that lands will deal less damage");
 
@@ -349,10 +351,11 @@ void cns_FireResistance::set_display_texts()
 void cns_SharpResistance::on_use()
 {
 	ic::on_use();
-	m::set_text("Sharp resistance gained! The next fire attack that lands will deal less damage");
+	m::set_text("Sharp resistance gained! The next attack that lands will deal less damage");
 
 	am::addSounds("sharpResistance");
 	am::playSound("sharpResistance");
+	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->add_buff<Buff>(1, 0.7f);
 }
 void cns_SharpResistance::set_display_texts()
 {
@@ -363,6 +366,8 @@ void cns_SharpResistance::set_display_texts()
 // Blunt resistance
 void cns_FireBomb::on_use()
 {
+	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->take_damage(15);
+
 	ic::on_use();
 	m::set_text("Fire Bomb thrown at enemy!");
 
@@ -395,7 +400,8 @@ void cns_Illusion::on_use()
 {
 	ic::on_use();
 	m::set_text("Illusion cast!");
-
+	iman::get_enemy()->get_compatible_components<MemoryComponent>()[0]->playerAttacks.clear();
+	iman::get_enemy()->get_compatible_components<MemoryComponent>()[0]->playerBlocks.clear();
 	am::addSounds("illusion");
 	am::playSound("illusion");
 }
@@ -403,7 +409,7 @@ void cns_Illusion::set_display_texts()
 {
 	_display_name = "Illusion";
 	_display_description =
-		"Casts an illusory self, \nconfusing your opponent and \navoiding damage from \ntheir next attack";
+		"Casts an illusory self, \nconfusing your opponent and \nemptying their mind";
 }
 
 // Fire buff
@@ -411,6 +417,7 @@ void cns_FireBlessing::on_use()
 {
 	ic::on_use();
 	m::set_text("Fire blessing recieved!");
+	iman::get_player()->get_compatible_components<BasicEntityStats>()[0]->add_buff<Buff>(1, 1.75f);
 
 	am::addSounds("fire");
 	am::playSound("fire");
@@ -419,7 +426,7 @@ void cns_FireBlessing::set_display_texts()
 {
 	_display_name = "Fire Blessing";
 	_display_description =
-		"Temporarily wraps your blade \nin flames. \n\nYour next attack will also \ndeal Fire damage";
+		"Temporarily wraps your blade \nin flames. \n\nYour next attack will \ndeal more damage";
 }
 
 // Sharp buff
@@ -427,6 +434,7 @@ void cns_Whetstone::on_use()
 {
 	ic::on_use();
 	m::set_text("Blade sharpened by Whetstone!");
+	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->add_buff<Buff>(0, 1.5f);
 
 	am::addSounds("whetstone");
 	am::playSound("whetstone");
@@ -435,13 +443,15 @@ void cns_Whetstone::set_display_texts()
 {
 	_display_name = "Whetstone";
 	_display_description = "Sharpens blade, allowing for \nadditional sharp damage on your \nnext attack";
-}
+}  
 
 // Rage
 void cns_Rage::on_use()
 {
 	ic::on_use();
 	m::set_text("Enraged!");
+	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->add_buff<Buff>(0, 2.f);
+	iman::get_player()->get_compatible_components<BasicEntityStats>()[0]->add_buff<Buff>(0, 2.f);
 
 	am::addSounds("rage");
 	am::playSound("rage");
@@ -450,7 +460,7 @@ void cns_Rage::set_display_texts()
 {
 	_display_name = "Rage";
 	_display_description =
-		"Unleashes your fury. \n\nYour next attack will deal additional \ndamage, but your unstable anger reduces \nlikelihood of a connection";
+		"Unleashes your fury. \n\nYour next attack will greatly improve \ndamage, but you will take more damage in your weak state";
 }
 
 // Quickeye
@@ -472,20 +482,21 @@ void cns_QuickEye::set_display_texts()
 void cns_Oil::on_use()
 {
 	ic::on_use();
-	m::set_text("Oil thrown!");
+	m::set_text("Acid thrown!");
+	iman::get_enemy()->get_compatible_components<BasicEntityStats>()[0]->take_damage(20);
 
 	am::addSounds("oil");
 	am::playSound("oil");
 }
 void cns_Oil::set_display_texts()
 {
-	_display_name = "Oil";
-	_display_description = "Coats foe in oil.\n\nYour foes next fire \nattack will ignite them.";
+	_display_name = "Acid";
+	_display_description = "Coats foe in acid.";
 }
 
 // ___________________ATTACKS________________
 
-void ia::on_use() 
+void ia::on_use()
 {
 	FightManager::set_player_attacked(true);
 
@@ -498,7 +509,7 @@ void ia::on_use()
 	target->get_compatible_components<SpriteComponent>()[0]->get_sprite().setColor(colour);
 }
 
-void ia::set_damage(int dmg) 
+void ia::set_damage(int dmg)
 {
 	damage = dmg;
 }

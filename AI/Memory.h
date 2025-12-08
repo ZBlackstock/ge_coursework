@@ -17,9 +17,10 @@ public:
     float GetMedianBlock() const;
     float GetMedianAttack() const;
 
-private:
     std::vector<float> playerBlocks;
     std::vector<float> playerAttacks;
+
+private:
     size_t maxMemory = 20;
 
     float RandomFloat(float a, float b) const;
